@@ -1,0 +1,19 @@
+form fieldset {
+    border: solid thin blue;
+}
+form label {
+    float: left;
+    clear: left;
+    width: 5em;
+}
+form input {
+    float: left;    
+}
+form input[type='submit'] {
+    float: left;
+    clear: left;  
+}
+nav * {
+    display: inline-block;
+    margin: 1em;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+
+
+</head>
+
+<body class="body">
+    <div class="timerDiv">
+        <p class="timer" id="dia" style="float:right"></p>
+        <p class="timer" id="timer"></p>
+    </div>
+
+    <div class="logoutDiv" id="logoutDiv">
+        <a id="logout" class="btn btn-info btn-lg"> Log out</a>
+    </div>
+
+    <div id="BtsAndLogin" style="margin-left: 100px; margin-right: 100px;">
+        <button class="btn btn-success" style="background-color: rgb(106, 52, 156);" type="button" id="btLogin">Login</button>
+        <button class="btn btn-success" style="background-color: rgb(106, 52, 156);"type="button" id="btRegister">Register</button>
+
+        <div id="formLogin" class="form-group">
+            <form class="form-group">
+                <fieldset class="scheduler-border">
+                    <legend>Put your credentials</legend>
+                    Username: <input class="form-control" type="text" name="" id="myUsername">
+                    <br>
+
+                    Password:<input class="form-control" type="password" name="" id="myPassword">
+                    <br>
+                    <button class="btn btn-outline-secondary" type="button" id="login">login</button>
+                    <p  id="response"> </p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div id="formRegister" style="margin-left: 100px; margin-right: 100px;" class="form-group" >
+        <form class="form-group">
+            <fieldset class="scheduler-border">
+                <legend>Create an account</legend>
+                Full name: <input class="form-control" type="text" name="" id="myFullName">
+                <br>
+                Username: <input class="form-control" type="text" name="" id="myNewUsername">
+                <br>
+                Password:       <input class="form-control" type="password" name="" id="myNewPassword">
+                Repeat Password:<input class="form-control" type="password" name="" id="myNewPasswordRepeat">
+                <br>
+                <button type="button" class="btn btn-outline-secondary" id="register">Register</button>
+                <div class="" >
+                    <strong id="registerResponse"></strong>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+</body>
+
+</html>
