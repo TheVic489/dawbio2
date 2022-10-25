@@ -22,6 +22,7 @@ if (filter_has_var(INPUT_POST, "registersubmit")) {
   // Interpreting errors
   if ($registerResult) {
     $result = "User successfuly created";
+    echo "[<a href='index.php'>Main Page</a>]";
   } elseif (!$registerResult) {
     $result = "User already exisist";
   } else {

@@ -8,7 +8,7 @@ print_r($result['username']);
 echo "<pre>";
 $_SESSION["user_array"] = $result;
 
-print_r($_SESSION["user_array"]['role']);
+print_r($_SESSION["user_array"]);
 
 
 //  Search fail
