@@ -1,5 +1,4 @@
 <?php
-session_start();
 // Get fullname
 if (isset($_SESSION['user_array'])) {
 $fname = $_SESSION['user_array']['fname'];

@@ -1,3 +1,14 @@
+<?php
+session_start();
+// Array with permited roles
+$permitted_roles = ['staff', 'admin'];
+$role = $_SESSION['user_array']['role'];
+// If role, is not in permited roles, redirecto to index.php
+if (!in_array($role, $permitted_roles)) {
+    header("Location: index.php");
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -11,8 +22,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
-    <div class="container-fluid">
         <?php include_once "topmenu.php";?>
+    <div class="container-fluid">
         <div class="container">
         <h2>Admin Menus</h2>
 <p>
@@ -24,3 +35,4 @@
     </div>
     </body>
 </html>
+

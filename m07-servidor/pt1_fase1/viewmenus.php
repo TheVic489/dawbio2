@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_array']) ) {
+    header("Location: index.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,8 +20,8 @@
 </head>
 
 <body>
+    <?php include_once "topmenu.php"; ?>
     <div class="container-fluid">
-        <?php include_once "topmenu.php"; ?>
         <div class="container" style="text-align: center;">
             <h2>Menús del dia</h2>
             <br>

@@ -1,3 +1,11 @@
+<?php
+session_start();
+// If role is not ADMIN, redirecto to index.php
+if ($_SESSION['user_array']['role'] != 'admin') {
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,8 +20,8 @@
 </head>
 
 <body>
+    <?php include_once "topmenu.php"; ?>
     <div class="container-fluid">
-        <?php include_once "topmenu.php"; ?>
         <div class="container">
             <h2>Admin Users</h2>
             <p>

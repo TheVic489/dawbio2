@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,8 +13,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
-    <div class="container-fluid">
         <?php include_once "topmenu.php";?>
+    <div class="container-fluid">
         <div class="container">
         <h2>Restaurant application</h2>
 <p>

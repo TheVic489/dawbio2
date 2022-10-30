@@ -5,6 +5,8 @@ $users = ["user1", "user2", "user3"];
 $pass  = ["pass1", "pass2", "pass3" ];
 $rols  = ["client", "gestor"];
 
+$destinations = ["Barcelona", "València", "Madrid"];
+
 //recoger las peticiones
 $entrada=file_get_contents('php://input');
 

@@ -2,11 +2,8 @@ username;password;role;name;surname
 user4;pass4;staff;name4;surname4
 admin1;admin1;admin;name4;surname4
 user5;pass5;registered;name5;surname5
-user6;pass6;registered;name6;surname6
-asdasd;asd;registered;name6;surname6
 asd;qwe;registered;name6;surname6
 TheVic489;pass1;registered;Victor;Piñana
 pepito;pass123123;registered;pepe;rodriguez
 JoanPra;pass1;registered;Joan;Pradells
 123;123;registered;Victor;Piñana
-

@@ -46,8 +46,9 @@ if (filter_has_var(INPUT_POST, "registersubmit")) {
 </head>
 
 <body>
+<?php include_once "topmenu.php"; ?>
   <div class="container-fluid">
-    <h2>Registration form</h2>
+    <h2 style="text-align: center">Registration form</h2>
     <form class="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
       <div class="form-group">
         <label class="control-label col-sm-2" for="username">Username:</label>
