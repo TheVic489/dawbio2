@@ -113,15 +113,68 @@
                 <br><br>
             </div>
                 <button type="button" class="btn btn-primary" id="btBuscarVols"> Buscar Vols</button>
+                <b id="error"></b>
         </form>
     </div>
-    <div id="seleccioVolsDiv">
+    <div class="center" id="seleccioVolsDiv">
         <div id="bcnMdrDive">
-            <h3>Barcelona - Madrid</h3>
-            <div id="bcnMdrContent">
+            <div class="nine">
+                <h1 id="vueloTitulo"></h1>
+                <span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span><span>&#9992;</span>
             </div>
+            <br>
+            <div id="bcnMdrContent">
+                <h4>Dilluns</h4>
+                <button  class="btn btn-dark" id="bmdilluns1">
+                </button>
+                <button  class="btn btn-dark" id="bmdilluns2">
+                </button>
+
+                <h4>Divendres</h4>
+                <button  class="btn btn-dark" id="bmdivendres1">
+                </button>
+                <button  class="btn btn-dark" id="bmdivendres2">
+                </button>
+
+                <h4>Dissapte</h4>
+                <button  class="btn btn-dark" id="bmdissapte">
+                </button>
+
+                <div id="preudiv">
+                    <button id="preu" type="button" class="btn btn-warning"></button>
+                </div>
+            </div>
+            
         </div>
     </div>
+
+    <div id="dades" class="container-fluid">
+        <h3>Reserva - Dades personals</h3>
+    <form id="form">
+
+        <div class="mb-3 mt-3 row">
+            <label for="tuEmail" class="form-label">Email:</label>
+            <div class="col-6">
+                 <input type="email" class="form-control col-6" id="tuEmail" placeholder="ejemplo@dominio.com">
+                 <div class="small text-danger"><p id="errorE"></p></div>
+            </div>
+        </div>
+        <div class="mb-3 mt-3 row">
+            <label for="tuDni" class="form-label">Dni:</label>
+            <div class="col-6">
+                 <input type="text" class="form-control col-6" id="tuDni" maxlength="9" placeholder="12345678Z">
+                 <div class="small text-danger"><p id="errorD"></p></div>
+            </div>
+        </div>
+        <div class="mb-3 mt-3 row">
+            <label for="tuNum" class="form-label">Numero de telefono:</label>
+            <div class="col-6">
+                 <input type="text" class="form-control col-6" id="tuNum" maxlength="9" placeholder="12345678Z">
+                 <div class="small text-danger"><p id="errorD"></p></div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-info"  id="btContinuar">Continuar</button>
+
 </body>
 
 </html>

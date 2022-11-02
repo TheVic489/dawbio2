@@ -38,6 +38,41 @@ function currentDateToFormat(date) {
   return year + "-" + month + "-" + day;
 }
 
+function validaEmail(value){
+  const expRegEmail=/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+  if (expRegEmail.test(value) == true)  {
+      return true; // Correcto
+  }else{
+      return false;// Error
+  }
+}
+
+function validaDni(rawDni){
+     
+  dni = rawDni.toUpperCase();
+  // Separte numbers and letter
+  numberDni  = dni.substr(0, dni.length -1);
+  letterDni  = dni.substr(dni.length -1, dni.length);
+
+  // Get module from numbers, and gets the letter 
+  resto   = numberDni % 23;
+  letters = 'TRWAGMYFPDXBNJZSQVHLCKET';
+  letter  = letters.charAt(resto)
+  //letter  = letters[resto]
+  
+  // Check if number is number and letter is letter
+  if (isNaN(numberDni) && !isNaN(letterDni)) {
+      document.getElementById("errorD").innerHTML = 'formato de DNI erroneo';
+  } else {
+      // Check if the letter introduced match with calculated one
+      if (letterDni != letter || dni.length != 9) {
+          document.getElementById("errorD").innerHTML = 'formato de DNI erroneo';
+      } else {
+          return true;
+     }
+  }
+}
+
 function volsOutput() {
   // New request
   let xhr = new XMLHttpRequest();
@@ -62,10 +97,14 @@ function volsOutput() {
   }
 
 }
+var HORAS_DE_SALIDA = {
+  "dilluns" : ["8:00", "17:00"],
+  "divendres" : ["7:00", "19:30"],
+  "dissapte" : ["14:00"],
+};
 // Gets de array of the arrive time of selected fly
 // NO funcoin
 function getBcnMdz() {
-
 
   // New request
   let xhr = new XMLHttpRequest();
@@ -73,10 +112,94 @@ function getBcnMdz() {
   xhr.send();//enviament de dades: objeto a JSON antes del envio
   xhr.onload = function () {//esperar a rebre dades
     let responseServerArray = JSON.parse(xhr.response);//reconvertirlo/parsearlo a variable JS
-    console.log(responseServerArray[0][1]);
-  
+    var dilluns_arribada   = responseServerArray[0];
+    var divendres_arribada = responseServerArray[1];
+    var dissapte_arribada  = responseServerArray[2];
+    
+    var preu  = responseServerArray['Preu'];
+
+    var dilluns_sortida   = HORAS_DE_SALIDA["dilluns"];
+    var divendres_sortida = HORAS_DE_SALIDA["divendres"];
+    var dissapte_sortida  = HORAS_DE_SALIDA["dissapte"];
+    
+    document.getElementById("vueloTitulo").innerHTML = "Barcelona - Madrid";
+
+    document.getElementById("bmdilluns1").innerHTML = "Hora de sortida: " + dilluns_sortida[0] + " -  Hora de arribada: " +  dilluns_arribada[0] + "<br>"; 
+    document.getElementById("bmdilluns2").innerHTML = "Hora de sortida: " + dilluns_sortida[1] + " -  Hora de arribada: " +  dilluns_arribada[1] + "<br>"; 
+
+    document.getElementById("bmdivendres1").innerHTML = "Hora de sortida: " + divendres_sortida[0] + " -  Hora de arribada: " +  divendres_arribada[0] + "<br>"; 
+    document.getElementById("bmdivendres2").innerHTML = "Hora de sortida: " + divendres_sortida[1] + " -  Hora de arribada: " +  divendres_arribada[1] + "<br>";  
+
+    document.getElementById("bmdissapte").innerHTML = "Hora de sortida: " + dissapte_sortida[0] + " -  Hora de arribada: " +  dissapte_arribada[0] + "<br>"; 
+    document.getElementById("preu").innerHTML = "Preu: " + preu + "€";
+
   }
-}
+}   
+
+function getBcnVlc() {
+
+  // New request
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "./php/bcn_vlc.php");// obrir connexio, method=GET
+  xhr.send();//enviament de dades: objeto a JSON antes del envio
+  xhr.onload = function () {//esperar a rebre dades
+    let responseServerArray = JSON.parse(xhr.response);//reconvertirlo/parsearlo a variable JS
+    var dilluns_arribada   = responseServerArray[0];
+    var divendres_arribada = responseServerArray[1];
+    var dissapte_arribada  = responseServerArray[2];
+    
+    var preu  = responseServerArray['Preu'];
+
+    var dilluns_sortida   = HORAS_DE_SALIDA["dilluns"];
+    var divendres_sortida = HORAS_DE_SALIDA["divendres"];
+    var dissapte_sortida  = HORAS_DE_SALIDA["dissapte"];
+    
+    document.getElementById("vueloTitulo").innerHTML = "Barcelona - Valencia";
+
+    document.getElementById("bmdilluns1").innerHTML = "Hora de sortida: " + dilluns_sortida[0] + " -  Hora de arribada: " +  dilluns_arribada[0] + "<br>"; 
+    document.getElementById("bmdilluns2").innerHTML = "Hora de sortida: " + dilluns_sortida[1] + " -  Hora de arribada: " +  dilluns_arribada[1] + "<br>"; 
+
+    document.getElementById("bmdivendres1").innerHTML = "Hora de sortida: " + divendres_sortida[0] + " -  Hora de arribada: " +  divendres_arribada[0] + "<br>"; 
+    document.getElementById("bmdivendres2").innerHTML = "Hora de sortida: " + divendres_sortida[1] + " -  Hora de arribada: " +  divendres_arribada[1] + "<br>";  
+
+    document.getElementById("bmdissapte").innerHTML = "Hora de sortida: " + dissapte_sortida[0] + " -  Hora de arribada: " +  dissapte_arribada[0] + "<br>"; 
+    document.getElementById("preu").innerHTML = "Preu: " + preu + "€";
+
+  }
+}  
+
+function getMdzVlc() {
+
+  // New request
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "./php/mdz_vlc.php");// obrir connexio, method=GET
+  xhr.send();//enviament de dades: objeto a JSON antes del envio
+  xhr.onload = function () {//esperar a rebre dades
+    let responseServerArray = JSON.parse(xhr.response);//reconvertirlo/parsearlo a variable JS
+    var dilluns_arribada   = responseServerArray[0];
+    var divendres_arribada = responseServerArray[1];
+    var dissapte_arribada  = responseServerArray[2];
+    
+    var preu  = responseServerArray['Preu'];
+
+    var dilluns_sortida   = HORAS_DE_SALIDA["dilluns"];
+    var divendres_sortida = HORAS_DE_SALIDA["divendres"];
+    var dissapte_sortida  = HORAS_DE_SALIDA["dissapte"];
+    
+    document.getElementById("vueloTitulo").innerHTML = "Madrid - València";
+
+    document.getElementById("bmdilluns1").innerHTML = "Hora de sortida: " + dilluns_sortida[0] + " -  Hora de arribada: " +  dilluns_arribada[0] + "<br>"; 
+    document.getElementById("bmdilluns2").innerHTML = "Hora de sortida: " + dilluns_sortida[1] + " -  Hora de arribada: " +  dilluns_arribada[1] + "<br>"; 
+
+    document.getElementById("bmdivendres1").innerHTML = "Hora de sortida: " + divendres_sortida[0] + " -  Hora de arribada: " +  divendres_arribada[0] + "<br>"; 
+    document.getElementById("bmdivendres2").innerHTML = "Hora de sortida: " + divendres_sortida[1] + " -  Hora de arribada: " +  divendres_arribada[1] + "<br>";  
+
+    document.getElementById("bmdissapte").innerHTML = "Hora de sortida: " + dissapte_sortida[0] + " -  Hora de arribada: " +  dissapte_arribada[0] + "<br>"; 
+    document.getElementById("preu").innerHTML = "Preu: " + preu + "€";
+
+  }
+}  
+
 // Main code
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -144,6 +267,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("ButtonsLoginRegister").style.display = "block";
         document.getElementById("logout").style.display = "None";
         document.getElementById("divBuscarVols").style.display = "None";
+        document.getElementById("seleccioVolsDiv").style.display = "None";
+        document.getElementById("dades").style.display = "None";
+        
         document.cookie = "username = notexist;expires=Thu, 01 Jan 1970 00:00:00 UTC;";
       })
 
@@ -246,16 +372,109 @@ document.addEventListener('DOMContentLoaded', function () {
   
   ///////////////////////  SELECCIO DE VOLS  /////////////////////
   document.getElementById("btBuscarVols").addEventListener("click", function () {
-    document.getElementById("divBuscarVols").display = "None";
-    document.getElementById("seleccioVolsDiv").display = "block";
 
     var origenOption   = document.getElementById('origen').value;
     var destinoOption  = document.getElementById('destino').value;
 
   if (origenOption == 'Barcelona' && destinoOption == 'Madrid') {
+    document.getElementById("divBuscarVols").style.display = "None";
+    document.getElementById("seleccioVolsDiv").style.display = "block";
+
     getBcnMdz()
+  }else if (origenOption == 'Barcelona' && destinoOption == 'València') {
+    document.getElementById("divBuscarVols").style.display = "None";
+    document.getElementById("seleccioVolsDiv").style.display = "block";
+
+    getBcnVlc()
+  }else if (origenOption == 'Madrid' && destinoOption == 'València') {
+    document.getElementById("divBuscarVols").style.display = "None";
+    document.getElementById("seleccioVolsDiv").style.display = "block";
+
+    getMdzVlc()
+  }else {
+    document.getElementById("error").innerHTML = "No hi han vols disponibles per als destins seleccionats";
   }
-  
 } );
+
+  ///////////////////////  RESERVA - DADES PERSONALS /////////////////////
+  document.getElementById("dades").style.display = "None";
+
+  document.getElementById("preu").addEventListener("click", function () {
+    document.getElementById("seleccioVolsDiv").style.display = "None";
+    document.getElementById("dades").style.display = "block";
+
+     // Validar email on blur
+     document.getElementById("tuEmail").addEventListener("blur", function () {
+        
+      myEmail = document.getElementById("tuEmail").value;
+      
+      var validateEmail = validaEmail(myEmail); // Valido
+
+      if (validateEmail == false) {
+          document.getElementById("errorE").innerHTML = "Email inválido"
+      }
+   })
+   document.getElementById("tuEmail").addEventListener("focus", function () {
+
+      document.getElementById("errorE").innerHTML = "";
+   })
+
+
+   //Validar dni on blur
+   document.getElementById("tuDni").addEventListener("blur", function () {
+      
+      myDni = d.getElementById("tuDni").value;
+      
+      var validateDni = validaDni(myDni); // Valido
+
+      if (validateDni == false) {
+          document.getElementById("errorD").innerHTML = "Dni inválido"
+      }
+   })
+   document.getElementById("tuDni").addEventListener("focus", function () {
+
+      document.getElementById("errorD").innerHTML = "";
+   })
+    
+    
+   document.getElementById("form").addEventListener("mouseover", function() {
+    var errorE  = document.getElementById("errorE").innerHTML;
+    var errorD  = document.getElementById("errorD").innerHTML;
+
+    if (errorD === "" && errorE === "") {
+        document.getElementById("btContinuar").disabled = false;
+    }else{
+        document.getElementById("btContinuar").disabled = true;
+    }
+    })
+     // Pagina final 
+    document.getElementById("btContinuar").addEventListener("click", function () {
+    location.href="./final.html";
+
+    // No he acoseguit que magafi les ids del altre fitcher html
+    var name = document.getElementById("myUsername").value;
+     document.getElementById("tuNombre").innerHTML = name;
+
+    var myDni = document.getElementById("tuDni").value;
+     document.getElementById("tuDNI").innerHTML = myDni;
+
+    var myEmail = document.getElementById("tuEmail").value;
+     document.getElementById("tuCorreo").innerHTML = myEmail;
+
+    var myNum = document.getElementById("tuNum").value;
+     document.getElementById("tuNumero").innerHTML = myNum;
+
+    var volSeleccionat = document.getElementById("vueloTitulo").value;
+     document.getElementById("volSeleccionat").innerHTML = volSeleccionat;
+
+    var preu = document.getElementById("preu").value;
+     document.getElementById("aPagar").innerHTML = preu;
+    });
+
+
+
+})
+
+
 
 });

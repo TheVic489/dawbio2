@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">-->
+   <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
+ 
+    <script src="./js/index.js"></script>
+   
+</head>
+<body>
+    <div class="container-fluid">
+        <h3>Formulario de registro</h3>
+    <form id="form">
+        <div class="mb-3 mt-3 row">
+            <label for="tuNombre" class="form-label">Dame tu nombre:</label>
+            <div class="col-6">
+                 <input type="text" class="form-control col-6" id="tuNombre" placeholder="Pep">
+                 <div class="small text-danger"><p id="errorN"></p></div>
+            </div>
+        </div>
+        <div class="mb-3 mt-3 row">
+            <label for="tuApellidos" class="form-label">Apellidos:</label>
+            <div class="col-6">
+                 <input type="text" class="form-control col-6" id="tuApellidos" placeholder="Garcia Garcia">
+                 <div class="small text-danger"><p id="errorA"></p></div>
+            </div>
+        </div>
+        <div class="mb-3 mt-3 row">
+            <label for="tuEmail" class="form-label">Email:</label>
+            <div class="col-6">
+                 <input type="email" class="form-control col-6" id="tuEmail" placeholder="ejemplo@dominio.com">
+                 <div class="small text-danger"><p id="errorE"></p></div>
+            </div>
+        </div>
+        <div class="mb-3 mt-3 row">
+            <label for="tuDni" class="form-label">Dni:</label>
+            <div class="col-6">
+                 <input type="text" class="form-control col-6" id="tuDni" maxlength="9" placeholder="12345678Z">
+                 <div class="small text-danger"><p id="errorD"></p></div>
+            </div>
+        </div>
+        <div class="mb-3 mt-3 row">
+            <label for="tuNac" class="form-label">Fecha de Nacimiento:</label>
+            <div class="col-6">
+                 <input type="date" class="form-control col-6" id="tuNac" >
+                 <div class="small text-danger"><p id="errorNac"></p></div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-info"  id="btRegistro">Registro</button>
+        
+
+    </form>
+
+        
+        
+        <div id="respuesta">
+
+        </div>
+    
+    </div>
+    
+    
+   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>-->
+   <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js" ></script>
+</body>
+</html>
