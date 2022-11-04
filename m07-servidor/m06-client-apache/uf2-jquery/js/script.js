@@ -1,5 +1,52 @@
 $(document).ready( function () {
+    // Al carrega, amagar divs
+    $("#div2").hide()
+    $("#div3").hide()
+    $('#calculadora').click(function () {
+        $("#div2").show()
+        $("#div3").hide()
+        $("#div1").hide()
+    })
+    $('#form').click(function () {
+        $("#div1").show()
+        $("#div3").hide()
+        $("#div2").hide()
 
+    })
+    $('#tablero').click(function () {
+        $("#div1").hide()
+        $("#div2").hide()
+        $("#div3").show()
+    })
+
+    //Exercici 1 : Form
+
+    // 0 . quan carrega, boto desabilitat
+    $("#btRegistro").prop('disabled', true);
+
+    // 1. es valida al soritr dels camps --> associar un esdeveniment a cada camp, quin es el millor
+    
+    // Validar nombre on blur
+    $("#myName").blur(function () {
+
+        myName = $("#myName").val();
+        let validateName = validaNomCognoms(myName); // Valido
+        if (validateName == false) {
+            $("#errorN").html("Formato de nombre erroneo"); 
+        }
+     })
+
+     console.log(validateName)
+
+
+
+
+
+
+
+
+
+    // Tabla de ajedrez
     $("tr:even>td:odd").css("background-color" , "black");
     $("tr:odd>td:even").css("background-color" , "black");
 
@@ -10,7 +57,7 @@ $(document).ready( function () {
 
 
     // Ejercicio 2
-    // Suma
+    // Calculadora
     $("#btSuma").click(function () {
 
         var firstValue  = parseFloat($("#input21").val());
@@ -88,3 +135,12 @@ $(document).ready( function () {
 
 
 });
+
+function validaNomCognoms(value){
+    const expRegName = /^[A-ZÑa-zñáéíóúàèòÀÈÒÁÉÍÓÚ'°çÇ ]+$/;
+    if (expRegName.test(value) == true)  {
+        return true; // Correcto
+    }else{
+        return false;// Error
+    }
+}

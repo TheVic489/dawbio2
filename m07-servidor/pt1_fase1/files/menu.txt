@@ -1,5 +1,5 @@
 id;category;name;price
-01;drink;;cola;2
+01;drink;cola;2
 02;appetiser;ensalada catalana;3
 03;appetiser;queso manchego;1.2
 04;maincourse;Arroz con setas;4.1
@@ -7,3 +7,4 @@ id;category;name;price
 06;maincourse;Patatas a lo pobre;3.2
 07;dessert;chessecake;2.7
 08;drink;water;1.8
+09;drink;wine;2.4

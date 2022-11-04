@@ -1,6 +1,6 @@
 <?php
 session_start();
-// If role is not ADMIN, redirecto to index.php
+// If role is not ADMIN, redirect to index.php
 if ($_SESSION['user_array']['role'] != 'admin') {
     header("Location: index.php");
 }

@@ -1,4 +1,3 @@
-name
 appetiser
 firstcourse
 maincourse
