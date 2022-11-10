@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/general.style.css">
+    <link rel="stylesheet" href="./css/clock_logout.style.css">
+    <link rel="stylesheet" href="./css/payment.style.css">
+    <script type="module" src="./js/payment.script.js" defer></script> 
+    <script type="text/javascript" src="./js/clock.js" defer ></script>
+    <title>Getting JSON</title>
+</head>
+<body style="display: none">
+ 
+    <div class="clock-logout-container">
+
+        <div class="clock-wrapper">
+            <div id="current-date" class="clock" ></div>   
+            <div id="digital-clock" class="clock" ></div>   
+        </div>
+
+        <div class="logout-wrapper">
+            <button class="button" id="logout-button" type="button" name="logout">Logout</button>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <div class="form-wrapper">
+            <h3 class="register-banner"><u>Payment informations</u></h3>
+            <p>* Please fill enter your informations to finish the payment.</p>
+            <form>
+                <!-- FIRST NAME-->
+                <div class="input-container">
+                    <label for="fullName">Full name</label>
+                    <input id="fullName" class="input-field" type="text" name="fullName" placeholder="Full name..">
+                    <p class="error-output fullName-error"></p>
+                </div>
+                <!-- END: FIRST NAME-->
+
+
+                <!-- EMAIL-->
+                <div class="input-container">
+                    <label for="email">E-mail</label>
+                    <input id="email" class="input-field" type="email" name="email" placeholder="Email address..">
+                    <p class="error-output email-error"></p>
+                </div>
+                <!-- END: EMAIL-->
+
+                <!-- DNI -->
+                <div class="input-container">
+                    <label for="dni">DNI</label>
+                    <input id="dni" class="input-field" type="text" name="dni" placeholder="DNI number.." maxlength="9">
+                    <p class="error-output dni-error"></p>
+                </div>
+                <!-- END: DNI -->
+
+                <!-- PHONENUMBER -->
+                <div class="input-container">
+                    <label for="phone-number">Phone number</label>
+                    <input id="phone-number" class="input-field" type="text" name="dni" placeholder="Phonenumber..">
+                    <p class="error-output phone-number-error"></p>
+                </div>
+                <!-- END: PHONENUMBER -->
+
+                <button id="submitButton" class="button" type="submit">Continue</button>
+
+            </form> 
+        </div>
+    </div>
+</body>
+</html>

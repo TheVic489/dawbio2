@@ -1,10 +1,21 @@
 <?php
 session_start();
+require_once './fn-php/fn_menu.php';
 
-if (!isset($_SESSION['user_array']) ) {
+if (!isset($_SESSION['user_array'])) {
     header("Location: index.php");
     exit;
 }
+// GET categories array
+$categories = get_categories('/files/categories.txt');
+
+$appetiser   = get_courses_by_categories('appetiser', './files/menu.txt');
+$firstcourse = get_courses_by_categories('firstcourse', './files/menu.txt');
+$maincourse  = get_courses_by_categories('maincourse', './files/menu.txt');
+$dessert     = get_courses_by_categories('dessert', './files/menu.txt');
+$drink       = get_courses_by_categories('drink', './files/menu.txt');
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,52 +34,123 @@ if (!isset($_SESSION['user_array']) ) {
     <?php include_once "topmenu.php"; ?>
     <div class="container-fluid">
         <div class="container" style="text-align: center;">
-            <h2>Menús del dia</h2>
-            <br>
-            <section class="wrap">
-                <div class="column-3 columns">
-                    <h3>Menú mediodia</h3>
-                    <div class="container-fluid" style="background-size: cover;">
-                        <hr>
-                        <h4>Primeros Platos</h4>
-                        <p>Arroz con setas</p>
-                        <p>Ensalada mixta</p>
-                        <p>Patatas a lo pobre.</p>
-                        <p>Gazpacho de la casa</p>
-                        <br>
-                        <h4>Segundos Platos</h4>
-                        <p>Chuleton de burgos</p>
-                        <p>Filete de salmon brasado</p>
-                        <p>Entrecot con pimienta blanca</p>
-                        <p>Revuelto de alcachofas</p>
-                        <br>
-                        <p class="precio-menu">
-                            Precio:
-                            <span style="background-color: yellow;">17€</span>
-                        </p>
-                    </div>
-                    <div class="container-fluid" style="background-size: cover;">
-                        <h3>Menú noche</h3>
-                        <hr>
-                        <h4>Primeros Platos</h4>
-                        <p>Arroz con setas</p>
-                        <p>Ensalada mixta</p>
-                        <p>Patatas a lo pobre</p>
-                        <p>Gazpacho de la casa</p>
-                        <br>
-                        <h4>Segundos Platos</h4>
-                        <p>Chuleton de burgos</p>
-                        <p>Filete de salmon brasado</p>
-                        <p>Entrecot con pimienta blanca</p>
-                        <p>Revuelto de alcachofas</p>
-                        <br>
-                        <p class="precio-menu">
-                            Precio:
-                            <span style="background-color: yellow;">20€</span>
-                        </p>
-                    </div>
-                </div>
-            </section>
+            <h2 style="text-align: left">Appetiser</h2>
+            <div class="container-fluid" id="appetiser_table">
+                <?php if (count($appetiser) > 0) : ?>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($appetiser as $row) : array_map('htmlentities', $row); ?>
+                                <tr>
+                                    <td><?php echo implode('</td><td>', $row); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="container" style="text-align: center;">
+            <h2 style="text-align: left">First Courses</h2>
+            <div class="container-fluid" id="firstcourse_table">
+                <?php if (count($firstcourse) > 0) : ?>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($firstcourse as $row) : array_map('htmlentities', $row); ?>
+                                <tr>
+                                    <td><?php echo implode('</td><td>', $row); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="container" style="text-align: center;">
+            <h2 style="text-align: left">Main Courses</h2>
+            <div class="container-fluid" id="maincourse_table">
+                <?php if (count($maincourse) > 0) : ?>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($maincourse as $row) : array_map('htmlentities', $row); ?>
+                                <tr>
+                                    <td><?php echo implode('</td><td>', $row); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="container" style="text-align: center;">
+            <h2 style="text-align: left">Dessert</h2>
+            <div class="container-fluid" id="dessert_table">
+                <?php if (count($dessert) > 0) : ?>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($dessert as $row) : array_map('htmlentities', $row); ?>
+                                <tr>
+                                    <td><?php echo implode('</td><td>', $row); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="container" style="text-align: center;">
+            <h2 style="text-align: left">Drinks</h2>
+            <div class="container-fluid" id="drink_table">
+                <?php if (count($drink) > 0) : ?>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($drink as $row) : array_map('htmlentities', $row); ?>
+                                <tr>
+                                    <td><?php echo implode('</td><td>', $row); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+            </div>
         </div>
         <?php include_once "footer.php"; ?>
     </div>

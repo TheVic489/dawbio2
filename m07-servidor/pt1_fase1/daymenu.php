@@ -1,5 +1,14 @@
 <?php
 session_start();
+require_once './fn-php/fn_menu.php';
+
+$categories = get_categories('/files/categories.txt');
+
+foreach ($categories as $cat) {
+    $day_menu = get_menu($cat, '/files/daymenu.txt');
+    printTable($day_menu);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,11 +24,52 @@ session_start();
     <body>
         <?php include_once "topmenu.php";?>
     <div class="container-fluid">
-        <div class="container">
-        <h2>Day menu</h2>
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-</p>
+    <h2>Menús del dia</h2>
+            <br>
+            <section class="wrap">
+                <div class="column-3 columns">
+                    <h3>Menú mediodia</h3>
+                    <div class="container-fluid" style="background-size: cover;">
+                        <hr>
+                        <h4>Primeros Platos</h4>
+                        <p>Arroz con setas</p>
+                        <p>Ensalada mixta</p>
+                        <p>Patatas a lo pobre.</p>
+                        <p>Gazpacho de la casa</p>
+                        <br>
+                        <h4>Segundos Platos</h4>
+                        <p>Chuleton de burgos</p>
+                        <p>Filete de salmon brasado</p>
+                        <p>Entrecot con pimienta blanca</p>
+                        <p>Revuelto de alcachofas</p>
+                        <br>
+                        <p class="precio-menu">
+                            Precio:
+                            <span style="background-color: yellow;">17€</span>
+                        </p>
+                    </div>
+                    <div class="container-fluid" style="background-size: cover;">
+                        <h3>Menú noche</h3>
+                        <hr>
+                        <h4>Primeros Platos</h4>
+                        <p>Arroz con setas</p>
+                        <p>Ensalada mixta</p>
+                        <p>Patatas a lo pobre</p>
+                        <p>Gazpacho de la casa</p>
+                        <br>
+                        <h4>Segundos Platos</h4>
+                        <p>Chuleton de burgos</p>
+                        <p>Filete de salmon brasado</p>
+                        <p>Entrecot con pimienta blanca</p>
+                        <p>Revuelto de alcachofas</p>
+                        <br>
+                        <p class="precio-menu">
+                            Precio:
+                            <span style="background-color: yellow;">20€</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
         </div>
         <?php include_once "footer.php";?>
     </div>

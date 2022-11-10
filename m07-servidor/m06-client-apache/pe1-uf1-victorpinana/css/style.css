@@ -1,0 +1,84 @@
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow: 0px 0px 0px 0px #000;
+    box-shadow: 0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+}
+
+div.logoutDiv {
+    margin-bottom: 20px;
+    float: right;
+}
+
+p.timer {
+    text-align: left;
+    vertical-align: top;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 25px;
+}
+
+a.logout {
+    text-align: right;
+}
+
+div {
+    margin: 0px;
+}
+
+body.body {
+    background-color: rgb(213, 213, 233);
+}
+
+button.btn {
+    margin: 10px;
+}
+
+div h3 {
+    font-size: 70px;
+    font-weight: 600;
+    background-image: linear-gradient(to left, #371398, #f08aae);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+b.error {
+    color: red;
+    background-color: red;
+}
+
+.nine h1 {
+    text-align:center; font-size:50px; text-transform:uppercase; color:#222; letter-spacing:1px;
+    font-family:"Playfair Display", serif; font-weight:400;
+  }
+  .nine h1 span {
+    margin-top: 5px;
+      font-size:15px; color:#444; word-spacing:1px; font-weight:normal; letter-spacing:2px;
+      text-transform: uppercase; font-family:"Raleway", sans-serif; font-weight:500;
+  
+      display: grid;
+      grid-template-columns: 1fr max-content 1fr;
+      grid-template-rows: 27px 0;
+      grid-gap: 20px;
+      align-items: center;
+  }
+  
+  .nine h1 span:after,.nine h1 span:before {
+      content: " ";
+      display: block;
+      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #ccc;
+      height: 5px;
+    background-color:#f8f8f8;
+  }
+
+div.center {
+text-align: center;
+}

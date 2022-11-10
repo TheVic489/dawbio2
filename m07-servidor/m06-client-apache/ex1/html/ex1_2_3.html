@@ -41,33 +41,13 @@
 
     </div>
 
-    <div id="dades" class="container-fluid">
-        <h3>Reserva - Dades personals</h3>
-    <form id="form">
-
-        <div class="mb-3 mt-3 row">
-            <label for="tuEmail" class="form-label">Email:</label>
-            <div class="col-6">
-                 <input type="email" class="form-control col-6" id="tuEmail" placeholder="ejemplo@dominio.com">
-                 <div class="small text-danger"><p id="errorE"></p></div>
-            </div>
-        </div>
-        <div class="mb-3 mt-3 row">
-            <label for="tuDni" class="form-label">Dni:</label>
-            <div class="col-6">
-                 <input type="text" class="form-control col-6" id="tuDni" maxlength="9" placeholder="12345678Z">
-                 <div class="small text-danger"><p id="errorD"></p></div>
-            </div>
-        </div>
-        <div class="mb-3 mt-3 row">
-            <label for="tuNum" class="form-label">Numero de telefono:</label>
-            <div class="col-6">
-                 <input type="text" class="form-control col-6" id="tuNum" maxlength="9" placeholder="12345678Z">
-                 <div class="small text-danger"><p id="errorD"></p></div>
-            </div>
-        </div>
-        <button type="button" class="btn btn-info"  id="btRegistro">Registro</button>
+    <div id="div3" class="mb-3">
+        <h2>Ejercicio 3</h2>    
+        <h4>Validar DNI</h4>
         
+        <input id="dniInput" class="form-control" type="text" placeholder="ej: 12345678Z" maxlength="9">
+        <button id="validar" type="button" class="btn btn-primary" style="margin: 10px">Validar</button>
+    </div>
 
     <script src="../vendor/js/bootstrap.bundle.min.js"></script>
 </body>
