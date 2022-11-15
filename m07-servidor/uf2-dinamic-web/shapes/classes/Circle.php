@@ -23,7 +23,7 @@ class Circle implements Shape {
      * read accessor for $radius
      * @return float
      */
-    public function getRadius(): float {
+    public function getRadius(): string {
         return $this->radius;
     }
 
