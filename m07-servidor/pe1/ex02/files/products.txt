@@ -1,0 +1,7 @@
+name;price
+Macarrons;2.8
+Pizza;4.23
+Empanadas;2.39
+Tortilla;7.89
+Salchichas;23.2
+

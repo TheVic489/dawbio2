@@ -1,0 +1,33 @@
+#topbar ul {
+    background-color: antiquewhite;
+    width: auto;
+}
+#topbar ul li {
+    display: inline;
+    text-decoration: none;
+    color: darkblue;
+}
+#topbar ul li a {
+    text-decoration: none;
+    background-color: lightgray;
+}
+#topbar ul * :hover {
+    background-color: burlywood;
+    color: whitesmoke;
+}
+div.footer {
+    background-color: antiquewhite;;
+    color: blueviolet;
+}
+form.form {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+b.info {
+    margin-right: 5px;
+}
+
+
+select {
+display: inline-flexbox;
+}

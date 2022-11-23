@@ -1,0 +1,568 @@
+---
+title: "Data visualization about US"
+author: "Adrian Cabrera, Martí Rivero, Gerard Garcia"
+date: "November 29, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(maps)
+library(mapproj)
+setwd("~/ProjecteAdrianGerardMarti/")
+demographics_raw <- read_csv("chsi_dataset/DEMOGRAPHICS.csv", na = c("-1111.1", "-1111", "-1", "-2222", "-2222.2", "-2"))
+measures_of_birth_and_death_raw <- read_csv("chsi_dataset/MEASURESOFBIRTHANDDEATH.csv", na = c("-1111.1", "-1111", "-1", "-2222", "-2222.2", "-2"))
+risk_factors_and_access_to_care_raw <- read_csv("chsi_dataset/RISKFACTORSANDACCESSTOCARE.csv", na = c("-1111.1", "-1111", "-1", "-2222", "-2222.2", "-2"))
+leading_causes_of_death_raw <- read_csv("chsi_dataset/LEADINGCAUSESOFDEATH.csv", na = c("-1111.1", "-1111", "-1", "-2222", "-2222.2", "-2"))
+vulnerable_pops_and_env_health_raw <- read_csv("chsi_dataset/VUNERABLEPOPSANDENVHEALTH.csv", na = c("-1111.1", "-1111", "-1", "-2222", "-2222.2", "-2"))
+preventive_services_use_raw <- read_csv("chsi_dataset/PREVENTIVESERVICESUSE.csv", na = c("-1111.1", "-1111", "-1", "-2222", "-2222.2", "-2"))
+count_nas <- function(vec) {
+  return(sum(is.na(vec)))
+}
+```
+
+Importing the dataset
+-
+### Explaining the dataset, the data and references
+This dataset contains various indicators of health related to diseases, safe living conditions, deaths, births ...
+
+The data is organized in states and the 3141 counties of the United States with more than 200 variables in total.
+
+This dataset is not designed only for healthcare professionals but for anyone who wants to do research or improve their community
+*References*
+
+[Dataset official webpage](https://healthdata.gov/dataset/community-health-status-indicators-chsi-combat-obesity-heart-disease-and-cancer).
+
+## The columns
+#### DEMOGRAPHICS COLUMNS
+
+| Name                | Data Type     | Description                       |  
+|---------------------|---------------|-----------------------------------|          
+| `State_FIPS_Code`   | Text          |Two-digit state identifier         |                               
+| `County_FIPS_Code`  | Text          |Three-digit county identifier      |                
+| `CHSI_County_Name`  | Text          |Name of county                     |             
+| `CHSI_State_Name`   | Text         |Name of State or District of Columbia| 
+| `Population_Size`   |Integer        |County data, population size|
+| `Poverty`   |Decimal        |County data, individuals living below poverty level|
+| `White`   |Decimal        |County data, White|
+| `Black`   |Decimal        |County data, Black|
+| `Native_American`|Decimal        |County data, American Indian|
+| `Asian`|Decimal        |County data, Asian/Pacific Islander|
+| `Hispanic`|Decimal        |County data,Hispanic origin|
+
+## Number of rows 
+```{r echo=FALSE}
+nrow(demographics_raw)
+```
+## Number of NA 
+```{r echo=FALSE}
+count_nas(demographics_raw)
+```
+#### MEASURESOFBIRTHANDDEATH COLUMNS
+
+| Name                | Data Type     | Description                       |  
+|---------------------|---------------|-----------------------------------|          
+| `State_FIPS_Code`   | Text          |Two-digit state identifier         |                               
+| `County_FIPS_Code`  | Text          |Three-digit county identifier      |                
+| `CHSI_County_Name`  | Text          |Name of county                     |             
+| `CHSI_State_Name`   | Text         |Name of State or District of Columbia| 
+| `Infant_Mortality`   | Decimal         |County data, infant mortality|
+| `Lung_Cancer`   | Decimal         |County data, death measures, lung cancer|
+| `Suicide`   | Decimal         |County data, death measures, suicide|
+| `MOBD_Time_Span`   | Text         |Time period of reported data for measures of birth and death|
+
+## Number of rows 
+```{r echo=FALSE}
+nrow(measures_of_birth_and_death_raw)
+```
+## Number of NA 
+```{r echo=FALSE}
+count_nas(measures_of_birth_and_death_raw)
+```
+#### VULNETABLEPOPSANDENVHEALTH COLUMNS
+
+| Name                | Data Type     | Description                       |  
+|---------------------|---------------|-----------------------------------|          
+| `State_FIPS_Code`   | Text          |Two-digit state identifier         |                            
+| `County_FIPS_Code`  | Text          |Three-digit county identifier      |                
+| `CHSI_County_Name`  | Text          |Name of county                     |             
+| `CHSI_State_Name`   | Text         |Name of State or District of Columbia| 
+| `Unemployed`   | Text              |County data, unemployed|
+
+## Number of rows 
+```{r echo=FALSE}
+nrow(vulnerable_pops_and_env_health_raw)
+```
+## Number of NA 
+```{r echo=FALSE}
+count_nas(vulnerable_pops_and_env_health_raw)
+```
+#### PREVENTIVESERVICESUSE COLUMNS
+
+| Name                | Data Type     | Description                       |  
+|---------------------|---------------|-----------------------------------|          
+| `State_FIPS_Code`   | Text          |Two-digit state identifier         |                            
+| `County_FIPS_Code`  | Text          |Three-digit county identifier      |                
+| `CHSI_County_Name`  | Text          |Name of county                     |             
+| `CHSI_State_Name`   | Text         |Name of State or District of Columbia| 
+| `HepA_Rpt`   | Integer         |County data, Hepatitis A reported cases|
+| `HepB_Rpt`   | Integer         |County data, Hepatitis B reported cases|
+
+## Number of rows 
+```{r echo=FALSE}
+nrow(preventive_services_use_raw)
+```
+## Number of NA 
+```{r echo=FALSE}
+count_nas(preventive_services_use_raw)
+```
+#### RISKFACTORSANDACCESSTOCARE COLUMNS
+
+| Name                | Data Type     | Description                       |  
+|---------------------|---------------|-----------------------------------|          
+| `State_FIPS_Code`   | Text          |Two-digit state identifier         |                            
+| `County_FIPS_Code`  | Text          |Three-digit county identifier      |                
+| `CHSI_County_Name`  | Text          |Name of county                     |             
+| `CHSI_State_Name`   | Text         |Name of State or District of Columbia|
+| `Obesity`   | Decimal         |County data,obesity|
+| `Smoker`   | Decimal         |County data,smoker| 
+| `Uninsured`   | Integer         |County data,uninsured individuals| 
+
+## Number of rows 
+```{r echo=FALSE}
+nrow(risk_factors_and_access_to_care_raw)
+```
+## Number of NA 
+```{r echo=FALSE}
+count_nas(risk_factors_and_access_to_care_raw)
+```
+### N/A information
+In the dataset we have found a report that explains how the NAs are indicated.
+According to the table we have found multiple values that we converted to NA during import. We indicate these values in the following relationship:
+(values - additional information)
+
+* -9999 - For unenployed variable.
+* -2222, -2222.2, -2 OR nda - No data available
+* -1111, -1111.1, -1 OR nrf - No report
+
+Tidying the dataset
+-
+No, the dataset was not cleant. We had to delete colums related to intervals, quantiles, percentiles that we did not require in our case. We used regular expressions patterns, selects and filters to tidy the data as needed. 
+
+In some situations we had to convert the data to long format. We invested and found the function pivot_longer() but we could not make use of it since is still in the maturation phrase and it is not included in the tidyverse standard, only in the development version, then we find the function gather with which achieved that change.
+
+The plots
+-
+Used libraries:
+
+`library(tidyverse)`
+
+`library(maps)`
+
+`library(mapproj)`
+
+
+Tidying data:
+
+```{r echo=FALSE}
+# Import data:
+# We consider NA the following values:
+# -111.1, -1111, -1, -2222, -2222.2, -2
+
+
+# Vector of string of column names
+demographics_colname <- colnames(demographics_raw)
+measures_of_birth_and_death_colname <- colnames(measures_of_birth_and_death_raw)
+risk_factors_and_access_to_care_colname <- colnames(risk_factors_and_access_to_care_raw)
+leading_causes_of_death_colname <- colnames(leading_causes_of_death_raw)
+vulnerable_pops_and_env_health_colname <- colnames(vulnerable_pops_and_env_health_raw)
+preventive_services_use_colname <- colnames(preventive_services_use_raw)
+
+# Create a pattern variable to delete all coulmns containing one of the following strings
+# Ind, Max, Min, CI
+pattern <- "Ind|Max|Min|CI"
+
+# Filter the colnames using the pattern created
+# We obtain an int vector
+demographics_result <- grep(pattern, demographics_colname)
+measures_of_birth_and_death_result <- grep(pattern, measures_of_birth_and_death_colname)
+risk_factors_and_access_to_care_result <- grep(pattern, risk_factors_and_access_to_care_colname)
+leading_causes_of_death_result <- grep(pattern, leading_causes_of_death_colname)
+vulnerable_pops_and_env_health_result <- grep(pattern, vulnerable_pops_and_env_health_colname)
+preventive_services_use_result <- grep(pattern, preventive_services_use_colname)
+
+# Tidy all tables using the vector created
+demographics_tidy <- select(demographics_raw, -demographics_result)
+measures_of_birth_and_death_tidy <- select(measures_of_birth_and_death_raw, -measures_of_birth_and_death_result)
+risk_factors_and_access_to_care_tidy <- select(risk_factors_and_access_to_care_raw, -risk_factors_and_access_to_care_result)
+leading_causes_of_death_tidy <- select(leading_causes_of_death_raw, -leading_causes_of_death_result)
+vulnerable_pops_and_env_health_tidy <- select(vulnerable_pops_and_env_health_raw, -vulnerable_pops_and_env_health_result)
+preventive_services_use_tidy <- select(preventive_services_use_raw, -preventive_services_use_result)
+```
+
+#### Exercise 3
+Plot which of the most populated states has the gratest infantil mortality.
+
+Result: We can see that texas is the state with the highest growth.
+
+```{r echo=FALSE}
+# Sum of the infant mortality of each state
+states_infant_mortality_tidy <- measures_of_birth_and_death_tidy %>%
+  group_by(CHSI_State_Name, MOBD_Time_Span) %>%
+  summarise(Infant_Mortality = sum(Infant_Mortality, na.rm = TRUE))
+
+# Sum of the population of each state
+population <- demographics_tidy %>%
+  group_by(CHSI_State_Name) %>%
+  summarise(population = sum(Population_Size))
+
+# Get the most populated states
+more_populated_state <- head(arrange(population, desc(population)))
+
+# Get a vector of the most populated states
+more_populated_state_name <- more_populated_state$CHSI_State_Name
+
+# Filter the table with population and infant mortality using the previous vector
+infant_mortality_in_state <- filter(states_infant_mortality_tidy, CHSI_State_Name %in% more_populated_state_name)
+
+# Plot of the result
+ggplot(infant_mortality_in_state, aes(x = CHSI_State_Name, y = Infant_Mortality)) + geom_col(fill = "#FFDB6D", color = "gray") + facet_grid(MOBD_Time_Span ~ .) +
+  labs(
+    title = "Infanitl mortality cases",
+    subtitle = "Infanitl mortality cases in the six more populated states and divided by periods",
+    x = "States",
+    y = "Infant mortality cases",
+    caption = "Last update 2003"
+  )
+```
+
+#### Exercise 4
+Plot the number of smokers and the lung cancer deaths in the six states with the highest number of smokers.
+
+Result: We cannot arrive at indications of a causation given that for example the state of Elliot County has the lowest percentage of smokers and is the second with the most deaths from lung cancer.
+
+```{r echo=FALSE}
+# Filter the table to get the data from 1994 to 2003
+measures_of_birth_and_death_tidy_1994_2003 <- filter(measures_of_birth_and_death_tidy, MOBD_Time_Span == "1994-2003")
+
+# Drop NA from Smokers column
+risk_factors_and_access_to_care_without_na <- risk_factors_and_access_to_care_tidy %>% drop_na(Smoker)
+
+# Join tables to get the state name, county name, number of lung cancer and the percentage of smokers
+lung_cancer_smokers_join_table <- inner_join(measures_of_birth_and_death_tidy_1994_2003, risk_factors_and_access_to_care_without_na, by = c("CHSI_County_Name", "CHSI_State_Name"))
+lung_cancer_smokers_join_table <- lung_cancer_smokers_join_table %>%
+  select(CHSI_State_Name, CHSI_County_Name, Lung_Cancer, Smoker) %>%
+  arrange(desc(Smoker)) %>%
+  head()
+
+# Plot the result
+ggplot(lung_cancer_smokers_join_table, aes(x = CHSI_County_Name)) +
+  geom_point(aes(y = Lung_Cancer, color = "Lung cancer")) +
+  geom_point(aes(y = Smoker, color = "Smokers")) +
+  labs(
+    title = "Lung cancer and Smokers",
+    subtitle = "Relation between lung cancer and smokers in some states",
+    x = "States",
+    y = "Number",
+    caption = "Last update 2003"
+  ) +
+  scale_color_manual(name = "Leyenda", values = c("red", "blue"))
+```
+
+
+#### Exercise 5
+Plot the percentage of races that commit suicide in Bronx.
+
+Result: We observe that the majority races are black and white.
+
+```{r echo=FALSE}
+
+# Filter the tabe to get all data from Bronx
+bronx_data_raw <- demographics_tidy %>% filter(CHSI_County_Name == "Bronx")
+
+# Get the columns of each race
+bronx_data <- select(bronx_data_raw, White:Asian)
+
+# There is a small gap, we filled that gap with Uknown
+# We consider Uknow as undocumented people
+bronx_tidy <- mutate(bronx_data, "Unknown" = 100 - sum(White + Black + Native_American + Asian))
+
+# Create a tibble with the races and the values
+result <- tibble(races = colnames(bronx_tidy), values = as.numeric(c(bronx_tidy[1, 1:ncol(bronx_tidy)])))
+
+# Plot the result
+ggplot(result, aes(x = "", y = values, fill = races)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start = 0) +
+  labs(
+    title = "Percentage of each race that commit suicide in Bronx",
+    subtitle = "Percentage of races in each State of United States",
+    x = "States",
+    y = "Percentage",
+    fill = "Legend",
+    caption = "Last update 2003"
+  )
+```
+
+#### Exercise 6
+Compare the percentage of each race that are in the east and west coast.
+
+Result: We can see that on the east coast there is a higher percentage of black population than on the west coast.
+
+```{r echo=FALSE, fig.width=16, fih.height=7}
+
+# Set the color pattern to use it in the plot
+cbbPalette <- c("#EFD36E", "#592f2a", "#E6A96F", "#FFDBAC")
+
+# EAST
+
+# Get the state names from the east coast
+east_coast_state_name <- c("Maine", "New Hampshire", "Massachusetts", "Rhode Island", "Connecticut", "New York", "New Jersey", "Pennsylvania", "Delaware", "Maryland", "Virginia", "North Carolina", "South Carolina", "Georgia", "Florida")
+
+# Filter the table to get all data of the east coast states
+east_coast_state <- filter(demographics_tidy, CHSI_State_Name %in% east_coast_state_name)
+
+# Select the state name and races columns of the east coast states
+east_coast_states_race <- select(east_coast_state, CHSI_State_Name, White:Asian)
+
+# Group by east coast states and summarise each race
+east_coast_states_race_tidy <- east_coast_states_race %>%
+  group_by(CHSI_State_Name) %>%
+  summarise(White = mean(White), Black = mean(Black), Native_American = mean(Native_American), Asian = mean(Asian))
+
+# Make the table to long format and group by state name
+table_formateada_east_gather <- east_coast_states_race_tidy %>%
+  gather(Total, Value, -CHSI_State_Name) %>%
+  group_by(CHSI_State_Name)
+
+# Plot the result
+ggplot(table_formateada_east_gather, aes(x = CHSI_State_Name, y = Value, fill = Total)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Percentage of races in East Coast",
+    subtitle = "Percentage of races in each State of United States",
+    x = "States",
+    y = "Percentage",
+    fill = "Legend",
+    caption = "Last update 2003"
+  ) +
+  scale_fill_manual(values = c(cbbPalette))
+
+# WEST
+
+# Get the state names from the west coast
+west_coast_state_name <- c("California", "Nevada", "Arizona", "Orlando", "Washington", "Alaska")
+
+# Filter the table to get all data of the west coast states
+states_west_coast_tbl <- filter(demographics_tidy, CHSI_State_Name %in% west_coast_state_name)
+
+# Select the state name and races columns of the west coast states
+west_coast_states_race <- select(states_west_coast_tbl, CHSI_State_Name, White:Asian)
+
+# Group by west coast states and summarise each race
+west_coast_states_race_tidy <- west_coast_states_race %>% group_by(CHSI_State_Name) %>% summarise(White = mean(White), Black = mean(Black), Native_American = mean(Native_American), Asian = mean(Asian))
+
+# Make the table to long format and group by state name
+table_formateada_west_gather <- west_coast_states_race_tidy %>%
+  gather(Total, Value, -CHSI_State_Name) %>%
+  group_by(CHSI_State_Name)
+
+# Plot the result
+ggplot(table_formateada_west_gather, aes(x = CHSI_State_Name, y = Value, fill = Total)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Percentage of races in West Coast",
+    subtitle = "Percentage of races in each State of United States",
+    x = "States",
+    y = "Percentage",
+    fill = "Legend",
+    caption = "Last update 2003"
+  ) +
+  scale_fill_manual(values = c(cbbPalette))
+```
+
+#### Exercise 7
+Plot the states with most poverty and compare to its obesity rates.
+
+Result: We have no evidence of causality as obesity is fairly uniform across states while poverty is much more variable.
+
+```{r echo=FALSE}
+# Group by state names and then create a mean of obesity for each state
+states_obesity <- risk_factors_and_access_to_care_tidy %>%
+  group_by(CHSI_State_Name) %>%
+  summarise(obesity = mean(Obesity, na.rm = T))
+
+# Group by state names and then create a mean of poverty for each state
+states_population_size <- demographics_tidy %>%
+  group_by(CHSI_State_Name) %>%
+  summarise(poverty = mean(Poverty, na.rm = T))
+
+# Join  the poverty and the obesity means
+join_tables <- inner_join(states_obesity, states_population_size, by = c("CHSI_State_Name", "CHSI_State_Name"))
+
+# Get the states with more obesity and poverty
+major_ordered_by_obesity_poverty <- head(arrange(join_tables, desc(poverty), desc(obesity)))
+
+# Make the table long format
+longer_format <- major_ordered_by_obesity_poverty %>%
+  gather(Total, Value, -CHSI_State_Name)
+
+# Plot the result
+ggplot(longer_format, aes(x = CHSI_State_Name, y = Value, fill = Total)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Poverty and obesity in the highest poverty states",
+    subtitle = "Poverty and obesity",
+    x = "States",
+    y = "Percentage",
+    fill = "Legend",
+    caption = "Last update 2003"
+  )
+```
+
+#### Exercise 8
+How  many counties exceed 20% of poverty and what are their names.
+
+Result: We can see that the southern states are generally poorer than the northern ones.
+
+```{r echo=FALSE}
+
+# Get the data from the USA map (longitude and latitude of each state)
+us_state_map <- map_data("state")
+
+# Select the state name and poverty of each state
+states_exceed_20_raw <- select(demographics_tidy, CHSI_State_Name, Poverty)
+
+# Order the data in descending order by poverty
+states_exceed_20_arrange <- arrange(states_exceed_20_raw, desc(Poverty))
+
+# Group by state name and create a mean of poverty removin all NA
+states_exceed_20_arrange <- states_exceed_20_arrange %>%
+  group_by(CHSI_State_Name) %>%
+  summarise(Poverty = mean(Poverty, na.rm = TRUE))
+
+# Convert to lower case the state names to make the join
+states_exceed_20_arrange$CHSI_State_Name <- tolower(states_exceed_20_arrange$CHSI_State_Name)
+
+# Join both tables to get the longitude, latitude, poverty and state name of each state
+data_usa <- merge(us_state_map, states_exceed_20_arrange, by.x = "region", by.y = "CHSI_State_Name")
+
+# PLot the result
+ggplot(data_usa, aes(x = long, y = lat, group = group, fill = Poverty)) +
+  geom_polygon(color = "gray") +
+  coord_map("polyconic") +
+  scale_fill_gradient2() +
+  labs(
+    title = "Poverty percentage",
+    subtitle = "Poverty percentage in each state of United States",
+    x = "Longitude",
+    y = "Latitude",
+    fill = "Legend",
+    caption = "Last update 2003"
+  )
+```
+
+#### Exercise 9
+Compare the richest and poorest counties by obesity and unemployment.
+
+Result: We cannot draw any conclusions given the lack of data.
+
+```{r echo=FALSE}
+
+# join tables
+join_tables_exc9 <- inner_join(risk_factors_and_access_to_care_tidy, demographics_tidy, by = "CHSI_County_Name") %>% inner_join(., vulnerable_pops_and_env_health_tidy, by = "CHSI_County_Name")
+
+# select columns
+most_poverty_state <- select(join_tables_exc9, CHSI_County_Name, Population_Size, Obesity, Poverty, Unemployed)
+
+# select most poverty states
+# look the most poverty states with arrange
+arrange(most_poverty_state, desc(Poverty))
+
+# save in c() names
+name_most_poverty <- c("Starr", "Shannon", "East Carroll", "Todd")
+# filter most poorest 4 states
+most_poverty_state <- most_poverty_state %>% filter(CHSI_County_Name %in% name_most_poverty)
+
+# group by  and convert table to format large
+table_format_most_poverty_state <- most_poverty_state %>%
+  group_by(CHSI_County_Name) %>%
+  summarise(Poverty = mean(Poverty), Obesity = mean(Obesity), Unemployed = mean(Unemployed / Population_Size) * 100) %>%
+  gather(Condition, Value, -CHSI_County_Name)
+# graphic
+ggplot(table_format_most_poverty_state, aes(x = CHSI_County_Name, y = Value, fill = Condition)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "The poorest counties",
+    subtitle = "Relationship of poverty, obesity and unemployment",
+    x = "States",
+    y = "Percentage",
+    fill = "Condition",
+    caption = "Last update 2003"
+  )
+
+
+# arrange
+most_rich_state <- select(join_tables_exc9, CHSI_County_Name, Population_Size, Obesity, Poverty, Unemployed)
+# select 6 rich states
+# look the most poverty states with arrange
+arrange(most_rich_state, Poverty)
+# save in c() names
+name_most_rich <- c("Douglas", "Los Alamos", "Falls Church City", "Hunterdon")
+# filter most poorest 4 states
+most_rich_state <- most_rich_state %>% filter(CHSI_County_Name %in% name_most_rich)
+# group by  and convert table to format large
+table_format_most_rich_state <- most_rich_state %>%
+  group_by(CHSI_County_Name) %>%
+  summarise(Poverty = mean(Poverty), Obesity = mean(Obesity), Unemployed = mean(Unemployed / Population_Size) * 100) %>%
+  gather(Condition, Value, -CHSI_County_Name)
+
+ggplot(table_format_most_rich_state, aes(x = CHSI_County_Name, y = Value, fill = Condition)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "The richest states",
+    subtitle = "Relationship of poverty, obesity and unemployment",
+    x = "States",
+    y = "Percentage",
+    fill = "Condition",
+    caption = "Last update 2003"
+  )
+```
+
+#### Exercice 10
+
+Compare the number of patients with Hepatitis A and B with the level of the population without health insurance.
+
+Result: Causation cannot be established because a county like Fulton with very few insured has practically the same number of Hepatitis A and B patients.
+
+```{r echo=FALSE}
+
+# Adding up Hepatitis A and B values in new column. Ascendant ordering and getting the six first values.
+hepatits_a_and_b <- select(preventive_services_use_tidy, CHSI_County_Name, CHSI_State_Name, HepA_Rpt, HepB_Rpt) %>%
+  mutate(Hep_Total = HepA_Rpt + HepB_Rpt) %>%
+  select(CHSI_County_Name, CHSI_State_Name, Hep_Total) %>%
+  arrange(desc(Hep_Total)) %>%
+  head()
+
+# Selecting state info and insured people number.
+uninsured <- select(risk_factors_and_access_to_care_tidy, CHSI_State_Name, CHSI_County_Name, Uninsured)
+
+# Joined uninsured and hepatitis in one tibble. Then converted to long format.
+hepatitis_and_uninsured <- inner_join(uninsured, hepatits_a_and_b, by = c("CHSI_State_Name", "CHSI_County_Name")) %>%
+  select(-CHSI_State_Name) %>%
+  gather(Type, Value, -CHSI_County_Name)
+
+# Plotting hepatitis cases and uninsured people by the selected states in two different tables for each variable
+ggplot(hepatitis_and_uninsured, aes(x = CHSI_County_Name, y = Value, fill = Type)) +
+  geom_col(position = "dodge") + facet_grid(Type ~ ., scales = "free") +
+  labs(
+    title = "Uninsured individuals and Hepatitis cases in some counties",
+    subtitle = "Unisured and Hepatitis A and B",
+    x = "States",
+    y = "Number of cases",
+    fill = "Legend",
+    caption = "Last update 2003"
+  )
+  ```
+
