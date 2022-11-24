@@ -4,15 +4,25 @@ const express = require("express");
 const bodyParse = require("body-parser");
 const mysql = require("mysql");
 const app = express();
+
 const connection = mysql.createConnection({
 	host: "localhost",
 	database: "testm06",
-	user: "vic",
-	password: "123qwe",
+	user: "root",
+	password: "",
 });
 
-app.use(bodyParse.urlencoded({ extended: false }));
+//app.use(bodyParse.urlencoded({ extended: false }));
 app.use(bodyParse.json());
+
+// GET
+app.get("/hello", (request, response) => {
+	response.send({ message: "Hola mon! (GET)" });
+});
+app.get("/hello/:name", (name, response) => {
+	var nom = name.params.name;
+	response.send({ message: `Hola ${nom} (GET)` });
+});
 
 app.post("/api/login", function (req, res) {
 	console.log("estem a login");
@@ -27,9 +37,9 @@ app.post("/api/login", function (req, res) {
 		console.log("Connected as id " + connection.threadId);
 	});
 
-	connection.query("SELECT * FROM users", function (error, results, field) {
+	connection.query("SELECT * FROM clients", function (error, results, field) {
 		if (error) {
-			res.status(400).send({ resultats: null, error: error.stack });
+			res.status(400).send({ resultats: null });
 		} else {
 			/*COMPROVACIÓ DE DADES PER CONSOLA DE NODE*/
 			//   console.log(results);
@@ -42,28 +52,11 @@ app.post("/api/login", function (req, res) {
 	});
 	connection.end();
 });
-// Error Displayer
-process.on("uncaughtException", function (err) {
-	console.log(err);
-});
-
-app.listen(3306, () => {
+app.listen(3000, () => {
 	console.log(
-		"Aquesta és la nostra API-REST que corre en http://localhost:3306"
+		"Aquesta és la nostra API-REST que corre en http://localhost:3000"
 	);
 });
-
-// Codificació del
-
-// Esperant verbs
-// // GET
-// app.get("/hello", (request, response) => {
-// 	response.send({ message: "Hola mon! (GET)" });
-// });
-// app.get("/hello/:name", (name, response) => {
-// 	var nom = name.params.name;
-// 	response.send({ message: `Hola ${nom} (GET)` });
-// });
 
 // // POST
 // app.post("/hello", (request, response) => {
