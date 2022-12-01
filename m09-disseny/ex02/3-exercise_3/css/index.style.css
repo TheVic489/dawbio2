@@ -1,0 +1,27 @@
+.bg-lime-green {
+    background-color: #32CD32;
+}
+
+.bg-neon-pink {
+    background-color: #FF10F0;
+}
+
+.bg-dull-orange {
+    background-color: #DB804E;
+}
+
+.bg-bright-red {
+    background-color: #FF160C;
+}
+
+.custom-height-100px {
+    height: 100px;
+}
+
+.custom-height-50px {
+    height: 50px;
+}
+
+.custom-height-25px {
+    height: 25px;
+}

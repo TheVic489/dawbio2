@@ -1,0 +1,8 @@
+id;username;password;role;name;surname
+1;user1;pass1;admin;name1;surname1
+2;user2;pass2;admin;name2;surname2
+3;user3;pass3;staff;name3;surname3
+4;user4;pass4;staff;name4;surname4
+5;user5;pass5;staff;name5;surname5
+6;user6;pass6;staff;name6;surname6
+9;user9;pass9;admin;name9;surname9

@@ -1,0 +1,11 @@
+.custom-div {
+
+    background-color: lightgrey; 
+    border: 1px solid black; 
+    height: 100px;
+
+}
+
+.custom-row-height {
+    height: 50px;
+}

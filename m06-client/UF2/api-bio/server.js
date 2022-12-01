@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParse = require("body-parser");
 const mysql = require("mysql");
 const app = express();
+const path = require("path")
 
 const connection = mysql.createConnection({
 	host: "localhost",
@@ -12,6 +13,7 @@ const connection = mysql.createConnection({
 	password: "",
 });
 
+app.use('/', express.static(path.join(__dirname, 'views/')))
 //app.use(bodyParse.urlencoded({ extended: false }));
 app.use(bodyParse.json());
 
@@ -24,7 +26,7 @@ app.get("/hello/:name", (name, response) => {
 	response.send({ message: `Hola ${nom} (GET)` });
 });
 
-app.post("/api/login", function (req, res) {
+app.get("/api/login", function (req, res) {
 	console.log("estem a login");
 
 	//provem de connectar-nos i capturar possibles errors
