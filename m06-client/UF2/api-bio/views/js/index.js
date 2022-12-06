@@ -35,39 +35,26 @@ $(function () {
 			// 	$("#table").append(`<td> ${client.clientType}</td>`);
 			// 	$("#table").append(`<td> ${client.entryDate}</td></tr>`);
 
-
 			// 	console.log(client.dni);
 			// });
 			console.log(data);
 
 			for (let user of users) {
-				let tr = document.createElement('tr');
-				
-				let td1 = document.createElement('td');
-				td1.textContent = user.dni;
-				tr.appendChild(td1);
-				
-				let td2 = document.createElement('td');
-				td2.textContent = user.fullName;
-				tr.appendChild(td2);
-				
-				let td3 = document.createElement('td');
-				td3.textContent = user.AccountType;
-				tr.appendChild(td3);
-				
-				let td4 = document.createElement('td');
-				td4.textContent = user.amount;
-				tr.appendChild(td4);
-
-				let td5 = document.createElement('td');
-				td5.textContent = user.clientType;
-				tr.appendChild(td5);
-
-				let td6 = document.createElement('td');
-				td6.textContent = user.entryDate;
-				tr.appendChild(td6);
-				
-				table.appendChild(tr);
+				$("#table").append(
+					'<tr> <td> <input disabled value="' +
+						user.dni +
+						'"></input> </td> <td> <input disabled value="' +
+						user.fullName +
+						'"></input> </td> <td> <input disabled value="' +
+						user.AccountType +
+						'"></input> </td> <td> <input disabled value="' +
+						user.amount +
+						'"></input> </td> <td> <input type="select" disabled value="' +
+						user.clientType +
+						'"></input> </td> <td> <input disabled value="' +
+						user.entryDate +
+						'"></input> </td> </tr>'
+				);
 			}
 		},
 

@@ -16,7 +16,7 @@ class MainController
 
     public function __construct()
     {
-        $this->view  = new ViewLoader();
+        $this->view = new ViewLoader();
         $this->model = new Model();
     }
 
@@ -50,8 +50,11 @@ class MainController
             case 'product/listAll':
                 $this->doListAllProducts();
                 break;
+            case 'user/listAll':
+                $this->doListAllUsers();
+                break;
             case 'product/form':
-                $this->doProductForm();   //show product form.
+                $this->doProductForm(); //show product form.
                 break;
             default:
                 break;
@@ -71,6 +74,9 @@ class MainController
             case 'product/add':
                 $this->doAddProduct();
                 break;
+            case 'user/form':
+                $this->doFormUser(); //show product form.
+                break;
             default:
                 break;
         }
@@ -86,6 +92,30 @@ class MainController
         $productLists = $this->model->searchAllProducts();
         $data['products_list'] = $productLists;
         $this->view->show('list-products.php', $data);
+    }
+    private function doFormUser()
+    {
+        //TODO
+        $user2add = $this->model->addUser();
+        $data['user2add'] = $user2add;
+
+        $this->view->show('form-users.php', $data);
+    }
+
+    /**
+     *  List all users from data source
+     */
+    private function doListAllUsers()
+    {
+        $userList = $this->model->searchAllUsers();
+        if (!is_null($userList)) {
+            $data['userList'] = $userList;
+            $this->view->show("list-users.php", $data);
+        } else {
+            $data['userList'] = array();
+            $data['message'] = "Data is null";
+            $this->view->show("list-users.php", $data);
+        }
     }
 
     /**

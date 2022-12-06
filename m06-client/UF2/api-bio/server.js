@@ -31,7 +31,6 @@ app.get("/api/login", function (req, res) {
 
 	//provem de connectar-nos i capturar possibles errors
 	connection.connect(function (err) {
-		console.log(err);
 		if (err) {
 			console.error("Error connecting: " + err.stack);
 			return;
