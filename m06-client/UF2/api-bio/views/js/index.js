@@ -27,35 +27,52 @@ $(function () {
 				users.push(myAccount);
 			});
 
-			// $.each(users, function (index, client) {
-			// 	$("#table").append(`<tr><td> ${client.dni}</td>`);
-			// 	$("#table").append(`<td> ${client.fullName}</td>`);
-			// 	$("#table").append(`<td> ${client.AccountType}</td>`);
-			// 	$("#table").append(`<td> ${client.amount}</td>`);
-			// 	$("#table").append(`<td> ${client.clientType}</td>`);
-			// 	$("#table").append(`<td> ${client.entryDate}</td></tr>`);
 
-			// 	console.log(client.dni);
-			// });
-			console.log(data);
+			users.forEach((user) => {
+				let cleanAmount = parseFloat(user.amount.substring(0, user.amount.length - 1).replaceAll('.', '')); // Masteringjs.io
+				if (cleanAmount <= 10000 ) {
+					user.clientType = "Poor client"
+				}
+				if (cleanAmount > 10001 && cleanAmount <= 100000 ) {
+					user.clientType = "Normal client"
+				}
+				if (cleanAmount > 100001 ) {
+					user.clientType = "Very rich client"
+				}
+			});
 
-			for (let user of users) {
-				$("#table").append(
-					'<tr> <td> <input disabled value="' +
-						user.dni +
-						'"></input> </td> <td> <input disabled value="' +
-						user.fullName +
-						'"></input> </td> <td> <input disabled value="' +
-						user.AccountType +
-						'"></input> </td> <td> <input disabled value="' +
-						user.amount +
-						'"></input> </td> <td> <input type="select" disabled value="' +
-						user.clientType +
-						'"></input> </td> <td> <input disabled value="' +
-						user.entryDate +
-						'"></input> </td> </tr>'
-				);
-			}
+			// Creation of the Table
+			let tbody = $("tbody");
+			tbody.html("");
+			users.forEach((user) => {
+				tbody.append(`
+				<tr>
+				<td id="dni">${user.dni}</td>
+				<td><input type="text" value="${user.fullName}" id="name"> </td>
+				<td><select><option type="select" value="${user.AccountType}" id="account-type">${user.AccountType}</option></select></td>
+				<td><input value="${user.amount}" id="amount"> </td>
+				<td><input value="${user.clientType}" id="client-type"> </td>
+				<td><input type="text" value="${user.entryDate}" id="datepicker"> </td>
+				<tr>
+				`);
+			});
+
+			// Save array of accounts in localstorage
+			localStorage.setItem('users', JSON.stringify(users));
+
+			// Disable table inputs
+			$("input").prop('disabled', true);
+			$("select").prop('disabled', true);
+
+			// Button for enable modifying
+			$("#bt-modify-data").click(function() {
+				$("input").prop('disabled', false);
+				$("select").prop('disabled', false);
+			})
+			//Date picker
+			//$( "#datepicker" ).datepicker();
+
+			
 		},
 
 		error: function (xhr, status) {
