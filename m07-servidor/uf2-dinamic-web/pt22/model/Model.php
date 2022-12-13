@@ -24,6 +24,13 @@ class Model
         //TODO
         return array();
     }
+    public function addItem(User $user): int {
+        $numAffected = 0;
+        if ($user !== null) {
+            $numAffected = $this->userDao->insert($user);            
+        }
+        return $numAffected;
+    }
 
     public function searchAllUsers(): ?array
     {

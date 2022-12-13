@@ -1,6 +1,8 @@
 <?php
 require_once 'lib/ViewLoader.php';
+require_once 'lib/UserFormValidator.php';
 require_once 'model/Model.php';
+require_once 'model/persist/UserPersistFileDao.php';
 /**
  * Main controller for store application.
  *
@@ -98,7 +100,10 @@ class MainController
     }
     private function doFormUser()
     {
-        $this->view->show('form-users.php');
+        $user = UserFormValidation::getData();
+        $data['user'] = $user;
+        $data['action'] = $this->action;
+        $this->view->show('form-users.php', $data);
     }
 
     /**
@@ -133,8 +138,21 @@ class MainController
 
     public function doAddUser()
     {
-        //TODO
-
-        return new User(12, 'asda', 23);
+        $user = UserFormValidation::getData();
+        $result = null;
+        if (is_null($user)) {
+            $result = "Error reading user";
+        } else {
+            $numAffected = $this->model->addItem($user);
+            if ($numAffected>0) {
+                $result = "Item successfully added";
+            } else {
+                $result = "Error adding item";
+            }            
+        }
+        //pass data to template.
+        $data['result'] = $result;
+        //show the template with the given data.
+        $this->view->show("form-users.php", $data);
     }
 }

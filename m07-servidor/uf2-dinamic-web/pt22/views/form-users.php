@@ -1,3 +1,4 @@
+
 <form action="index.php" method="POST">
     <div class="form-group">
         <label class="control-label col-sm-2" for="username">Username:</label>
@@ -17,3 +18,12 @@
     </div>
     <button type="submit" name="action" value="user/add">Submit</button>
 </form>
+
+<?php
+$result = $params['result']??null;
+if (!is_null($result)) {
+    echo <<<EOT
+    <div><p class="alert">$result</p></div>
+EOT;
+} 
+?>
