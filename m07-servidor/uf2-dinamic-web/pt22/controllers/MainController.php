@@ -56,6 +56,9 @@ class MainController
             case 'product/form':
                 $this->doProductForm(); //show product form.
                 break;
+            case 'user/form':
+                $this->doFormUser(); //show product form.
+                break;
             default:
                 break;
         }
@@ -74,8 +77,8 @@ class MainController
             case 'product/add':
                 $this->doAddProduct();
                 break;
-            case 'user/form':
-                $this->doFormUser(); //show product form.
+            case 'user/add':
+                $this->doAddUser(); //show product form.
                 break;
             default:
                 break;
@@ -95,11 +98,7 @@ class MainController
     }
     private function doFormUser()
     {
-        //TODO
-        $user2add = $this->model->addUser();
-        $data['user2add'] = $user2add;
-
-        $this->view->show('form-users.php', $data);
+        $this->view->show('form-users.php');
     }
 
     /**
@@ -123,12 +122,19 @@ class MainController
      */
     private function doProductForm()
     {
-        $this->view->show('form-products.php');
+        $this->view->show('form-users.php');
     }
 
     private function doAddProduct()
     {
         $data['message'] = "Add product not implemented";
         $this->view->show('not-implemented.php', $data);
+    }
+
+    public function doAddUser()
+    {
+        //TODO
+
+        return new User(12, 'asda', 23);
     }
 }

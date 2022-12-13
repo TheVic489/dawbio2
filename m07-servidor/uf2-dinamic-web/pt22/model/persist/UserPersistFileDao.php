@@ -158,12 +158,12 @@ class UserPersistFileDao
      */
     protected function fromFieldsToObj(array $fields): ?User
     {
-        $id = intval($fields[0]);
+        $id       = intval($fields[0]);
         $username = $fields[1];
         $password = $fields[2];
-        $role = $fields[3];
-        $name = $fields[4];
-        $surname = $fields[5];
+        $role     = $fields[3];
+        $name     = $fields[4];
+        $surname  = $fields[5];
         $obj = new User($id, $username, $password, $role, $name, $surname);
         return $obj;
     }

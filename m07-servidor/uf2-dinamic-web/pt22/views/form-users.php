@@ -15,8 +15,5 @@
         <label class="control-label col-sm-2" for="surname">Surname:</label>
         <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname" required>
     </div>
-    <button type="submit" name="action" value="product/add">Submit</button>
+    <button type="submit" name="action" value="user/add">Submit</button>
 </form>
-
-<?php
-?>

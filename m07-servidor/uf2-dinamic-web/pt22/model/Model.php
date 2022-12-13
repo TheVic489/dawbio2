@@ -33,9 +33,4 @@ class Model
         return $data;
     }
     
-    public function addUser(): User
-    {
-        //TODO
-        return new User();
-    }
 }
