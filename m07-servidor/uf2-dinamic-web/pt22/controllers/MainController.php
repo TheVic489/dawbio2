@@ -2,7 +2,7 @@
 require_once 'lib/ViewLoader.php';
 require_once 'lib/UserFormValidator.php';
 require_once 'model/Model.php';
-require_once 'model/persist/UserPersistFileDao.php';
+        require_once 'model/persist/UserPersistFileDao.php';
 /**
  * Main controller for store application.
  *
