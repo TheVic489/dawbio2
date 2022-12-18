@@ -15,14 +15,15 @@ $(function () {
 
 		success: function (data) {
 			let users = [];
+			console.log(data)
 			data.resultats.forEach((elem) => {
 				let myAccount = new Account(
-					elem["DNI"],
-					elem["Name"],
-					elem["Account type"],
+					elem["Account_type"],
 					elem["Amount"],
 					elem["Client type"],
-					elem["Entry date"]
+					elem["DNI"],
+					elem["Entry_date"],
+					elem["NAME"],
 				);
 				users.push(myAccount);
 			});

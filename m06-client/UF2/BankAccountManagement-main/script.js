@@ -24,7 +24,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 //Create mysql connection
 let connection = mysql.createConnection({
   host: "127.0.0.1",
-  database: "BankDB",
+  database: "bankdb",
   user: "root",
   password: "",
   multipleStatements: true,
@@ -40,7 +40,7 @@ app.get("/api/clients", (req, res) => {
     console.log("Connected as id: " + connection.threadId);
   });
 
-  connection.query("SELECT * FROM Clients", (error, results, field) => {
+  connection.query("SELECT * FROM clients", (error, results, field) => {
     if (error) {
       res.status(400).send({ response: null });
     } else {
@@ -81,3 +81,4 @@ app.listen(3000, () => {
     "Aquesta és la nostra API-REST que corre en http://localhost:3000"
   );
 });
+  

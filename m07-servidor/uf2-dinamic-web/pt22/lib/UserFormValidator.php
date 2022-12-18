@@ -15,9 +15,10 @@ class UserFormValidation {
      */
     public static function getData() {
 
+        $defaultRole = "registered";
         $UserObj = null;
-        $id = 10;
-        
+        $dao = new UserPersistFileDao("files/users.txt" , ";");
+
         $username = "";
         //retrieve id sent by client.
         if (filter_has_var(INPUT_POST, 'username')) {
@@ -38,10 +39,18 @@ class UserFormValidation {
         if (filter_has_var(INPUT_POST, 'surname')) {
             $surname = filter_input(INPUT_POST, 'surname'); 
         }
-        //if (!empty($id) && !empty($password) && !empty($name)) { 
+        $id = 0;
+        if (filter_has_var(INPUT_POST, 'id')) {
+            $id = filter_input(INPUT_POST, 'id'); 
+        }
+
+        if (!$dao->repeatedId($id)) { 
             //they exists and they are not empty
-            $UserObj = new User($id, $username, $password, 'registered', $name, $surname);
-        //}
+            $UserObj = new User($id, $username, $password, $defaultRole, $name, $surname);
+        
+        }else{
+            $UserObj = null;
+        }
         return $UserObj;
     }
     

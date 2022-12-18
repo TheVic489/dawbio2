@@ -40,19 +40,22 @@ class Model
     }
 
     /**
-     * Validate user
+     * Validate user from given params, 
      * @param string $username
      * @param string $password
-     * @return bool true if 
+     * @return number ($valid = 0) -> Wrong Password ($valid = -1) -> User doesn't exists  ($valid = 1) -> Login Success
      */
-    public function validateLogin(string $username, string $password): bool
+    public function validateLogin(string $username, string $password): int
     {
-        $valid = false;
+        $valid = 0;
         $user2validate = $this->userDao->getUserbyUsername($username);
-        if (!is_null($user2validate)) {
+
+        if (($user2validate !== -1)) {
             if ($user2validate->getPassword() == $password) {
-                $valid = true;
+                $valid = 1;
             }
+        }elseif (($user2validate == -1)){
+            $valid = -1;
         }
         return $valid;
     }

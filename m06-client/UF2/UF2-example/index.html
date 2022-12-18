@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery</title>
+    <!--cridem a jquery-->
+    <!--Opcio 1: cridant a la url-->
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+    <!--Opcio 2:cridant a l'arxiu que t'has hagut de baixar-->
+    <!--<script src="vendor/jquery/jquery-3.6.0.min.js"></script>-->
+    
+
+    <!--cridar a plugins de jquery-->
+    <!--aqui cridariem a paquets prefet de jquery-->
+    
+    <!--cridem al nostre js-->
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+     
+</head>
+<body>
+     
+    <div class="ancestors"> DIV PRINCIPAL amb la class=ancestors
+      <div id="id0" style="width:500px;"> div1 amb id=id0/(child DIV PRINCIPAL)
+            <ul> ul (grandparent SPAN1 CENTRAL)
+                <li> li (parent SPAN1 CENTRAL) 
+                    <span>
+                        span1 central
+                    </span>
+                </li>
+
+            </ul>
+        </div>
+    
+        <div style="width:500px;"> div2 (grandparent SPAN2 CENTRAL)/(child DIV PRINCIPAL)
+            <p> p1 (parent SPAN2 CENTRAL) /(child DIV2/grandchild DIV PRINCIPAL)
+                <span>
+                    span2 central
+                </span>
+            </p>
+        </div>
+        <p id="par2">Bon dia!!!!!</p>
+        <span>span3</span>
+        <h2>h2</h2>
+        <h3>h3</h3>
+        <p>paragraf p3</p>
+    </div>
+    
+</body>
+</html>

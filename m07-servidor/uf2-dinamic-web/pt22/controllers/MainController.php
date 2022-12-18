@@ -1,6 +1,7 @@
 <?php
 require_once 'lib/ViewLoader.php';
 require_once 'lib/UserFormValidator.php';
+require_once 'lib/UserLoginForm.php';
 require_once 'model/Model.php';
 require_once 'model/persist/UserPersistFileDao.php';
 /**
@@ -64,6 +65,10 @@ class MainController
             case 'login/form':
                 $this->doLoginForm(); //show product form.
                 break;
+            case 'logout':
+                $this->doLogout(); //show product form.
+                break;
+                
             default:
                 break;
         }
@@ -84,6 +89,9 @@ class MainController
                 break;
             case 'user/add':
                 $this->doAddUser(); //show product form.
+                break;
+            case 'login/submit':
+                $this->doLoginUser(); //show product form.
                 break;
             default:
                 break;
@@ -147,13 +155,13 @@ class MainController
         $user = UserFormValidation::getData();
         $result = null;
         if (is_null($user)) {
-            $result = "Error reading user";
+            $result = "Error adding user";
         } else {
             $numAffected = $this->model->addItem($user);
             if ($numAffected>0) {
                 $result = "Item successfully added";
             } else {
-                $result = "Error adding item";
+                $result = "Error reading item";
             }            
         }
         //pass data to template.
@@ -164,9 +172,28 @@ class MainController
 
     public function doLoginUser()
     {
-        $userCredentials   = UserFormValidation::getData();
+        $result = "";
+        $userCredentials = UserLoginForm::getFormCredentials();
         list($user, $pass) = $userCredentials;
         $userFound = $this->model->validateLogin($user, $pass);
+        if ($userFound == 1) {
+            $result = 'Logged succesfuly';
+            $_SESSION['username'] = $user;
+            header("Location: index.php");
+        }elseif ($userFound == -1) {
+            $result = 'User not found';
+            
+        } elseif ($userFound == 0) {
+            $result = 'Wrong Password';
+        }
+        $data['message'] = $result;
+        $this->view->show("login-form.php", $data);
         
+    }
+
+    public function doLogout()
+    {
+        session_destroy();
+        header("Location: index.php ");
     }
 }

@@ -7,3 +7,5 @@ id;username;password;role;name;surname
 6;user6;pass6;staff;name6;surname6
 9;user9;pass9;admin;name9;surname9
 10;user10;pass10;registered;name10;surname10
+10;vic;123;registered;Victor;Piñana
+123;asdasd;sd;registered;ujh;oiu

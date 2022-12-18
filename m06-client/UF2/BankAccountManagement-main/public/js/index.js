@@ -102,9 +102,9 @@ function setDinamicClients(data_clients) {
   //*******TEST********/
   $(".names").change(function () {
     if (validateFullName($(this))) {
-     
       row_index = $(this)[0].id.substr(-1);
-      //*Add new name to object
+      console.log($(this))
+      //*Add new name to object 
       accounts[row_index].fullNameClient = $(this).val();
     } 
   });

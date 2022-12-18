@@ -12,7 +12,7 @@ class AccountObj{
         this.#DNI = DNI;
         this.#fullNameClient = fullNameClient;
         this.#amount = amount;
-        this.#entryDate = entryDate;
+        this.#entrwyDate = entryDate;
         this.#accountType = accountType;
         this.#clientType = clientType;
     }

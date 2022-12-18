@@ -182,16 +182,28 @@ class UserPersistFileDao
      * Returns a user if 
      * @param string $username
      * @param string $password
-     * @return User|null
+     * @return User| -1 if doesn't find it
      */
-    public function getUserbyUsername(string $username): ?User {
+    public function getUserbyUsername(string $username): User|int {
         $objList = $this->selectAll();
+        $result = -1;
         foreach ($objList as $user) {
             if ($user->getUsername() == $username) {
-                return $user;
-            }else{
-                return null;
+                $result = $user;
             }
         }
+        return $result;
+    }
+
+    public function repeatedId($id): bool
+    {
+       $objList = $this->selectAll();
+       $result = false;
+       foreach ($objList as $user) {
+           if ($user->getId() == $id) {
+               $result = true;
+           }
+       }
+       return $result;
     }
 }
