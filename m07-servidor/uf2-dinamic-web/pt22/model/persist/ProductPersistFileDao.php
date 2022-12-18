@@ -1,12 +1,11 @@
 <?php
-require_once "model/User.php";
 
 /**
  *  DAO for user persistence in file.
  *
  * @author ProvenSoft
  */
-class UserPersistFileDao
+class ProductPersistFileDao
 {
 
     /**

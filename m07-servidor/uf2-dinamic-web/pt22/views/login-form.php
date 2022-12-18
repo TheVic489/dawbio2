@@ -10,6 +10,8 @@
 </form>
 
 <?php
+if (isset($_SESSION['username'])) { echo '<p>Already logged!</p>'; } 
+
 $username = $params['username'] ?? null;
 $message = $params['message'] ?? null;
 if (!is_null($message)) {

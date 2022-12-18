@@ -68,7 +68,9 @@ class MainController
             case 'logout':
                 $this->doLogout(); //show product form.
                 break;
-                
+            case 'logout/form':
+                $this->doLogoutForm(); //show product form.
+                break;
             default:
                 break;
         }
@@ -122,14 +124,20 @@ class MainController
      */
     private function doListAllUsers()
     {
-        $userList = $this->model->searchAllUsers();
-        if (!is_null($userList)) {
-            $data['userList'] = $userList;
-            $this->view->show("list-users.php", $data);
-        } else {
-            $data['userList'] = array();
-            $data['message'] = "Data is null";
-            $this->view->show("list-users.php", $data);
+        if (($_SESSION['role'] == 'admin') || ($_SESSION['role'] == 'staff')) {
+            $userList = $this->model->searchAllUsers();
+            if (!is_null($userList)) {
+                $data['userList'] = $userList;
+                $this->view->show("list-users.php", $data);
+            } else {
+                $data['userList'] = array();
+                $data['message'] = "Data is null";
+                $this->view->show("list-users.php", $data);
+            }
+        }else{
+                $data['message'] = "You don't have enough permisions";
+            $this->view->show("insufficient-permissions.php", $data);
+
         }
     }
 
@@ -158,11 +166,11 @@ class MainController
             $result = "Error adding user";
         } else {
             $numAffected = $this->model->addItem($user);
-            if ($numAffected>0) {
+            if ($numAffected > 0) {
                 $result = "Item successfully added";
             } else {
                 $result = "Error reading item";
-            }            
+            }
         }
         //pass data to template.
         $data['result'] = $result;
@@ -177,23 +185,32 @@ class MainController
         list($user, $pass) = $userCredentials;
         $userFound = $this->model->validateLogin($user, $pass);
         if ($userFound == 1) {
-            $result = 'Logged succesfuly';
+            $role = $this->model->getRole($user);
+
+            $_SESSION['role'] = $role;
             $_SESSION['username'] = $user;
+
+            $result = 'Logged succesfuly';
             header("Location: index.php");
-        }elseif ($userFound == -1) {
+        } elseif ($userFound == -1) {
             $result = 'User not found';
-            
+
         } elseif ($userFound == 0) {
             $result = 'Wrong Password';
         }
         $data['message'] = $result;
         $this->view->show("login-form.php", $data);
-        
+
     }
 
     public function doLogout()
     {
         session_destroy();
         header("Location: index.php ");
+    }
+
+    public function doLogoutForm()
+    {
+        $this->view->show("logout-form.php");
     }
 }

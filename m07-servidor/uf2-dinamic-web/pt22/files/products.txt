@@ -1,0 +1,5 @@
+id;description;price;stock
+1;desc01;1001;101;
+2;desc02;1002;102;
+3;desc03;1003;103;
+4;desc04;1004;104;

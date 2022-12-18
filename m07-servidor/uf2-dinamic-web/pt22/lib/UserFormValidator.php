@@ -5,15 +5,15 @@ require_once 'model/persist/UserPersistFileDao.php';
 /**
  * Description of UserFormValidation
  * Provides validation to get data from User form.
- * @author ProvenSoft
+ * @author Victor
  */
 class UserFormValidation {
 
     /**
      * validates and gets data from User form.
-     * @return User the User with the given data or null if data is not present and valid.
+     * @return User|null the User with the given data or null if data is not present and valid.
      */
-    public static function getData() {
+    public static function getData(): User|null {
 
         $defaultRole = "registered";
         $UserObj = null;

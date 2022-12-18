@@ -4,10 +4,7 @@
     <tr>
         <th>id</th>
         <th>username</th>
-        <th>password</th>
         <th>role</th>
-        <th>name</th>
-        <th>surname</th>
     </tr>
     <?php
         //display list of items in a table.
@@ -20,10 +17,7 @@
             <tr>
                 <td>{$User->getId()}</td>
                 <td>{$User->getUsername()}</td>
-                <td>{$User->getPassword()}</td>
                 <td>{$User->getRole()}</td>
-                <td>{$User->getName()}</td>
-                <td>{$User->getSurname()}</td>
             </tr>               
 EOT;
 

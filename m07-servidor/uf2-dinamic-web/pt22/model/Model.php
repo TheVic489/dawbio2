@@ -1,6 +1,7 @@
 <?php
 require_once 'lib/ViewLoader.php';
 require_once 'persist/UserPersistFileDao.php';
+require_once 'persist/ProductPersistFileDao.php';
 
 /**
  * searches all products from data source
@@ -11,18 +12,27 @@ class Model
     private string $userFile;
     private string $userFileDelimiter;
     private UserPersistFileDao $userDao;
+
+    private string $productFile;
+    private string $productFileDelimiter;
+    private ProductPersistFileDao $productDao;
     
     public function __construct()
     {
         $this->userFile = "files/users.txt";
         $this->userFileDelimiter = ";";
         $this->userDao = new UserPersistFileDao($this->userFile, $this->userFileDelimiter);
+        
+        $this->productFile = "files/users.txt";
+        $this->productFileDelimiter = ";";
+        $this->productDao = new ProductPersistFileDao($this->productFile, $this->productFileDelimiter);
     }
 
     public function searchAllProducts()
     {
-        //TODO
-        return array();
+        $data = null;
+        $data = $this->productDao->selectAll();
+        return $data;
     }
     public function addItem(User $user): int {
         $numAffected = 0;
@@ -39,8 +49,14 @@ class Model
         return $data;
     }
 
+    public function getRole($username) {
+        $user = $this->userDao->getUserbyUsername($username);
+        $role = $user->getRole();
+        return $role;
+    }
+
     /**
-     * Validate user from given params, 
+     * Validate user from datasource with given credentials, 
      * @param string $username
      * @param string $password
      * @return number ($valid = 0) -> Wrong Password ($valid = -1) -> User doesn't exists  ($valid = 1) -> Login Success

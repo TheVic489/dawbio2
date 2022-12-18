@@ -24,6 +24,15 @@
     </div>
     <button type="submit" name="action" value="user/add">Submit</button>
     </fieldset>
+
+    <fieldset>
+        <button type="button" id="finduser" name="finduser" onclick="submitForm(event);return false;">Find</button>
+        <button type="button" id="user/add" name="user/add value="user/add" onclick="submitForm(event);return false;">Add</button>
+        <button type="button" id="modifyuser" name="modifyuser" {$disable} onclick="submitForm(event);return false;">Modify</button>
+        <button type="button" id="removeuser" name="removeuser" {$disable} onclick="submitForm(event);return false;">Remove</button>
+        <input name="action" id="action" hidden="hidden" value="add"/>
+    </fieldset>
+    
 </form>
 
 <?php
