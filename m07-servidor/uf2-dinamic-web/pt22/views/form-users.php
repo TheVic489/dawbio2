@@ -1,5 +1,7 @@
 
 <form action="index.php" method="POST">
+    <fieldset>
+    <legend> Add user</legend>
     <div class="form-group">
         <label class="control-label col-sm-2" for="username">Username:</label>
         <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
@@ -17,6 +19,7 @@
         <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname" required>
     </div>
     <button type="submit" name="action" value="user/add">Submit</button>
+    </fieldset>
 </form>
 
 <?php

@@ -6,3 +6,4 @@ id;username;password;role;name;surname
 5;user5;pass5;staff;name5;surname5
 6;user6;pass6;staff;name6;surname6
 9;user9;pass9;admin;name9;surname9
+10;user10;pass10;registered;name10;surname10

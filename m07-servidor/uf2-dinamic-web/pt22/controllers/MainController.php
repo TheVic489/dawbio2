@@ -2,7 +2,7 @@
 require_once 'lib/ViewLoader.php';
 require_once 'lib/UserFormValidator.php';
 require_once 'model/Model.php';
-        require_once 'model/persist/UserPersistFileDao.php';
+require_once 'model/persist/UserPersistFileDao.php';
 /**
  * Main controller for store application.
  *
@@ -60,6 +60,9 @@ class MainController
                 break;
             case 'user/form':
                 $this->doFormUser(); //show product form.
+                break;
+            case 'login/form':
+                $this->doLoginForm(); //show product form.
                 break;
             default:
                 break;
@@ -129,7 +132,10 @@ class MainController
     {
         $this->view->show('form-users.php');
     }
-
+    private function doLoginForm()
+    {
+        $this->view->show('login-form.php');
+    }
     private function doAddProduct()
     {
         $data['message'] = "Add product not implemented";
@@ -154,5 +160,13 @@ class MainController
         $data['result'] = $result;
         //show the template with the given data.
         $this->view->show("form-users.php", $data);
+    }
+
+    public function doLoginUser()
+    {
+        $userCredentials   = UserFormValidation::getData();
+        list($user, $pass) = $userCredentials;
+        $userFound = $this->model->validateLogin($user, $pass);
+        
     }
 }

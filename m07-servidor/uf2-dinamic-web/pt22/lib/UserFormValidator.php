@@ -8,15 +8,16 @@ require_once 'model/persist/UserPersistFileDao.php';
  * @author ProvenSoft
  */
 class UserFormValidation {
-    
+
     /**
      * validates and gets data from User form.
      * @return User the User with the given data or null if data is not present and valid.
      */
     public static function getData() {
+
         $UserObj = null;
         $id = 10;
-
+        
         $username = "";
         //retrieve id sent by client.
         if (filter_has_var(INPUT_POST, 'username')) {

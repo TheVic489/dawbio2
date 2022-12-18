@@ -36,8 +36,25 @@ class Model
     {
         $data = null;
         $data = $this->userDao->selectAll();
-        //TODO
         return $data;
+    }
+
+    /**
+     * Validate user
+     * @param string $username
+     * @param string $password
+     * @return bool true if 
+     */
+    public function validateLogin(string $username, string $password): bool
+    {
+        $valid = false;
+        $user2validate = $this->userDao->getUserbyUsername($username);
+        if (!is_null($user2validate)) {
+            if ($user2validate->getPassword() == $password) {
+                $valid = true;
+            }
+        }
+        return $valid;
     }
     
 }

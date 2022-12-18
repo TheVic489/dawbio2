@@ -1,5 +1,6 @@
 <?php
 require_once "model/User.php";
+
 /**
  *  DAO for user persistence in file.
  *
@@ -43,7 +44,17 @@ class UserPersistFileDao
         }
         return $objList;
     }
-
+    public function getLastId(): int
+    {
+        $id = 0;
+        $usersList = $this->selectAll();
+        foreach ($usersList as $user) {
+            if ($user->getId() > $id) {
+                $id = $user->getId();
+            }
+        }
+        return $id;
+    }
     /**
      * selects object.
      * @param User $obj the object to get from file.
@@ -167,5 +178,20 @@ class UserPersistFileDao
         $obj = new User($id, $username, $password, $role, $name, $surname);
         return $obj;
     }
-
+    /**
+     * Returns a user if 
+     * @param string $username
+     * @param string $password
+     * @return User|null
+     */
+    public function getUserbyUsername(string $username): ?User {
+        $objList = $this->selectAll();
+        foreach ($objList as $user) {
+            if ($user->getUsername() == $username) {
+                return $user;
+            }else{
+                return null;
+            }
+        }
+    }
 }
