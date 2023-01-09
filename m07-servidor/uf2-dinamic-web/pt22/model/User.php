@@ -23,27 +23,27 @@ class User {
         $this->surname = $surname;
     }
 
-    public function getId(): int {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getUsername(): string {
+    public function getUsername(): ?string {
         return $this->username;
     }
 
-    public function getPassword(): string {
+    public function getPassword(): ?string {
         return $this->password;
     }
 
-    public function getRole(): string {
+    public function getRole(): ?string {
         return $this->role;
     }
 
-    public function getName(): string {
+    public function getName(): ?string {
         return $this->name;
     }
 
-    public function getSurname(): string {
+    public function getSurname(): ?string {
         return $this->surname;
     }
 

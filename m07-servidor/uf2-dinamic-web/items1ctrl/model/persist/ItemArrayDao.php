@@ -154,7 +154,7 @@ class ItemArrayDao implements ItemDaoInterface {
     public function deleteAll(): void {
         unset($this->data);
         $this->data = array();
-        $this_>$this->lastId = 0;
+        $this->$this->lastId = 0;
     }
     
     public function setUpData(): void {

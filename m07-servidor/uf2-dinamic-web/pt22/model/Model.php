@@ -23,7 +23,7 @@ class Model
         $this->userFileDelimiter = ";";
         $this->userDao = new UserPersistFileDao($this->userFile, $this->userFileDelimiter);
         
-        $this->productFile = "files/users.txt";
+        $this->productFile = "files/products.txt";
         $this->productFileDelimiter = ";";
         $this->productDao = new ProductPersistFileDao($this->productFile, $this->productFileDelimiter);
     }
@@ -41,7 +41,13 @@ class Model
         }
         return $numAffected;
     }
-
+    public function addProduct(Product $product): int {
+        $numAffected = 0;
+        if ($product !== null) {
+            $numAffected = $this->productDao->insert($product);            
+        }
+        return $numAffected;
+    }
     public function searchAllUsers(): ?array
     {
         $data = null;
@@ -55,6 +61,52 @@ class Model
         return $role;
     }
 
+    public function searchUsertById(int $id): ?User {  //nullable return.
+        $item = $this->userDao->select(new User($id, null, null,null, null, null));
+        return $item;
+    }
+    
+
+    public function searchProductById(int $id): ?Product {  //nullable return.
+        $item = $this->productDao->select(new Product($id, null, null, null));
+        return $item;
+    }
+
+    public function removeProduct(Product $product): int {
+        $numAffected = 0;
+        if ($product != null) {
+            $numAffected = $this->productDao->delete($product);
+        }
+        return $numAffected;
+    }  
+
+
+    public function modifyProduct(Product $product): int {
+        $numAffected = 0;
+        if ($product != null) {
+            $numAffected = $this->productDao->update($product);
+        }
+        return $numAffected;
+    }
+    
+
+
+    public function removeUser(User $user): int {
+        $numAffected = 0;
+        if ($user != null) {
+            $numAffected = $this->userDao->delete($user);
+        }
+        return $numAffected;
+    }  
+
+
+    public function modifyUser(User $user): int {
+        $numAffected = 0;
+        if ($user != null) {
+            $numAffected = $this->userDao->update($user);
+        }
+        return $numAffected;
+    }
     /**
      * Validate user from datasource with given credentials, 
      * @param string $username

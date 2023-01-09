@@ -1,4 +1,3 @@
-
 <table>
     <h2>List all users</h2>
     <tr>

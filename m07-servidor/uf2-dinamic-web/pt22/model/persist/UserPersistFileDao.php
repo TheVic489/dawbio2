@@ -210,4 +210,21 @@ class UserPersistFileDao
        }
        return $result;
     }
+
+    /**
+     * Check from given username if exisist in data source 
+     * @param integer $username
+     * @return bool true if exisist false if doesn't
+     */
+    public function repeatedUsername($username): bool
+    {
+       $objList = $this->selectAll();
+       $result = false;
+       foreach ($objList as $user) {
+           if ($user->getUsername() == $username) {
+               $result = true;
+           }
+       }
+       return $result;
+    }
 }

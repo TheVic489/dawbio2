@@ -1,4 +1,5 @@
 <?php
+require_once "model/Product.php";
 
 /**
  *  DAO for user persistence in file.
@@ -56,10 +57,10 @@ class ProductPersistFileDao
     }
     /**
      * selects object.
-     * @param User $obj the object to get from file.
+     * @param Product $obj the object to get from file.
      * @return object from file equal to the given one or null if not found.
      */
-    public function select(User $obj): ?User
+    public function select(Product $obj): ?Product
     {
         $resultObj = null;
         //get all data.
@@ -92,10 +93,10 @@ class ProductPersistFileDao
 
     /**
      * inserts a new object in file.
-     * @param User $obj the object to insert.
+     * @param Product $obj the object to insert.
      * @return number of objects written.
      */
-    public function insert(User $obj): int
+    public function insert(Product $obj): int
     {
         $handle = fopen($this->filename, "ab"); //open file to read.
         //convert object to csv.
@@ -106,10 +107,10 @@ class ProductPersistFileDao
 
     /**
      * deletes object from file.
-     * @param User $obj the object to delete.
+     * @param Product $obj the object to delete.
      * @return number of objects deleted.
      */
-    public function delete(User $obj): int
+    public function delete(Product $obj): int
     {
         $result = 0;
         //get all data.
@@ -126,10 +127,10 @@ class ProductPersistFileDao
 
     /**
      * updates object in file.
-     * @param  User $obj the object to update.
+     * @param  Product $obj the object to update.
      * @return number of objects updated.
      */
-    public function update(User $obj): int
+    public function update(Product $obj): int
     {
         $result = 0;
         //get all data.
@@ -147,10 +148,10 @@ class ProductPersistFileDao
     /**
      * searches object in array.
      * @param $list array, the array to search in.
-     * @param User $obj the object to search.
+     * @param Product $obj the object to search.
      * @return int object position or -1 if not found.
      */
-    private function arraySearchIndex(array $list, User $obj): int
+    private function arraySearchIndex(array $list, Product $obj): int
     {
         $index = -1;
         for ($i = 0; $i < count($list); $i++) {
@@ -166,28 +167,27 @@ class ProductPersistFileDao
      * @param $fields array, the fields to convert to object.
      * @return object or null in case of error.
      */
-    protected function fromFieldsToObj(array $fields): ?User
+    protected function fromFieldsToObj(array $fields): ?Product
     {
-        $id       = intval($fields[0]);
-        $username = $fields[1];
-        $password = $fields[2];
-        $role     = $fields[3];
-        $name     = $fields[4];
-        $surname  = $fields[5];
-        $obj = new User($id, $username, $password, $role, $name, $surname);
+        $id          = intval($fields[0]);
+        $description = $fields[1];
+        $price       = floatval($fields[2]);
+        $stock       = intval($fields[3]);
+
+        $obj = new Product($id, $description, $price, $stock);
         return $obj;
     }
     /**
-     * Returns the user if exist from given username
-     * @param string $username
-     * @param string $password
-     * @return User|int User if exists user, -1 if do not
+     * Returns the user if exist from given description
+     * @param string $description
+     * @param string $price
+     * @return Product|int Product if exists user, -1 if do not
      */
-    public function getUserbyUsername(string $username): User|int {
+    public function getUserbydescription(string $description): Product|int {
         $objList = $this->selectAll();
         $result = -1;
         foreach ($objList as $user) {
-            if ($user->getUsername() == $username) {
+            if ($user->getdescription() == $description) {
                 $result = $user;
             }
         }
@@ -204,6 +204,22 @@ class ProductPersistFileDao
        $result = false;
        foreach ($objList as $user) {
            if ($user->getId() == $id) {
+               $result = true;
+           }
+       }
+       return $result;
+    }
+        /**
+     * Check from given username if exisist in data source 
+     * @param integer $username
+     * @return bool true if exisist false if doesn't
+     */
+    public function repeatedUsername($username): bool
+    {
+       $objList = $this->selectAll();
+       $result = false;
+       foreach ($objList as $user) {
+           if ($user->getUsername() == $username) {
                $result = true;
            }
        }
