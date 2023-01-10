@@ -1,0 +1,5 @@
+1;pau;pau;admin;Pau;Figueras
+2;test1;test;staff;test;test
+6;test2;test;staff;test;test
+3;gabi;gabi;staff;gabi;gabix
+10;pep;pep;staff;Pep;Pep
