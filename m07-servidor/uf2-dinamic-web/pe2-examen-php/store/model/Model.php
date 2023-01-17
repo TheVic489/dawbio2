@@ -70,16 +70,22 @@ class Model
         }
         return $found;
     }
+    /**
+     * Get Age by username
+     * 
+     * @param int $username
+     * @return int $age
+     */
     public function getAge($username)
     {
         $user = $this->userDao->selectWhereUsername($username);
-        $role = $user->getAge();
-        return $role;
+        $age = $user->getAge();
+        return $age;
     }
     /**
      * searches a user with the given username
      * @param string $username the username to search
-     * @return the user searched or null if not found
+     * @return User|null user searched or null if not found
      */
     public function searchUserByUsername(string $username): ?User
     {

@@ -216,7 +216,7 @@ class MainController
         $user = UserFormValidation::getData();
         $result = null;
         if (is_null($user)) {
-            $result = "Error adding user";
+            $result = "User already exists";
         } else {
             $numAffected = $this->model->addItem($user);
             if ($numAffected > 0) {

@@ -142,22 +142,24 @@ class MainController
         header("Location: index.php ");
     }
 
+    // Do login page
     public function doLoginUser()
     {
         $result = "";
-        $userCredentials = UserLoginForm::getFormCredentials();
-        list($user, $pass) = $userCredentials;
+        $userCredentials   = UserLoginForm::getFormCredentials(); //Get data form
+        list($user, $pass) = $userCredentials; // Separate user and password
         $userFound = $this->model->searchUserByUsernameAndPassword($user, $pass);
-        if ($userFound !== null) {
+        
+        if ($userFound !== null) { // If user found
             $age = $this->model->getAge($user);
 
-            $_SESSION['age'] = $age;
+            $_SESSION['age']      = $age;
             $_SESSION['username'] = $user;
 
             $result = 'Logged succesfuly';
             header("Location: index.php");
 
-        } elseif ($userFound == null) {
+        } elseif ($userFound == null) { // If user not found
             $result = 'User not found';
         }
         $data['message'] = $result;
@@ -194,7 +196,7 @@ class MainController
     {
         $username2Find = UserFormValidation::getUsername2Find();
         $result = null;
-        if (is_null($username2Find)) {
+        if (($username2Find) == "") {
             $result = "Username field is void";
         } else {
             $userFound = $this->model->searchUserByUsername($username2Find);
@@ -218,8 +220,10 @@ class MainController
         $user = UserFormValidation::getData();
         $result = null;
         if (is_null($user)) {
-            $result = "Error adding user";
-        } else {
+            $result = "User already exists";
+        } elseif ($user->getUsername() == '' || $user->getPassword() == '' || $user->getAge() == 0 ) {
+            $result = "Please enter a valid data";
+        }else {
             $numAffected = $this->model->addUser($user);
             if ($numAffected > 0) {
                 $result = "Item successfully added";

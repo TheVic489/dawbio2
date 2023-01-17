@@ -8,7 +8,9 @@
         return false;
     }
 </script>
+
 <?php
+$empty = "";
 $user = $params['user'] ?? null; //?? is the 'null coalescing operator'.
 $action = $params['action'] ?? "findItem";
 $result = $params['result'] ?? null;

@@ -36,10 +36,10 @@ class UserFormValidation {
 
         
         if ((!$dao->repeatedUsername($username))) { 
-            //they exists and they are not empty
             $UserObj = new User($username, $password, $age);
         
         }else{
+            // User already exists
             $UserObj = null;
         }
         return $UserObj;
@@ -49,13 +49,17 @@ class UserFormValidation {
      * @return int $id
      */
     public static function getUsername2Find() {
-        $username = null;
+        $username = "";
         if (filter_has_var(INPUT_POST, 'username')) {
             $username = filter_input(INPUT_POST, 'username'); 
         }
         return $username;
     }
 
+    /**
+     * gets data from User form with no validation
+     * @return User User
+     */
     public static function getDataForm(): User|null {
 
         $UserObj = null;
