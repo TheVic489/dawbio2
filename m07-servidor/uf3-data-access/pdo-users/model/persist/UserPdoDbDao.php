@@ -68,11 +68,11 @@ class UserPdoDbDao {
             if ($success) {
                 if ($stmt->rowCount()>0) {
                     //retrieve data with helper method $this->fetchToUser()
-//                    //$stmt->setFetchMode(PDO::FETCH_ASSOC);
-//                    // get one row at the time
-//                    while ($u = $this->fetchToUser($stmt)){
-//                        array_push($data, $u);
-//                    }
+                //    //$stmt->setFetchMode(PDO::FETCH_ASSOC);
+                //    // get one row at the time
+                //    while ($u = $this->fetchToUser($stmt)){
+                //        array_push($data, $u);
+                //    }
 //                  //retrieve data as object of given class
 //                    $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "user\model\User");
 //                    $data = $stmt->fetchAll(); 
@@ -196,7 +196,7 @@ class UserPdoDbDao {
 
     /**
      * gets data from resultset and builds an object with retrieved data
-     * @param type $statement the resultset to get data from
+     * @param $statement the resultset to get data from
      * @return mixed the object with read data or false in case of error
      */
     private function fetchToUser($statement): mixed {
