@@ -127,7 +127,31 @@ class UserPdoDbDao {
      */
     public function update(User $entity): int {
         $numAffected = 0;
-        //TODO
+        try {
+            //PDO object creation.
+            $connection = $this->userDb->getConnection(); 
+            //query preparation.
+            $stmt = $connection->prepare($this->queries['UPDATE']);
+            //bind parameter value.
+            $stmt->bindValue(":id", $entity->getId(), \PDO::PARAM_INT);
+            $stmt->bindValue("username", $entity->getUsername(), \PDO::PARAM_STR);
+            $stmt->bindValue("password", $entity->getPassword(), \PDO::PARAM_STR);
+            $stmt->bindValue("role", $entity->getRole(), \PDO::PARAM_STR);
+            //query execution.
+            $success = $stmt->execute(); //bool
+            //Statement data recovery.
+            if ($success) {
+                $numAffected = $stmt->rowCount();
+            } else {
+                $numAffected = 0;
+            }
+        } catch (\PDOException $e) {
+            $numAffected = 0;
+            //Examples of how to get errors. TODO: delete this and treat properly the exceptions.
+            print "Error Code <br>".$e->getCode();
+            print "Error Message <br>".$e->getMessage();
+            print "Strack Trace <br>".nl2br($e->getTraceAsString());
+        }   
         return $numAffected;  
     }
 

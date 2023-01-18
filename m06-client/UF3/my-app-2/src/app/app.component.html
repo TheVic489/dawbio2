@@ -1,3 +1,20 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Pràctica</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav me-auto">
+
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="search" placeholder="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
 <!-- Así podiamos ver las componentes hasta ahora-->
 <!-- <app-compo1></app-compo1>
 <app-compo2></app-compo2>
@@ -5,10 +22,10 @@
 
 <div>
   
-  <a routerLink="/login"   > la meva component 1</a>
+  <button type="button" class="btn btn-primary" routerLink="/login"> Login</button>
   <br> 
-  <a routerLink="/register"> la meva component 2</a>
-
+  <button type="button" class="btn btn-primary" routerLink="/register"> Register</button>
+  
   <router-outlet></router-outlet>
 
 </div>

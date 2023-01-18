@@ -1,6 +1,93 @@
+<p>formulario reactivo</p> 
+<div class="container">
+    <form [formGroup]="myForm" (ngSubmit)="submit()">
+        <p>Username:
+            <input type="text" formControlName="username">
+            <span class="danger" style="color: rgb(255, 112, 112);" *ngIf="this.myForm.get('username')?.errors?.['required'] && 
+                                                                            this.myForm.get('username')?.touched">
+                * El username es obligatorio
+            </span>
+            <span class="danger" style="color: rgb(255, 112, 112);" *ngIf="this.myForm.get('username')?.errors?.['minlength'] && 
+                                                                            this.myForm.get('username')?.touched">
+                *Minimo mas de seis letras
+            </span>
+            <span class="danger" style="color: rgb(255, 112, 112);" *ngIf="this.myForm.get('username')?.errors?.['pattern'] &&
+                                                                            this.myForm.get('username')?.touched">
+                *Solo letras
+            </span>
+        </p>
+        <p>Correo:</p>
+        <input type="text" formControlName="correo">
+        <span class="danger" style="color: rgb(255, 112, 112);" *ngIf="this.myForm.get('correo')?.errors?.['required'] && this.myForm.get('correo')?.touched">
+            *Formato del correo incorrecto
+        </span>
+        <!-- <span class="danger" style="color: rgb(255, 112, 112);" *ngIf="this.myForm.get('correo')?.errors?.['email'] && this.myForm.get('correo')?.touched">
+            *pon bien el correo
+        </span> -->
+        <span class="danger" style="color: rgb(255, 112, 112);" *ngIf="this.myForm.get('correo')?.errors?.['pattern'] && this.myForm.get('correo')?.touched">
+            *pon bien el correo
+        </span>
+        <p>Contraseña:</p>
+        <input type="text" formControlName="password">
+        <span class="danger" style="color: rgb(255, 112, 112);" *ngIf="this.myForm.get('password')?.errors?.['required'] && this.myForm.get('password')?.touched">
+            *pon la contraseña
+        </span>
+        <span class="danger" style="color: rgb(255, 112, 112);" *ngIf="this.myForm.get('password')?.errors?.['minlength'] && this.myForm.get('password')?.touched">
+            *minimo 8 caracteres
+        </span>
+        <p>Repetir contraseña:</p>
+        <input type="text" formControlName="passwordrepeat">
+        <span class="danger" style="color: rgb(255, 112, 112);" *ngIf="this.myForm.get('password') != this.myForm.get('passwordrepeat') && this.myForm.get('passwordrepeat')?.touched">
+            *la contraeña ha de ser igual que la anterior
+        </span>
+        <p>Estat civil:</p>
+        <select  formControlName="estat" name="estat" id="" >
+            <option *ngFor="let a of estado" value="{{a}}">{{a}}</option>
+        </select>
+        <span *ngIf="this.myForm.get('estat')?.errors?.['required'] && this.myForm.get('estat')?.touched">
+            *Pon el estado civil
+        
+        </span>
+        <p>
+            Sexe: 
+            <br>
+            <input type="radio" name="sexe" value="Home" formControlName="sexe"> Home
+            <br>
+            <input type="radio" name="sexe" value="Dona"formControlName="sexe"> Done 
+            <br>
+            <input type="radio" name="sexe" value="Porfavor"formControlName="sexe"> Porfa
+            <br>
+            <span *ngIf="this.myForm.get('sexe')?.errors?.['required'] &&
+                         this.myForm.get('sexe')?.touched">
+              *Select one
+            </span>
+          </p>
 
-<p>compo1 works!</p>
+        <p> De que vols rebre l'informacio:</p>
+        <p *ngFor="let i of informacio">
+        <input type="checkbox" formControlName="info" value="{{i}}"> {{i}} 
+       
+        <span *ngIf="this.myForm.get('info')?.errors?.['required'] &&
+                     this.myForm.get('info')?.touched">
+        *Select one
+        </span>
+        </p>
 
-<p *ngFor="let fruta of misFrutas">
-    {{ fruta }}
-</p>
+        <p>Aceptar condicions:<input type="checkbox" formControlName="checkcondicions"></p>
+        <span *ngIf="this.myForm.get('checkcondicions')?.errors?.['required'] && this.myForm.get('checkcondicions')?.touched">
+            *Tens que aceptar els termes i condicions.
+        </span>
+        <!-- <p>Edad:</p>      
+            <input type="number" formControlName="edad" appEntrevalores>
+            <span *ngIf="this.myForm.get('edad')?.errors?.['required'] && this.myForm.get('edad')?.touched">
+                *Pon la edad
+            </span>
+            <span *ngIf="this.myForm.get('edad')?.errors?.['entre'] && this.myForm.get('edad')?.touched">
+                *Pon la edad entre 18 y 100
+            </span> -->
+        <button type="submit" [disabled]="myForm.invalid">clica</button>
+    </form>
+    <div>
+        {{registerUserData}}
+    </div>
+</div>
