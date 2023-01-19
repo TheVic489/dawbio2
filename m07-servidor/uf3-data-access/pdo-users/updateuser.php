@@ -28,7 +28,7 @@
                 if (!is_null($found)) {
                     //echo "<p>User found: " . $found . "</p>";
                     $user = $found;
-                    
+                    //HOla
                 } else {
                     echo "<p>User with id = $userId not found</p>";
                 }
