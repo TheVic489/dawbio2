@@ -48,7 +48,7 @@ class Renderer {
     
     public static function renderUserFields2Modify(\user\model\User $user): string {
         $result = "<fieldset>";
-        $result .= self::renderLabelInput("Id: ", "id", $user->getId(), 'disabled');
+        $result .= self::renderLabelInput("Id: ", "id", $user->getId(), 'readonly');
         $result .= self::renderLabelInput("Username: ", "username", $user->getUsername());
         $result .= self::renderLabelInput("Password: ", "password", $user->getPassword());
         $result .= self::renderLabelInput("Role: ", "role", $user->getRole());

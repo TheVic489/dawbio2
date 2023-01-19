@@ -13,9 +13,10 @@
         require_once "lib/Validator.php";
         require_once 'model/User.php';
         require_once "model/persist/UserPdoDbDao.php";
+
         $user = new user\model\User();
-        
         $user = \lib\views\Validator::validateUser(INPUT_POST);
+
         if (filter_has_var(INPUT_POST, 'search')) {
             $sId = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
             $userId = filter_var($sId, FILTER_VALIDATE_INT);
@@ -26,9 +27,8 @@
                 $found = $dao->select($user);
                 if (!is_null($found)) {
                     //echo "<p>User found: " . $found . "</p>";
-                    echo "<form>";
-                    echo lib\views\Renderer::renderUserFields2Modify($found);
-                    echo "</form>";
+                    $user = $found;
+                    
                 } else {
                     echo "<p>User with id = $userId not found</p>";
                 }
@@ -51,10 +51,11 @@
                 echo "<p>Valid data shoud be provided</p>";
             }            
         } 
+
         echo "<form method='post' action=\"$_SERVER[PHP_SELF]\">";
         echo lib\views\Renderer::renderUserFields($user);
-        echo "<button type='update' name='update' value='insert'>Update</button>";
-        echo "<button type='search' name='search' value='search'>Search</button>";
+        echo "<button type='submit' name='search' value='search'>Search</button>";
+        echo "<button type='submit' name='update' value='insert'>Update</button>";
         echo "</form>";
         ?>
     </body>
