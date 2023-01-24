@@ -1,22 +1,22 @@
 export class User {
-  username: string | null;
-  password: string | null;
-  role: string | null;
-  email: string | null;
-  civilStatus: string | null;
-  gender: string | null;
-  info: string | null;
-  conditions: boolean;
+  username: any;
+  password:any;
+  role:any;
+  email:any;
+  civilStatus:any;
+  gender:any;
+  info:any;
+  conditions: any;
 
   constructor(
-    username: string | null,
-    password: string | null,
-    role: string | null,
-    email: string | null,
-    civilStatus: string | null,
-    gender: string | null,
-    info: string | null,
-    conditions: boolean
+    username:any,
+    password:any,
+    role:any,
+    email:any,
+    civilStatus:any,
+    gender:any,
+    info:any,
+    conditions: any
   ) {
     this.username = username;
     this.password = password;

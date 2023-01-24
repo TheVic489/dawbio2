@@ -12,7 +12,7 @@ export class ServicioFrutasService {
     let auxiliar: string[] = ['manzanas', 'fresas', 'sandias', 'peras'];
 
     for (let i: number = 0; i < 100; i++) {
-      let j = Math.floor(Math.random() * 4);
+      let j = Math.floor(Math.random() * 2);
 
       frutas.push(auxiliar[j]);
     }

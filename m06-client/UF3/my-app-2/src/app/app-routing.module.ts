@@ -12,12 +12,12 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: Compo1Component
+    component: Compo2Component
   },
 
   {
     path: 'register',
-    component: Compo2Component
+    component: Compo1Component
   },
 
   {

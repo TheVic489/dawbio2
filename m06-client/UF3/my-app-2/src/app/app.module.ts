@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { Compo1Component } from './components/compo1/compo1.component';
 import { Compo2Component } from './components/compo2/compo2.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ValidateRepPassDirective } from './directives/validate-rep-pass.directive';
 @NgModule({
   declarations: [
     AppComponent,
     Compo1Component,
     Compo2Component,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ValidateRepPassDirective
   ],
   imports: [
     BrowserModule,
