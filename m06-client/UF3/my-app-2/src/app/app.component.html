@@ -3,14 +3,19 @@
     <a class="navbar-brand" href="#">Pràctica</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
+      
     </button>
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">
 
+        <button type="button" class="btn btn-primary inline" routerLink="/login"> Login</button>
+        <button type="button" class="btn btn-primary inline"  routerLink="/register"> Register</button>
+              
       </ul>
       <form class="d-flex">
         <input class="form-control me-sm-2" type="search" placeholder="Search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        
       </form>
     </div>
   </div>
@@ -21,10 +26,6 @@
 <app-page-not-found></app-page-not-found> -->
 
 <div>
-  
-  <button type="button" class="btn btn-primary" routerLink="/login"> Login</button>
-  <br> 
-  <button type="button" class="btn btn-primary" routerLink="/register"> Register</button>
   
   <router-outlet></router-outlet>
 

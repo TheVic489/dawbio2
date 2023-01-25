@@ -7,6 +7,8 @@ require_once 'lib/Validator.php';
 
 require_once 'model/StoreModel.php';
 require_once 'model/User.php';
+require_once 'model/Category.php';
+
 
 use proven\store\model\StoreModel as Model;
 use proven\lib\ViewLoader as View;
@@ -95,6 +97,9 @@ class MainController {
             case 'category':
                 $this->doCategoryMng();
                 break;
+            case 'category/edit':
+                $this->doCategoryEditForm("edit");
+                break;
             case 'product':
                 $this->doProductMng();
                 break;
@@ -127,6 +132,9 @@ class MainController {
                 break;
             case 'user/modify': 
                 $this->doUserModify();
+                break;
+            case 'category/modify': 
+                $this->doCategoryModify();
                 break;
             case 'user/remove': 
                 $this->doUserRemove();
@@ -253,9 +261,41 @@ class MainController {
      * displays category management page.
      */
     public function doCategoryMng() {
-        //TODO
-        $this->view->show("message.php", ['message' => 'Not implemented yet!']);
+        //get all users.
+        $result = $this->model->findAllCategories();
+        //pass list to view and show.
+        $this->view->show("category/categorymanage.php", ['list' => $result]);        
+        //$this->view->show("user/user.php", [])  //initial prototype version;
     }
+
+    public function doCategoryEditForm(string $mode) {
+        $data = array();
+        if ($mode != 'category/add') {
+            //fetch data for selected category
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+            if (($id !== false) && (!is_null($id))) {
+                $category = $this->model->findCategoryById($id);
+                if (!is_null($category)) {
+                    $data['category'] = $category;
+                }
+             }
+             $data['mode'] = $mode;
+        }
+        $this->view->show("category/categorydetail.php", $data);  //initial prototype version.
+    }
+    public function doCategoryModify() {
+        //get category data from form and validate
+        $category = Validator::validateCategory(INPUT_POST);
+        //add category to database
+        if (!is_null($category)) {
+            $result = $this->model->modifyCategory($category);
+            $message = ($result > 0) ? "Successfully modified":"Error modifying";
+            $this->view->show("category/categorydetail.php", ['mode' => 'add', 'message' => $message]);
+        } else {
+            $message = "Invalid data";
+            $this->view->show("category/categorydetail.php", ['mode' => 'add', 'message' => $message]);
+        }
+    }    
 
     /* ============== PRODUCT MANAGEMENT CONTROL METHODS ============== */
 

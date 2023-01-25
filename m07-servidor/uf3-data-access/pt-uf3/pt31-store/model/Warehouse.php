@@ -5,9 +5,9 @@ namespace proven\store\model;
 class Warehouse {
 
     public function __construct(
-            private int $id = 0,
-            private ?string $code = null,
-            private ?string $address = null
+        private int $id = 0,
+        private ?string $code = null,
+        private ?string $address = null
     ) {
         
     }
