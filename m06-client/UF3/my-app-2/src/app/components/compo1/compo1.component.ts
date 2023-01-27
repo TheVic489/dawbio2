@@ -10,13 +10,16 @@ import { User } from 'src/app/model/User';
 })
 export class Compo1Component {
   constructor(private serviceUser: UsersServiceService) {}
- 
+
+  //Init register data
   registerUserData!: User;
 
+  //Form selects
   estado     = ['Casat/da', 'Solter/a', 'Divorciat/da'];
   informacio = ['Música', 'Accesoris', 'Roba'];
 
   myForm = new FormGroup({
+
     username: new FormControl('', [
       Validators.required,
       Validators.minLength(6),

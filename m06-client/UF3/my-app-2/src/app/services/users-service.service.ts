@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { User } from '../model/User';
 
 @Injectable({
   providedIn: 'root',
@@ -7,9 +8,11 @@ export class UsersServiceService {
   constructor() {}
 
   myUsersArray: object[] = []
+
   // Métodos que generen/devuelvan datos
   getUsers(): object[]|void {
-    let users:   string[] = [];
+    let users:    string[] = [];
+    let user:     User     = new User('pepitogrillo', 'pass01' , 'comprador' , 'pepito@mail.cat', 'Soltero/a', 'Hombre', '', 'True');
     let auxiliar: string[] = ['manzanas', 'fresas', 'sandias', 'peras'];
 
     for (let i: number = 0; i < 100; i++) {
