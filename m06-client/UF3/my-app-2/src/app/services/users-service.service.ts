@@ -6,7 +6,6 @@ import { User } from '../model/User';
 })
 export class UsersServiceService {
   constructor() {}
-
   myUsersArray: object[] = []
 
   // Métodos que generen/devuelvan datos
@@ -23,12 +22,27 @@ export class UsersServiceService {
 
  //  return users;
   }
-  // VAlidate and return role of user
+  // Validate and return role of user
   validateUser(username: string, password: string): string {
-    
+    users.forEach(User => {
+      
+      if (username == dbUsername && password == dbPassword) {
+
+      }
+
+    });
     let role = '';
 
     return  role
+  }
+  
+  validateUsers(users, userToValidate) {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username === userToValidate.username && users[i].password === userToValidate.password) {
+        return true;
+      }
+    }
+    return false;
   }
 
   registerUser(user2reg: object): any {
