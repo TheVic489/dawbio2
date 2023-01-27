@@ -1,21 +1,21 @@
 export class User {
   username: any;
-  password:any;
-  role:any;
-  email:any;
-  civilStatus:any;
-  gender:any;
-  info:any;
+  password: any;
+  role: any;
+  email: any;
+  civilStatus: any;
+  gender: any;
+  info: any;
   conditions: any;
 
   constructor(
-    username:any,
-    password:any,
-    role:any,
-    email:any,
-    civilStatus:any,
-    gender:any,
-    info:any,
+    username: any,
+    password: any,
+    role: any,
+    email: any,
+    civilStatus: any,
+    gender: any,
+    info: any,
     conditions: any
   ) {
     this.username = username;
@@ -27,7 +27,4 @@ export class User {
     this.info = info;
     this.conditions = conditions;
   }
-
-  
-
 }

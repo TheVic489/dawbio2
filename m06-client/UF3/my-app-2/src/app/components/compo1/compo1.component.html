@@ -19,18 +19,18 @@
         <p>Correo:
             <input type="text" class="form-control" formControlName="correo">
             <span class="red-font" *ngIf="this.myForm.get('correo')?.errors?.['required'] && this.myForm.get('correo')?.touched">
-                *Formato del correo incorrecto
+                *El correo es obligatiorio 
             </span>
 
             <span class="red-font" *ngIf="this.myForm.get('correo')?.errors?.['pattern'] && this.myForm.get('correo')?.touched">
-                *pon bien el correo
+                *Formato del correo incorrecto
             </span>
         </p>
 
         <p>Contraseña:
             <input type="text" class="form-control" formControlName="password">
             <span class="red-font" *ngIf="this.myForm.get('password')?.errors?.['required'] && this.myForm.get('password')?.touched">
-                *pon la contraseña
+                *la contraseña es obligatoria
             </span>
             <span class="red-font" *ngIf="this.myForm.get('password')?.errors?.['minlength'] && this.myForm.get('password')?.touched">
                 *minimo 8 caracteres
@@ -49,17 +49,19 @@
             </select>
 
             <span class="red-font" *ngIf="this.myForm.get('estat')?.errors?.['required'] && this.myForm.get('estat')?.touched">
-                *Pon el estado civil
+                *El estado civil és obligatorio
             </span>
         </p>
      
         <p>
             Sexe: 
             <br>
-            <input class="form-check-input" type="radio" name="sexe" value="Home" formControlName="sexe"> Home
+            <input class="form-check-input" type="radio" name="sexe" value="Home"  formControlName="sexe"> Home
             <br>
-            <input class="form-check-input" type="radio" name="sexe" value="Dona"formControlName="sexe"> Done 
+            <input class="form-check-input" type="radio" name="sexe" value="Dona"  formControlName="sexe"> Done 
             <br>
+            <input class="form-check-input" type="radio" name="sexe" value="Altres"formControlName="sexe"> Altres 
+
             <span class="red-font" *ngIf="this.myForm.get('sexe')?.errors?.['required'] &&
                          this.myForm.get('sexe')?.touched">
             *Select one
@@ -81,7 +83,7 @@
 
         <button class="btn btn-primary" [disabled]="myForm.invalid" type="submit">Enviar</button>
     </form>
-    <div>
-        {{registerUserData}}
+    <div class="green-font">
+        {{result}}
     </div>
 </div>

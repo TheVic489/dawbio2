@@ -8,6 +8,7 @@ import { Compo1Component } from './components/compo1/compo1.component';
 import { Compo2Component } from './components/compo2/compo2.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ValidateRepPassDirective } from './directives/validate-rep-pass.directive';
+import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,7 @@ import { ValidateRepPassDirective } from './directives/validate-rep-pass.directi
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

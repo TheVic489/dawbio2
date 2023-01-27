@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersServiceService } from 'src/app/services/users-service.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 import { User } from 'src/app/model/User';
 
 @Component({
@@ -11,8 +12,10 @@ import { User } from 'src/app/model/User';
 export class Compo1Component {
   constructor(private serviceUser: UsersServiceService) {}
 
-  //Init register data
+  //Init vars
   registerUserData!: User;
+  result = '';
+
 
   //Form selects
   estado     = ['Casat/da', 'Solter/a', 'Divorciat/da'];
@@ -58,8 +61,10 @@ export class Compo1Component {
       this.myForm.value.info,
       this.myForm.value.checkcondicions
     );
-      console.log(this.registerUserData)
-    //this.serviceUser.registerUser(this.registerUserData)
+    // Call service for validate login
+    this.serviceUser.registerUser(this.registerUserData)
+    this.result = "Register successfuly";
+
 
   }
 }

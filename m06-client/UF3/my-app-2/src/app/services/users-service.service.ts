@@ -1,51 +1,42 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/User';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersServiceService {
-  constructor() {}
-  myUsersArray: object[] = []
-
+  constructor(private cookieService: CookieService) {}
+  myUsersArray: User[] = [];
   // Métodos que generen/devuelvan datos
-  getUsers(): object[]|void {
-    let users:    string[] = [];
-    let user:     User     = new User('pepitogrillo', 'pass01' , 'comprador' , 'pepito@mail.cat', 'Soltero/a', 'Hombre', '', 'True');
-    let auxiliar: string[] = ['manzanas', 'fresas', 'sandias', 'peras'];
+  getUsers(){
+    let auxiliar: User[] = [new User('user01', 'pass01', 'comprador', 'pepito@mail.cat',    'Soltero/a',    'Hombre', 'Musica', 'True'),
+                            new User('user02', 'pass01', 'comprador', 'alejandra@mail.cat', 'Divorciat/da', 'Mujer',  'Accesoris', 'True'),
+                            new User('user03', 'pass01', 'comprador', 'maria@mail.cat',     'Casat/da',     'Hombre', '', 'True'),
+                            ];
 
-    for (let i: number = 0; i < 100; i++) {
-      let j = Math.floor(Math.random() * 2);
+    for (let i: number = 0; i < 20; i++) {
+      let j = Math.floor(Math.random() * 3);
 
-      users.push(auxiliar[j]);
+      this.myUsersArray.push(auxiliar[j]);
     }
-
- //  return users;
   }
   // Validate and return role of user
-  validateUser(username: string, password: string): string {
-    users.forEach(User => {
-      
-      if (username == dbUsername && password == dbPassword) {
-
-      }
-
-    });
+  validateUser(usern: any, pass: any): string {
     let role = '';
+    this.myUsersArray.forEach(user => {
+      if (user.username === usern && user.password === pass) {
+        role = user.role
 
-    return  role
-  }
-  
-  validateUsers(users, userToValidate) {
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].username === userToValidate.username && users[i].password === userToValidate.password) {
-        return true;
-      }
-    }
-    return false;
+        this.cookieService.set('username', user.username);
+        this.cookieService.set('role', user.role);
+
+      } 
+    });
+    return role
   }
 
-  registerUser(user2reg: object): any {
+  registerUser(user2reg: User): any {
     this.myUsersArray.push(user2reg);
   }
 }
