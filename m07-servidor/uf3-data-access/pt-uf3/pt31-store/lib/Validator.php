@@ -5,6 +5,7 @@ require_once 'model/User.php';
 require_once 'model/Category.php';
 
 use proven\store\model\Category;
+use proven\store\model\Product;
 use proven\store\model\User;
 
 class Validator {
@@ -27,6 +28,18 @@ class Validator {
         $code = static::cleanAndValidate($method, 'code'); 
         $description = static::cleanAndValidate($method, 'description'); 
         $obj = new Category($id, $code, $description);
+
+        return $obj;        
+    }
+    public static function validateProduct(int $method) {
+        $obj  = null;
+        $id   = static::cleanAndValidate($method, 'id', FILTER_VALIDATE_INT); 
+        $code = static::cleanAndValidate($method, 'code'); 
+        $description = static::cleanAndValidate($method, 'description'); 
+        $price = static::cleanAndValidate($method, 'price', FILTER_VALIDATE_INT); 
+        $categoryId = static::cleanAndValidate($method, 'categoryid'); 
+
+        $obj = new Product($id, $code, $description, $price, $categoryId);
 
         return $obj;        
     }

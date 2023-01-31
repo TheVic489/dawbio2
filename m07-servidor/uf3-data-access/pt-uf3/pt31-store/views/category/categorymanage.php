@@ -6,7 +6,7 @@
         </strong>
     </div>
 <?php endif ?>
-<form method="post">
+<!-- <form method="post">
     <div class="row g-3 align-items-center">
         <span class="col-auto">
             <label for="search" class="col-form-label">Role to search</label>
@@ -21,7 +21,7 @@
             <button class="btn btn-primary" type="submit" name="action" value="category/form">Add</button>
         </span>
     </div>
-</form>
+</form> -->
 <?php
 //display list in a table.
 $list = $params['list'] ?? null;
@@ -33,6 +33,7 @@ if (isset($list)) {
         <tr>
             <th>code</th>
             <th>description</th>
+            <th>actions</th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +44,7 @@ EOT;
             <tr>
             <td><a href="index.php?action=category/edit&id={$elem->getId()}">{$elem->getCode()}</td>
             <td>{$elem->getDescription()}</a></td>
+            <td><button class="btn btn-outline-dark" name="action" value="category/remove">remove</button></td>
             </tr>               
 EOT;
     }

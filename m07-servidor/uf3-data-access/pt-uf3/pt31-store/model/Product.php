@@ -26,15 +26,15 @@ class Product {
         return $this->id;
     }
 
-    public function getCode(): string {
+    public function getCode(): ?string {
         return $this->code;
     }
 
-    public function getDescription(): string {
+    public function getDescription(): ?string {
         return $this->description;
     }
 
-    public function getPrice(): float {
+    public function getPrice(): ?float {
         return $this->price;
     }
 

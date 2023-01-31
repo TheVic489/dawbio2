@@ -12,7 +12,7 @@
         <p>Contraseña:
             <input type="password" class="form-control" formControlName="password">
             <span class="red-font" *ngIf="this.myForm.get('password')?.errors?.['required'] && 
-                                          this.myForm.get('correo')?.touched">
+                                          this.myForm.get('password')?.touched">
                 *Escribe la contraseña
             </span>
         </p>
@@ -23,7 +23,6 @@
         {{result}}
     </div>
     <div>
-        {{nombre}}
-        {{role}}
+        <!-- {{role}} -->
     </div>
 </div>

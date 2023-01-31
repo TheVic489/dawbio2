@@ -1,20 +1,21 @@
-import { Component }                          from '@angular/core';
+import { Component, OnInit }                          from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersServiceService }                from 'src/app/services/users-service.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-compo2',
-  templateUrl: './compo2.component.html',
   styleUrls: ['./compo2.component.css'],
+  templateUrl: './compo2.component.html',
 })
 export class Compo2Component {
-  constructor(private serviceUser: UsersServiceService,  private cookieService: CookieService) {}
+  constructor(private serviceUser: UsersServiceService,  private cookieService: CookieService, private router: Router) {}
 
   //Init vars
-  nombre = '';
-  role   = ''
-  result = ''
+  nombre: any = '';
+  role:   any = ''
+  result: any = ''
 
   myForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -23,11 +24,23 @@ export class Compo2Component {
   });
 
   submit(): void {
-    //solo si clicas
+    // Load random users
     this.serviceUser.getUsers();
-    this.serviceUser.validateUser(this.myForm.value.username, this.myForm.value.password)
+    // Validate login
+    this.role = this.serviceUser.validateUser(this.myForm.value.username, this.myForm.value.password)
+    this.nombre = this.myForm.value.username;
+
     // Get cookie 
-    this.nombre = this.cookieService.get('nombre');
-    this.role   = this.cookieService.get('role');
+    this.cookieService.get('username');
+    this.cookieService.get('role');
+
+    // Redirects to esdeveniments
+    if (this.role != '') {
+      this.router.navigate(['/esdeveniments']);
+      sessionStorage.removeItem('reloaded'); 
+
+    } 
+
   }
+  
 }

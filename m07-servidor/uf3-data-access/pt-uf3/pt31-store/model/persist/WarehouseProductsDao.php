@@ -10,6 +10,8 @@ use proven\store\model\WarehouseProducts as WarehouseProducts;
 /**
  * WarehouseProducts database persistence class.
  * @author ProvenSoft
+ * 
+ * TODO
  */
 class WarehouseDaoProducts {
 
@@ -18,7 +20,7 @@ class WarehouseDaoProducts {
      */
     private DbConnect $dbConnect;
     /**
-     * table name for warehouse.
+     * table name for warehouseProducts.
      */
     private static string $TABLE_NAME = 'warehousesproducts';
     /**
@@ -67,36 +69,36 @@ class WarehouseDaoProducts {
     }
 
     /**
-     * fetches a row from PDOStatement and converts it into an warehouse object.
+     * fetches a row from PDOStatement and converts it into an warehouseproduct object.
      * @param $statement the statement with query data.
      * @return WarehouseProducts|false object with retrieved data or false in case of error.
      */
     private function fetchTocategory($statement): mixed {
         $row = $statement->fetch();
         if ($row) {
-            $id = intval($row['id']);
-            $code = $row['code'];
-            $address = $row['address'];
+            $warehouseid = intval($row['warehouseid']);
+            $productid = $row['productid'];
+            $stock = $row['stock'];
 
-            return new WarehouseProducts($id, $code, $address);
+            return new WarehouseProducts($warehouseid, $productid, $stock);
         } else {
             return false;
         }
     }    
     
     /**
-     * selects an warehouse given its id.
-     * @param warehouse the warehouse to search.
-     * @return warehouse object being searched or null if not found or in case of error.
+     * selects an warehouseProducts given its id.
+     * @param warehouseProducts the warehouseProducts to search.
+     * @return warehouseProducts object being searched or null if not found or in case of error.
      */
-    public function select(WarehouseProducts $warehouse): ?WarehouseProducts {
+    public function select(WarehouseProducts $warehouseProducts): ?WarehouseProducts {
         $data = null;
         try {
             //PDO object creation.
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
             $stmt = $connection->prepare($this->queries['SELECT_WHERE_ID']);
-            $stmt->bindValue(':id', $warehouse->getId(), \PDO::PARAM_INT);
+            $stmt->bindValue(':id', $warehouseProducts->getId(), \PDO::PARAM_INT);
             //query execution.
             $success = $stmt->execute(); //bool
             //Statement data recovery.
@@ -128,7 +130,7 @@ class WarehouseDaoProducts {
 
     /**
      * selects all entitites in database.
-     * return array of warehouse objects.
+     * return array of warehouseProducts objects.
      */
     public function selectAll(): array {
         $data = array();
@@ -164,7 +166,7 @@ class WarehouseDaoProducts {
 
     /**
      * selects entitites in database where field value.
-     * return array of warehouse objects.
+     * return array of warehouseProducts objects.
      */
     public function selectWhere(string $fieldname, string $fieldvalue): array {
         $data = array();
@@ -200,20 +202,20 @@ class WarehouseDaoProducts {
     }
 
     /**
-     * inserts a new warehouse in database.
-     * @param warehouse the warehouse object to insert.
+     * inserts a new warehouseProducts in database.
+     * @param warehouseProducts the warehouseProducts object to insert.
      * @return number of rows affected.
      */
-    public function insert(WarehouseProducts $warehouse): int {
+    public function insert(WarehouseProducts $warehouseProducts): int {
         $numAffected = 0;
         try {
             //PDO object creation.
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
             $stmt = $connection->prepare($this->queries['INSERT']);
-            $stmt->bindValue(':id', $warehouse->getId(), \PDO::PARAM_STR);
-            $stmt->bindValue(':code', $warehouse->getCode(), \PDO::PARAM_STR);
-            $stmt->bindValue(':address', $warehouse->getAddress(), \PDO::PARAM_STR);
+            $stmt->bindValue(':id', $warehouseProducts->getId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':code', $warehouseProducts->getCode(), \PDO::PARAM_STR);
+            $stmt->bindValue(':address', $warehouseProducts->getAddress(), \PDO::PARAM_STR);
             //query execution.
             $success = $stmt->execute(); //bool
             $numAffected = $success ? $stmt->rowCount() : 0;
@@ -227,20 +229,20 @@ class WarehouseDaoProducts {
     }
 
     /**
-     * updates warehouse in database.
-     * @param warehouse the warehouse object to update.
+     * updates warehouseProducts in database.
+     * @param warehouseProducts the warehouseProducts object to update.
      * @return number of rows affected.
      */
-    public function update(WarehouseProducts $warehouse): int {
+    public function update(WarehouseProducts $warehouseProducts): int {
         $numAffected = 0;
         try {
             //PDO object creation.
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
             $stmt = $connection->prepare($this->queries['UPDATE']);
-            $stmt->bindValue(':id', $warehouse->getId(), \PDO::PARAM_STR);
-            $stmt->bindValue(':code', $warehouse->getCode(), \PDO::PARAM_STR);
-            $stmt->bindValue(':address', $warehouse->getAddress(), \PDO::PARAM_STR);
+            $stmt->bindValue(':id', $warehouseProducts->getId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':code', $warehouseProducts->getCode(), \PDO::PARAM_STR);
+            $stmt->bindValue(':address', $warehouseProducts->getAddress(), \PDO::PARAM_STR);
             //query execution.
             $success = $stmt->execute(); //bool
             $numAffected = $success ? $stmt->rowCount() : 0;
@@ -254,18 +256,18 @@ class WarehouseDaoProducts {
     }
 
     /**
-     * deletes warehouse from database.
-     * @param warehouse the warehouse object to delete.
+     * deletes warehouseProducts from database.
+     * @param warehouseProducts the warehouseProducts object to delete.
      * @return number of rows affected.
      */
-    public function delete(WarehouseProducts $warehouse): int {
+    public function delete(WarehouseProducts $warehouseProducts): int {
         $numAffected = 0;
         try {
             //PDO object creation.
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.            
             $stmt = $connection->prepare($this->queries['DELETE']);
-            $stmt->bindValue(':id', $warehouse->getId(), \PDO::PARAM_INT);
+            $stmt->bindValue(':id', $warehouseProducts->getId(), \PDO::PARAM_INT);
             $success = $stmt->execute(); //bool
             $numAffected = $success ? $stmt->rowCount() : 0;
         } catch (\PDOException $e) {

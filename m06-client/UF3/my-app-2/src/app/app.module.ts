@@ -9,13 +9,15 @@ import { Compo2Component } from './components/compo2/compo2.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ValidateRepPassDirective } from './directives/validate-rep-pass.directive';
 import { CookieService } from 'ngx-cookie-service';
+import { EsdevenimentsComponent } from './esdeveniments/esdeveniments.component';
 @NgModule({
   declarations: [
     AppComponent,
     Compo1Component,
     Compo2Component,
     PageNotFoundComponent,
-    ValidateRepPassDirective
+    ValidateRepPassDirective,
+    EsdevenimentsComponent
   ],
   imports: [
     BrowserModule,

@@ -33,7 +33,7 @@ class ProductDao {
         $this->dbConnect = new DbConnect();
         $this->queries = array();
         $this->initQueries();    
-    }
+    }           
 
     /**
      * defines queries to database.
@@ -57,15 +57,15 @@ class ProductDao {
             self::$TABLE_NAME
         );
         $this->queries['SELECT_WHERE_CATEGORY_ID'] = \sprintf(
-            "select * from %s where categoryid = :categoryid", 
+            "select * from %s where category_id = :category_id", 
             self::$TABLE_NAME
         );
-        $this->queries['INSERT'] = \sprintf(
-                "insert into %s (id, code, description, price, categoryid) values (:id, :code, :categoryid)", 
+        $this->queries['INSERT'] = \sprintf(                                                                    
+                "insert into %s (id, code, description, price, category_id) values (:id, :code, :description, :price, :category_id)", 
                 self::$TABLE_NAME
         );
         $this->queries['UPDATE'] = \sprintf(
-                "update %s set id = :id, code = :code, description = :description, price = :price, categoryid = :categoryid where id = :id", 
+                "update %s set id = :id, code = :code, description = :description, price = :price, category_id = :category_id where id = :id", 
                 self::$TABLE_NAME
         );
         $this->queries['DELETE'] = \sprintf(
@@ -86,9 +86,9 @@ class ProductDao {
             $code = $row['code'];
             $description = $row['description'];
             $price = $row['price'];
-            $categoryid = $row['categoryid'];
+            $category_id = $row['category_id'];
 
-            return new Product($id, $code, $description, $price, $categoryid);
+            return new Product($id, $code, $description, $price, $category_id);
         } else {
             return false;
         }
@@ -221,18 +221,18 @@ class ProductDao {
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
             $stmt = $connection->prepare($this->queries['INSERT']);
-            $stmt->bindValue(':id', $product->getId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':id', $product->getId(), \PDO::PARAM_INT);
             $stmt->bindValue(':code', $product->getCode(), \PDO::PARAM_STR);
             $stmt->bindValue(':description', $product->getDescription(), \PDO::PARAM_STR);
             $stmt->bindValue(':price', $product->getPrice(), \PDO::PARAM_STR);
-            $stmt->bindValue(':categoryid', $product->getCategoryId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':category_id', $product->getCategoryId(), \PDO::PARAM_INT);
             //query execution.
             $success = $stmt->execute(); //bool
             $numAffected = $success ? $stmt->rowCount() : 0;
         } catch (\PDOException $e) {
-            // print "Error Code <br>".$e->getCode();
-            // print "Error Message <br>".$e->getMessage();
-            // print "Strack Trace <br>".nl2br($e->getTraceAsString());
+            print "Error Code <br>".$e->getCode();
+            print "Error Message <br>".$e->getMessage();
+            print "Strack Trace <br>".nl2br($e->getTraceAsString());
             $numAffected = 0;
         }
         return $numAffected;
@@ -250,18 +250,18 @@ class ProductDao {
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
             $stmt = $connection->prepare($this->queries['UPDATE']);
-            $stmt->bindValue(':id', $product->getId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':id', $product->getId(), \PDO::PARAM_INT);
             $stmt->bindValue(':code', $product->getCode(), \PDO::PARAM_STR);
             $stmt->bindValue(':description', $product->getDescription(), \PDO::PARAM_STR);
-            $stmt->bindValue(':price', $product->getPrice(), \PDO::PARAM_STR);
-            $stmt->bindValue(':categoryid', $product->getCategoryId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':price', $product->getPrice(), \PDO::PARAM_BOOL);
+            $stmt->bindValue(':category_id', $product->getCategoryId(), \PDO::PARAM_INT);
             //query execution.
             $success = $stmt->execute(); //bool
             $numAffected = $success ? $stmt->rowCount() : 0;
         } catch (\PDOException $e) {
-            // print "Error Code <br>".$e->getCode();
-            // print "Error Message <br>".$e->getMessage();
-            // print "Strack Trace <br>".nl2br($e->getTraceAsString());
+            print "Error Code <br>".$e->getCode();
+            print "Error Message <br>".$e->getMessage();
+            print "Strack Trace <br>".nl2br($e->getTraceAsString());
             $numAffected = 0;
         }
         return $numAffected;  
