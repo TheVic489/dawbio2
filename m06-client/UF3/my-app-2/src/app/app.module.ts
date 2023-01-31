@@ -17,7 +17,7 @@ import { EsdevenimentsComponent } from './esdeveniments/esdeveniments.component'
     Compo2Component,
     PageNotFoundComponent,
     ValidateRepPassDirective,
-    EsdevenimentsComponent
+    EsdevenimentsComponent,
   ],
   imports: [
     BrowserModule,

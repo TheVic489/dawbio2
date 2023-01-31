@@ -14,14 +14,18 @@ export class EsdevenimentsComponent implements OnInit {
     private cookieService: CookieService,
     private router: Router
   ) {}
+
   isLogged!: boolean;
 
   ngOnInit() {
     this.handleSesison();
 
+    //TODO
+    
+
     //this.serviceUser.getUsers();
   }
-
+  
   handleSesison(){
     /// HANDLE SESSION ///
     // Reload page to show logout button
@@ -31,7 +35,6 @@ export class EsdevenimentsComponent implements OnInit {
     }
     // If it's not logged, redirect to login
     this.isLogged = this.serviceUser.checkCookieSession();
-
     if (!this.isLogged) { 
       this.router.navigate(['/login']);
     }

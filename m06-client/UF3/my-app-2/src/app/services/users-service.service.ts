@@ -8,15 +8,10 @@ import { CookieService } from 'ngx-cookie-service';
 export class UsersServiceService {
   constructor(private cookieService: CookieService) {}
   myUsersArray: User[] = [new User('user01', 'pass01', 'comprador', 'pepito@mail.cat',    'Soltero/a',    'Hombre', 'Musica', 'True'),
-                        new User('user02', 'pass01', 'comprador', 'alejandra@mail.cat', 'Divorciat/da', 'Mujer',  'Accesoris', 'True'),
-                        new User('user03', 'pass01', 'comprador', 'maria@mail.cat',     'Casat/da',     'Hombre', '', 'True'),
+                          new User('user02', 'pass01', 'comprador', 'alejandra@mail.cat', 'Divorciat/da', 'Mujer',  'Accesoris', 'True'),
+                          new User('user03', 'pass01', 'comprador', 'maria@mail.cat',     'Casat/da',     'Hombre', '', 'True'),
      ];
-  // Métodos que generen/devuelvan datos
 
-  auxiliar: User[] = [new User('user01', 'pass01', 'comprador', 'pepito@mail.cat',    'Soltero/a',    'Hombre', 'Musica', 'True'),
-                      new User('user02', 'pass01', 'comprador', 'alejandra@mail.cat', 'Divorciat/da', 'Mujer',  'Accesoris', 'True'),
-                      new User('user03', 'pass01', 'comprador', 'maria@mail.cat',     'Casat/da',     'Hombre', '', 'True'),
-                          ];
   usernames   = ["Juan", "Pedro", "Miguel", "Andrés", "María", "user01", "user02"];
   correos     = ["gmail.com", "hotmail.com", "yahoo.com", "outlook.com"];
   contraseñas = ["contra", "seña", "pass04", "pass02", "pass03", "pass01"];

@@ -14,6 +14,7 @@
       </ul>
       <form class="d-flex">
         <div *ngIf="isLoged">
+          <p>Hola {{myRole}}!</p>
           <button type="button" class="btn btn-warning inline" (click)="doLogOut()"> Logout </button>
         </div>
         <input class="form-control me-sm-2" type="search" placeholder="Search">
