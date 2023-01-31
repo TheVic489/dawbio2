@@ -10,6 +10,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ValidateRepPassDirective } from './directives/validate-rep-pass.directive';
 import { CookieService } from 'ngx-cookie-service';
 import { EsdevenimentsComponent } from './esdeveniments/esdeveniments.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,8 @@ import { EsdevenimentsComponent } from './esdeveniments/esdeveniments.component'
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

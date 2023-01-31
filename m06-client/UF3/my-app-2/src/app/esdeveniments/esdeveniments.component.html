@@ -1,1 +1,24 @@
-<p>esdeveniments works!</p>
+<h1 class="title">Events List!</h1>
+<div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col" >Name</th>
+            <th scope="col" >Type</th>
+            <th scope="col" >Date</th>
+            <th scope="col" >Place</th>
+            <th scope="col" >Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let event of events | paginate: { itemsPerPage: 10, currentPage: page}">
+            <td  class="table-active" >{{ event.name }}</td>
+            <td  class="table-active" >{{ event.type }}</td>
+            <td  class="table-active" >{{ event.date }}</td>
+            <td  class="table-active" >{{ event.price }}</td>
+            <td  class="table-active" >{{ event.place }}<button class="btn btn-secondary float-right" id="deleteButton" (click)="deleteRow(this)">Delete</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<pagination-controls class="page" (pageChange)="page = $event"></pagination-controls>

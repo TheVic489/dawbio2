@@ -1,0 +1,17 @@
+.title {
+    margin-bottom: 20px;
+    margin-top: 20px; 
+    text-align: center;  
+}
+.table-div {
+    margin-right: 30px;
+    margin-left: 30px;
+}
+.page {
+    text-align: center;
+}
+.float-right {
+    float: right;
+    margin-right: 100px;
+
+}

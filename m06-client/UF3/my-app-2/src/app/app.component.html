@@ -7,16 +7,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">
-
+        <div *ngIf="!isLoged">
         <button type="button" class="btn btn-primary inline" routerLink="/login"> Login</button>
         <button type="button" class="btn btn-primary inline"  routerLink="/register"> Register</button>
-              
-      </ul>
-      <form class="d-flex">
-        <div *ngIf="isLoged">
-          <p>Hola {{myRole}}!</p>
-          <button type="button" class="btn btn-warning inline" (click)="doLogOut()"> Logout </button>
         </div>
+      </ul>
+      <div *ngIf="isLoged">
+        <b class="inline margin" >Hola {{myRole}}!</b>
+        <button type="button" class="btn btn-warning inline" (click)="doLogOut()"> Logout </button>
+      </div>
+      <form class="d-flex">
+
         <input class="form-control me-sm-2" type="search" placeholder="Search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         

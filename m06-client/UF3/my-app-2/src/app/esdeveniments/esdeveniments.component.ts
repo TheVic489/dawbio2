@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit }   from '@angular/core';
 import { UsersServiceService } from 'src/app/services/users-service.service';
-import { CookieService } from 'ngx-cookie-service';
+import { ListEventsServiceService } from 'src/app/services/list-events-service.service';
+import { CookieService }       from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { Event }  from '../model/Esdeveniments';
+
 
 @Component({
   selector: 'app-esdeveniments',
@@ -9,23 +12,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./esdeveniments.component.css'],
 })
 export class EsdevenimentsComponent implements OnInit {
-  constructor(
+  constructor( // --> per injectar, serveis, cookies, router
     private serviceUser: UsersServiceService,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private listeventService: ListEventsServiceService
   ) {}
 
   isLogged!: boolean;
-
+  events!: Event[];
+  page: number = 1;
+  
   ngOnInit() {
+    //Execute Handle session
     this.handleSesison();
-
-    //TODO
-    
-
+    this.events = this.listeventService.getEvents()
     //this.serviceUser.getUsers();
   }
   
+  deleteRow(element: any): void {
+    var row = element.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+  }
   handleSesison(){
     /// HANDLE SESSION ///
     // Reload page to show logout button
