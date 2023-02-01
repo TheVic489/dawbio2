@@ -4,6 +4,7 @@ import { ListEventsServiceService } from 'src/app/services/list-events-service.s
 import { CookieService }       from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { Event }  from '../model/Esdeveniments';
+import { trigger } from '@angular/animations';
 // Comoponente de los Eventos
 
 @Component({
@@ -24,24 +25,43 @@ export class EsdevenimentsComponent implements OnInit {
   events!:   Event[];
   page:      number = 1;
   myRole!:   string;
-  
+  itXpage!:  number;
+
+  filterEvents!:  Event[];
+  filterByName!: string;
+  filterByPrice!: number ;
   ngOnInit() {
     // Execute Handle session
     this.handleSesison();
-
     // Get events list
     this.events = this.listeventService.getEvents()
-
+    
     //Get Role
     this.myRole = this.serviceUser.getCookieRole();
-
+  
+    this.itXpage = 10;
+    this.filterByName = "";
+    this.filterByPrice = 100;
+    this.filterEvents = this.events;
+  }
+  // Deletes row for button
+  deleteRow(element: any): void {
+    this.filterEvents = this.filterEvents.filter(delEvent => delEvent != element)    
   }
   
-  deleteRow(element: any): void {
-    this.events = this.events.filter(delEvent => delEvent != element)    
+  filter() {
+    this.filterEvents = this.events.filter(value => {
+
+      if(value.name.indexOf(this.filterByName) != -1) {
+        if(value.price <= this.filterByPrice)
+        return true;
+      }
+      return false;
+    });
   }
 
-  handleSesison(){
+
+  handleSesison(): void{
     /// HANDLE SESSION ///
 
     // Reload page to show logout button

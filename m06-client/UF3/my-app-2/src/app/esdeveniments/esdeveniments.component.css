@@ -4,17 +4,25 @@
     text-align: center;  
 }
 .table-div {
-    margin-right: 30px;
-    margin-left: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
 }
 .page {
     text-align: center;
+
+}
+.select {
+    padding-left: 20px;
 
 }
 b {
     font-size: 19px;
 }
 
+.filter {
+    margin-left: 30%;
+    margin-right: 30%;
+}
 ul .ngx-pagination {
     padding-left: 0;
 

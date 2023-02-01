@@ -1,11 +1,11 @@
 export class Event {
-  name: any;
+  name: string;
   type: any;
   date: any;
   place: any;
   price: any;
 
-  constructor(name: any, type: any, date: any, place: any, price: any) {
+  constructor(name: string, type: any, date: any, place: any, price: any) {
     this.name = name;
     this.type = type;
     this.date = date;
@@ -13,11 +13,11 @@ export class Event {
     this.price = price;
   }
 
-  get Name(): any {
+  get Name(): string {
     return this.name;
   }
 
-  set Name(name: any) {
+  set Name(name: string) {
     this.name = name;
   }
 

@@ -1,27 +1,35 @@
 <h1 class="title">Events List!</h1>
-<form class="d-flex form">
+<div class="filter">    
+    Filter by name: <input class="form-control me-sm-2" type="text" [(ngModel)]="filterByName" (ngModelChange)="filter()" placeholder="Search">
+    Filter by price:<input class="form-control me-sm-2" type="range" min="0" max="100" [(ngModel)]="filterByPrice" (ngModelChange)="filter()" placeholder="Search">
+    <p class="">{{filterByPrice}}</p>
+</div>
 
-    <input class="form-control me-sm-2" type="search" placeholder="Search">
-    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    
-  </form>
-<div>
+<div class="select">
+    <p>Items per page</p>
+    <select class="form-select form-select-sm"  aria-label=".form-select-sm example" name="" id="">
+        <option value="">5</option>
+        <option value="">10</option>
+        <option value="">15</option>
+    </select>
+</div>
+<div class="table-div">
 <table class="table table-striped table-hover">
     <thead>
         <tr>
             <th scope="col" >Name</th>
             <th scope="col" >Type</th>
             <th scope="col" >Date</th>
-            <th scope="col" >Place</th>
             <th scope="col" >Price</th>
+            <th scope="col" >Place</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let event of events | paginate: { itemsPerPage: 10, currentPage: page}">
+        <tr *ngFor="let event of filterEvents | paginate: { itemsPerPage: itXpage, currentPage: page}">
             <td  class="table-active" >{{ event.name }}</td>
             <td  class="table-active" >{{ event.type }}</td>
             <td  class="table-active" >{{ event.date }}</td>
-            <td  class="table-active" >{{ event.price }}</td>
+            <td  class="table-active" >{{ event.price }} €</td>
             <td  class="table-active" >{{ event.place }}
             </td>
             <td class="table-active">
@@ -32,11 +40,17 @@
         </tr>
         </tbody>
     </table>
+    <!-- <div>
+        <tr *ngFor="let events of filterEventsByName()">
+            <td>{{ eventsResult.name }}</td>
+            ...
+        </tr>
+    </div> -->
 </div>
-<div class="page">
+<div class="page ">
 <pagination-controls class="btn btn-dark" (pageChange)="page = $event"></pagination-controls>
 </div>
-<div class="abajo-izquierda">
-<b *ngIf="events.length > 1">Total number of events: {{ events.length }} </b>
-<b *ngIf="events.length == 0">No events found </b>
+<div class="abajo-izquierda table-div">
+<b *ngIf="filterEvents.length > 1">Total number of events: {{ filterEvents.length }} </b>
+<b *ngIf="filterEvents.length == 0">No events found </b>
 </div>

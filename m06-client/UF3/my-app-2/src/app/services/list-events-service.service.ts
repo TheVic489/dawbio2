@@ -25,7 +25,7 @@ export class ListEventsServiceService {
       const eventType = this.eventTypes[Math.floor(Math.random() * this.eventTypes.length)];
       const eventDate = this.eventDates[Math.floor(Math.random() * this.eventDates.length)];
       const eventPlace = this.eventPlaces[Math.floor(Math.random() * this.eventPlaces.length)];
-      const eventPrice = (Math.floor(Math.random() * 100) + 1) + '€';
+      const eventPrice = (Math.floor(Math.random() * 100) + 1);
     
       const event = new Event(eventName, eventType, eventDate, eventPlace, eventPrice);
       this.events.push(event);
