@@ -49,6 +49,7 @@ export class EsdevenimentsComponent implements OnInit {
     this.filterEvents = this.filterEvents.filter(delEvent => delEvent != element)    
   }
   
+  // Filter events
   filter() {
     this.filterEvents = this.events.filter(value => {
 
@@ -65,6 +66,7 @@ export class EsdevenimentsComponent implements OnInit {
     /// HANDLE SESSION ///
 
     // Reload page to show logout button
+    // Reload page if its has been not reloaded yet.
     if (sessionStorage.getItem('reloaded') === null) {
       sessionStorage.setItem('reloaded', 'true');
       window.location.reload();

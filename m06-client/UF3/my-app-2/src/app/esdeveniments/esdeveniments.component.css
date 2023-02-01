@@ -9,7 +9,10 @@
 }
 .page {
     text-align: center;
-
+    margin-top: 5px; 
+}
+.number {
+    text-align: center;
 }
 .select {
     padding-left: 20px;

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersServiceService } from 'src/app/services/users-service.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
 import { User } from 'src/app/model/User';
 
+// COMPONENTE DEL REGISTRO
 @Component({
   selector: 'app-compo1',
   templateUrl: './compo1.component.html',
@@ -21,6 +21,7 @@ export class Compo1Component {
   estado     = ['Casat/da', 'Solter/a', 'Divorciat/da'];
   informacio = ['Música', 'Accesoris', 'Roba'];
 
+  // Form group
   myForm = new FormGroup({
 
     username: new FormControl('', [
@@ -54,14 +55,14 @@ export class Compo1Component {
     this.registerUserData = new User(
       this.myForm.value.username,
       this.myForm.value.password,
-      'comprador',
+      'comprador',                 // Siempre comprador al registrar
       this.myForm.value.correo,
       this.myForm.value.estat,
       this.myForm.value.sexe,
       this.myForm.value.info,
       this.myForm.value.checkcondicions
     );
-    // Call service for validate login
+    // Call service for register the user
     this.serviceUser.registerUser(this.registerUserData)
     this.result = "Register successfuly";
 
