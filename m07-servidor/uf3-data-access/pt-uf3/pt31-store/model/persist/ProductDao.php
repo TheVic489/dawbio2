@@ -65,7 +65,7 @@ class ProductDao {
                 self::$TABLE_NAME
         );
         $this->queries['UPDATE'] = \sprintf(
-                "update %s set id = :id, code = :code, description = :description, price = :price, category_id = :category_id where id = :id", 
+                "update %s set code = :code, description = :description, price = :price, category_id = :category_id where id = :id", 
                 self::$TABLE_NAME
         );
         $this->queries['DELETE'] = \sprintf(
@@ -79,7 +79,7 @@ class ProductDao {
      * @param $statement the statement with query data.
      * @return Product|false object with retrieved data or false in case of error.
      */
-    private function fetchTocategory($statement): mixed {
+    private function fetchToProduct($statement): mixed {
         $row = $statement->fetch();
         if ($row) {
             $id = intval($row['id']);
@@ -115,11 +115,14 @@ class ProductDao {
                     // //set fetch mode.
                     // $stmt->setFetchMode(\PDO::FETCH_ASSOC);
                     // // get one row at the time
-                    // if ($u = $this->fetchTocategory($stmt)){
+                    // if ($u = $this->fetchToProduct($stmt)){
                     //     $data = $u;
                     // }
-                    $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Product::class);
-                    $data = $stmt->fetch();
+                    // $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Product::class);
+                    // $data = $stmt->fetch();
+                    while ($p = $this->fetchToProduct($stmt)) {
+                        $data = $p;
+                    }
                 } else {
                     $data = null;
                 }
@@ -140,7 +143,7 @@ class ProductDao {
      * selects all entitites in database.
      * return array of product objects.
      */
-    public function selectAll(): array {
+    public function selectAll(): array{
         $data = array();
         try {
             //PDO object creation.
@@ -153,9 +156,12 @@ class ProductDao {
             if ($success) {
                 if ($stmt->rowCount()>0) {
                    //fetch in class mode and get array with all data.                   
-                    $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Product::class);
+                     $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Product::class);
                     $data = $stmt->fetchAll(); 
                     //or in one single sentence:
+                    while ($p = $this->fetchToProduct($stmt)){
+                        $data = array_push($data, $p);
+                    }
                     // $data = $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Product::class);
                 } else {
                     $data = array();
@@ -253,7 +259,7 @@ class ProductDao {
             $stmt->bindValue(':id', $product->getId(), \PDO::PARAM_INT);
             $stmt->bindValue(':code', $product->getCode(), \PDO::PARAM_STR);
             $stmt->bindValue(':description', $product->getDescription(), \PDO::PARAM_STR);
-            $stmt->bindValue(':price', $product->getPrice(), \PDO::PARAM_BOOL);
+            $stmt->bindValue(':price', strval($product->getPrice()), \PDO::PARAM_STR);
             $stmt->bindValue(':category_id', $product->getCategoryId(), \PDO::PARAM_INT);
             //query execution.
             $success = $stmt->execute(); //bool

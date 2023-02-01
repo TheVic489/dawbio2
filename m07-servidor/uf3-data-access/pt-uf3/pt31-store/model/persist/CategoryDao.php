@@ -254,7 +254,6 @@ class CategoryDao {
             print "Strack Trace <br>".nl2br($e->getTraceAsString());
             $numAffected = 0;
         }
-        var_dump("\ntest");
         return $numAffected;  
     }
 

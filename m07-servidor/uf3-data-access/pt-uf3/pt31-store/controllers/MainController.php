@@ -111,8 +111,14 @@ class MainController {
             case 'product/formremove':
                 $this->doProductRemoveForm("remove");
                 break;
+            case 'category/formremove':
+                $this->doCategoryRemoveForm("remove");
+                break;
             case 'warehouse':
                 $this->doWareHouseMng();
+                break;
+            case 'warehouse/edit':
+                $this->doWarehouseEditForm("edit");
                 break;
             case 'loginform':
                 $this->doLoginForm();
@@ -153,11 +159,20 @@ class MainController {
             case 'product/modify': 
                 $this->doProductModify();
                 break;
+            case 'warehouse/modify': 
+                $this->doWarehouseModify();
+                break;
             case 'user/remove': 
                 $this->doUserRemove();
                 break;
             case 'product/remove': 
                 $this->doProductRemove();
+                break;
+            case 'category/remove': 
+                $this->doCategoryRemove();
+                break;
+            case 'product/searchbycategory': 
+                $this->doProductSearchByCategory();
                 break;
             case 'login/submit':
                 $this->doLoginUser(); 
@@ -349,6 +364,34 @@ class MainController {
         }
     }    
 
+    public function doCategoryRemove() {
+        //get category data from form and validate
+        $category = Validator::validateCategory(INPUT_POST);
+        //add category to database
+        if (!is_null($category)) {
+            $result = $this->model->removeCategory($category);
+            $message = ($result > 0) ? "Successfully removed":"Error removing";
+            $this->view->show("category/categoryremoveform.php", ['mode' => 'add', 'message' => $message]);
+        } else {
+            $message = "Invalid data";
+            $this->view->show("category/categoryremoveform.php", ['mode' => 'add', 'message' => $message]);
+        }
+    } 
+    public function doCategoryRemoveForm(string $mode) {
+        $data = array();
+        if ($mode != 'category/add') {
+            //fetch data for selected category
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+            if (($id !== false) && (!is_null($id))) {
+                $category = $this->model->findCategoryById($id);
+                if (!is_null($category)) {
+                    $data['category'] = $category;
+                }
+             }
+             $data['mode'] = $mode;
+        }
+        $this->view->show("category/categoryre  moveform.php", $data);  //initial prototype version.
+    }
     /* ============== PRODUCT MANAGEMENT CONTROL METHODS ============== */
 
     /**
@@ -434,8 +477,37 @@ class MainController {
      * displays product management page.
      */
     public function doWarehouseMng() {
-        //TODO
-        $this->view->show("message.php", ['message' => 'Not implemented yet!']);
+         //get all users.
+         $result = $this->model->findAllWarehouses();
+         //pass list to view and show.
+         $this->view->show("warehouse/warehousemanage.php", ['list' => $result]);     
     }
-    
+    public function doWarehouseEditForm(string $mode) {
+        $data = array();
+        if ($mode != 'warehouse/add') {
+            //fetch data for selected warehouse
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+            if (($id !== false) && (!is_null($id))) {
+                $warehouse = $this->model->findWarehouseById($id);
+                if (!is_null($warehouse)) {
+                    $data['warehouse'] = $warehouse;
+                }
+             }
+             $data['mode'] = $mode;
+        }
+        $this->view->show("warehouse/warehousedetail.php", $data);  //initial prototype version.
+    }
+    public function doWarehouseModify() {
+        //get warehouse data from form and validate
+        $warehouse = Validator::validateWarehouse(INPUT_POST);
+        //add warehouse to database
+        if (!is_null($warehouse)) {
+            $result = $this->model->modifyWarehouse($warehouse);
+            $message = ($result > 0) ? "Successfully modified":"Error modifying";
+            $this->view->show("warehouse/warehousedetail.php", ['mode' => 'add', 'message' => $message]);
+        } else {
+            $message = "Invalid data";
+            $this->view->show("warehouse/warehousedetail.php", ['mode' => 'add', 'message' => $message]);
+        }
+    }
 }

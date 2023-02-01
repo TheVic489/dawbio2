@@ -52,7 +52,16 @@ validateUser(usern: any, pass: any): string {
     this.myUsersArray.push(user2reg);
   }
 
+  /**
+   * Check if cookie role exists
+   * @returns Boolean, True if exists, false otherwise
+   */
   checkCookieSession(): boolean {
     return this.cookieService.check('role');
+  }
+  
+  // Get and return Cookie role value
+  getCookieRole(): string {
+    return this.cookieService.get('role')
   }
 }

@@ -28,7 +28,7 @@ $list = $params['list'] ?? null;
 if (isset($list)) {
     echo <<<EOT
         <table class="table table-sm table-bordered table-striped table-hover caption-top table-responsive-sm">
-        <caption>List of users</caption>
+        <caption>List of products</caption>
         <thead class='table-dark'>
         <tr>
             <th>code</th>

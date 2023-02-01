@@ -20,7 +20,7 @@ class WarehouseDao {
     /**
      * table name for warehouse.
      */
-    private static string $TABLE_NAME = 'warehouse';
+    private static string $TABLE_NAME = 'warehouses';
     /**
      * queries to database.
      */
@@ -61,7 +61,7 @@ class WarehouseDao {
                 self::$TABLE_NAME
         );
         $this->queries['UPDATE'] = \sprintf(
-                "update %s set id = :id, code = :code, address = :address where id = :id", 
+                "update %s set code = :code, address = :address where id = :id", 
                 self::$TABLE_NAME
         );
         $this->queries['DELETE'] = \sprintf(
@@ -158,9 +158,9 @@ class WarehouseDao {
                 $data = array();
             }
         } catch (\PDOException $e) {
-//            print "Error Code <br>".$e->getCode();
-//            print "Error Message <br>".$e->getMessage();
-//            print "Stack Trace <br>".nl2br($e->getTraceAsString());
+           print "Error Code <br>".$e->getCode();
+           print "Error Message <br>".$e->getMessage();
+           print "Stack Trace <br>".nl2br($e->getTraceAsString());
             $data = array();
         }   
         return $data;   
@@ -249,9 +249,9 @@ class WarehouseDao {
             $success = $stmt->execute(); //bool
             $numAffected = $success ? $stmt->rowCount() : 0;
         } catch (\PDOException $e) {
-            // print "Error Code <br>".$e->getCode();
-            // print "Error Message <br>".$e->getMessage();
-            // print "Strack Trace <br>".nl2br($e->getTraceAsString());
+            print "Error Code <br>".$e->getCode();
+            print "Error Message <br>".$e->getMessage();
+            print "Strack Trace <br>".nl2br($e->getTraceAsString());
             $numAffected = 0;
         }
         return $numAffected;  

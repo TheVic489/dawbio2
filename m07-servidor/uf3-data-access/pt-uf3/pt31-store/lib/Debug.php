@@ -10,7 +10,7 @@ class Debug {
         ini_set('error_reporting', E_ALL);        
     }
     
-    static function display(array $data): void {
+    static function display(array|object $data): void {
         foreach ($data as $value) {
             echo $value . "<br/>";
         }

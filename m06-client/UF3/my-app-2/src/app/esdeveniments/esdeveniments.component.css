@@ -9,9 +9,23 @@
 }
 .page {
     text-align: center;
+
 }
+b {
+    font-size: 19px;
+}
+
 .float-right {
     float: right;
     margin-right: 100px;
 
+}
+.abajo-izquierda {
+    text-align: right;
+    float: right;
+    position: absolute;
+}
+form.form {
+    margin-left: 30%;
+    margin-right: 30%;
 }

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Event }  from '../model/Esdeveniments';
-// import { UsersServiceService } from 'src/app/services/users-service.service';
-// import { CookieService }       from 'ngx-cookie-service';
-// import { Router } from '@angular/router';
+//  Servicio de las listas de los eventos
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +13,13 @@ export class ListEventsServiceService {
     // private router: Router
   ) { }
 
-  events: Event[] = [];
-  eventTypes  = ['Music', 'Sports', 'Theater', 'Comedy', 'Technology', 'Anime'];
-  eventPlaces = ['New York', 'London', 'Paris', 'Berlin', 'Tokyo', 'Barcelona', 'Albacete'];
-  eventDates  = ['10-12-2023', '03-02-2023', '04-10-2023', '10-12-2023', '01-03-2023'];
-  
+  events: Event[] = []; //Events void list
+  eventTypes  = ['Music', 'Sports', 'Theater', 'Comedy', 'Technology', 'Anime'];             // Event Types
+  eventPlaces = ['New York', 'London', 'Paris', 'Berlin', 'Tokyo', 'Barcelona', 'Albacete']; // Event Places
+  eventDates  = ['10-12-2023', '03-02-2023', '04-10-2023', '10-12-2023', '01-03-2023'];      // Event Dates
+
+  // Generate 100 random events and push to events list 
   getEvents() {
-    // Generate 100 events randomly
     for (let i = 0; i < 100; i++) {
       const eventName = `Event ${i + 1}`;
       const eventType = this.eventTypes[Math.floor(Math.random() * this.eventTypes.length)];
@@ -33,8 +31,6 @@ export class ListEventsServiceService {
       this.events.push(event);
 
     }
-
-    console.log(this.events);
     return this.events;
   }  
 

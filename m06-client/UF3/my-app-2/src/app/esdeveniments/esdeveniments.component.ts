@@ -4,7 +4,7 @@ import { ListEventsServiceService } from 'src/app/services/list-events-service.s
 import { CookieService }       from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { Event }  from '../model/Esdeveniments';
-
+// Comoponente de los Eventos
 
 @Component({
   selector: 'app-esdeveniments',
@@ -18,24 +18,32 @@ export class EsdevenimentsComponent implements OnInit {
     private router: Router,
     private listeventService: ListEventsServiceService
   ) {}
-
+  
+  // Init Variables
   isLogged!: boolean;
-  events!: Event[];
-  page: number = 1;
+  events!:   Event[];
+  page:      number = 1;
+  myRole!:   string;
   
   ngOnInit() {
-    //Execute Handle session
+    // Execute Handle session
     this.handleSesison();
+
+    // Get events list
     this.events = this.listeventService.getEvents()
-    //this.serviceUser.getUsers();
+
+    //Get Role
+    this.myRole = this.serviceUser.getCookieRole();
+
   }
   
   deleteRow(element: any): void {
-    var row = element.parentNode.parentNode;
-    row.parentNode.removeChild(row);
+    this.events = this.events.filter(delEvent => delEvent != element)    
   }
+
   handleSesison(){
     /// HANDLE SESSION ///
+
     // Reload page to show logout button
     if (sessionStorage.getItem('reloaded') === null) {
       sessionStorage.setItem('reloaded', 'true');
@@ -46,6 +54,5 @@ export class EsdevenimentsComponent implements OnInit {
     if (!this.isLogged) { 
       this.router.navigate(['/login']);
     }
-    /////////////////////////////////////////////7
   }
 }

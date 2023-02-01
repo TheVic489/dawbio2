@@ -28,7 +28,7 @@ $list = $params['list'] ?? null;
 if (isset($list)) {
     echo <<<EOT
         <table class="table table-sm table-bordered table-striped table-hover caption-top table-responsive-sm">
-        <caption>List of users</caption>
+        <caption>List of Categories</caption>
         <thead class='table-dark'>
         <tr>
             <th>code</th>
@@ -44,7 +44,7 @@ EOT;
             <tr>
             <td><a href="index.php?action=category/edit&id={$elem->getId()}">{$elem->getCode()}</td>
             <td>{$elem->getDescription()}</a></td>
-            <td><button class="btn btn-outline-dark" name="action" value="category/remove">remove</button></td>
+            <td><button class="btn btn-outline-dark" name="action" value="category/remove"><a href="index.php?action=category/formremove&id={$elem->getId()}">remove<a/></button></td>
             </tr>               
 EOT;
     }

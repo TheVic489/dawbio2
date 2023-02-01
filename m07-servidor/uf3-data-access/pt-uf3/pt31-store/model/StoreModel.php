@@ -10,9 +10,17 @@ require_once 'model/Category.php';
 require_once 'model/persist/ProductDao.php';
 require_once 'model/Product.php';
 
+require_once 'model/persist/WarehouseDao.php';
+require_once 'model/Warehouse.php';
+
+require_once 'model/persist/WarehouseProductsDao.php';
+require_once 'model/WarehouseProducts.php';
+
 use proven\store\model\persist\CategoryDao;
 use proven\store\model\persist\UserDao;
 use proven\store\model\persist\ProductDao;
+use proven\store\model\persist\WarehouseDao;
+use proven\store\model\persist\WarehouseProductsDao;
 //use proven\store\model\User;
 
 /**
@@ -39,6 +47,10 @@ class StoreModel {
     }
     public function findAllProducts(): array {
         $dbHelper = new ProductDao();
+        return $dbHelper->selectAll();
+    }
+    public function findAllWarehouses(): array {
+        $dbHelper = new WarehouseDao();
         return $dbHelper->selectAll();
     }
     
@@ -72,6 +84,10 @@ class StoreModel {
         $dbHelper = new ProductDao();
         return $dbHelper->update($product);
     }
+    public function modifyWarehouse(Warehouse $warehouse): int {
+        $dbHelper = new WarehouseDao();
+        return $dbHelper->update($warehouse);
+    }
 
     public function removeUser(User $user): int {
         $dbHelper = new UserDao();
@@ -80,6 +96,10 @@ class StoreModel {
     public function removeProduct(Product $product): int {
         $dbHelper = new ProductDao();
         return $dbHelper->delete($product);
+    }
+    public function removeCategory(Category $category): int {
+        $dbHelper = new CategoryDao();
+        return $dbHelper->delete($category);
     }
     
 
@@ -96,6 +116,11 @@ class StoreModel {
     public function findProductById(int $id): ?Product {
         $dbHelper = new ProductDao();
         $p = new Product($id);
+        return $dbHelper->select($p);
+    }
+    public function findWarehouseById(int $id): ?Warehouse {
+        $dbHelper = new WarehouseDao();
+        $p = new Warehouse($id);
         return $dbHelper->select($p);
     }
 

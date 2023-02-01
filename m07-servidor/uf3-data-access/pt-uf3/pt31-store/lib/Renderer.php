@@ -4,10 +4,12 @@ namespace proven\lib\views;
 require_once 'model/User.php';
 require_once 'model/Category.php';
 require_once 'model/Product.php';
+require_once 'model/Warehouse.php';
 
 use proven\store\model\User;
 use proven\store\model\Category;
 use proven\store\model\Product;
+use proven\store\model\Warehouse;
 
 class Renderer {
 
@@ -80,6 +82,20 @@ class Renderer {
         $result .= self::renderLabelInput("Price: ", "price", $product->getPrice(), "placeholder='price'");
         $result .= self::renderLabelInput("Category ID: ", "categoryid", $product->getCategoryId(), "placeholder='category id'");
         //$result .= self::renderLabelInput("Actions: ", "price", $product->getPrice(), "placeholder='price'");
+        $result .= "</fieldset>";
+        return $result;
+    }
+    /**
+     * renders fields for a warehouse's form
+     * @param Warehouse $warehouse 
+     * @return string html representation of fields
+     */
+    public static function renderWarehouseFields(Warehouse $warehouse): string {
+        $result = "<fieldset>";
+        $result .= self::renderLabelInput("Id: ", "id", $warehouse->getId(), "readonly placeholder='id'");
+        $result .= self::renderLabelInput("Code: ", "code", $warehouse->getCode(), "placeholder='code'");
+        $result .= self::renderLabelInput("Address: ", "address", $warehouse->getAddress(), "placeholder='Address'");
+        //$result .= self::renderLabelInput("Actions: ", "price", $warehouse->getPrice(), "placeholder='price'");
         $result .= "</fieldset>";
         return $result;
     }
