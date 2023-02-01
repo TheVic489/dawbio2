@@ -15,6 +15,10 @@ b {
     font-size: 19px;
 }
 
+ul .ngx-pagination {
+    padding-left: 0;
+
+}
 .float-right {
     float: right;
     margin-right: 100px;
