@@ -12,11 +12,11 @@ class WarehouseProducts {
         
     }
 
-    public function getWarehouseId(): int {
+    public function getWarehouseId(): ?int {
         return $this->warehouseId;
     }
 
-    public function getProductId(): int {
+    public function getProductId(): ?int {
         return $this->productId;
     }
 
@@ -37,7 +37,7 @@ class WarehouseProducts {
     }
 
     public function __toString() {
-        return sprintf("WarehouseProducts{[warehouseid=%d][productid=%s][stock=%s]}",
+        return sprintf("WarehouseProducts{[warehouse_id=%d][product_id=%s][stock=%s]}",
                 $this->warehouseId, $this->productId, $this->stock);
     }
 

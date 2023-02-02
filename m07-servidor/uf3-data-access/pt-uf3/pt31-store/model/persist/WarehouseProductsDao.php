@@ -15,7 +15,7 @@ use proven\store\model\Product as Product;
  * 
  * TODO
  */
-class WarehouseDaoProducts {
+class WarehouseProductsDao {
 
     /**
      * Encapsulates connection data to database.
@@ -78,8 +78,8 @@ class WarehouseDaoProducts {
     private function fetchTocategory($statement): mixed {
         $row = $statement->fetch();
         if ($row) {
-            $warehouseid = intval($row['warehouseid']);
-            $productid = $row['productid'];
+            $warehouseid = intval($row['warehouse_id']);
+            $productid = $row['product_id'];
             $stock = $row['stock'];
 
             return new WarehouseProducts($warehouseid, $productid, $stock);
@@ -158,18 +158,18 @@ class WarehouseDaoProducts {
                 $data = array();
             }
         } catch (\PDOException $e) {
-//            print "Error Code <br>".$e->getProductId();
-//            print "Error Message <br>".$e->getMessage();
-//            print "Stack Trace <br>".nl2br($e->getTraceAsString());
+        //    print "Error Code <br>".$e->getProductId();
+        //    print "Error Message <br>".$e->getMessage();
+        //    print "Stack Trace <br>".nl2br($e->getTraceAsString());
             $data = array();
         }   
         return $data;   
     }
     /**
-     * selects w entitites in database.
-     * return array of warehouseProducts objects.
+     * selects WarehouseProduct entity with given product id.
+     * return warehouseProducts object.
      */
-    public function selectWarehouseProductWhereProductId( Product $product): array {
+    public function selectWarehouseProductWhereProductId( Product $product): ?WarehouseProducts {
         $data = null;
         try {
             //PDO object creation.
