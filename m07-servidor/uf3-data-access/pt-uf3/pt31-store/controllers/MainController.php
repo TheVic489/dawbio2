@@ -11,6 +11,7 @@ require_once 'model/User.php';
 require_once 'model/Category.php';
 
 
+use proven\store\model\persist\UserDao;
 use proven\store\model\StoreModel as Model;
 use proven\lib\ViewLoader as View;
 
@@ -111,6 +112,9 @@ class MainController {
             case 'product/formremove':
                 $this->doProductRemoveForm("remove");
                 break;
+            case 'product/stocks':
+                $this->doProductStocks();
+                break;
             case 'category/formremove':
                 $this->doCategoryRemoveForm("remove");
                 break;
@@ -122,6 +126,9 @@ class MainController {
                 break;
             case 'loginform':
                 $this->doLoginForm();
+                break;
+            case 'logout':
+                $this->doLogout(); //show product form.
                 break;
             default:  //processing default action.
                 $this->handleError();
@@ -205,7 +212,7 @@ class MainController {
      * displays login form page.
      */
     public function doLoginForm() {
-        $this->view->show("login/loginform.php", []);  //initial prototype version;
+        $this->view->show("login-form.php", []);  //initial prototype version;
     }
     /**
      * Do the login service
@@ -213,26 +220,29 @@ class MainController {
      */
     public function doLoginUser()
     {
-        // $result = "";
-        // $userCredentials = UserLoginForm::getFormCredentials();
-        // list($user, $pass) = $userCredentials;
-        // $userFound = $this->model->validateLogin($user, $pass);
-        // if ($userFound == 1) {
-        //     $role = $this->model->getRole($user);
+        $result = "";
+        $userCredentials = UserLoginForm::getFormCredentials(); // Get user credentials from login form.
+        if (empty($userCredentials)) { // handle if credentials are empty.
+            $this->handleError();
+        }
+        list($user, $pass) = $userCredentials;
+        $userFound = $this->model->findUserByUsernamePassword($user, $pass); 
+        if ($userFound != null ) {
+            $username = $userFound->getUsername();
+            $role     = $userFound->getRole();
+            $_SESSION['username'] = $username;
+            $_SESSION['role']     = $role;
 
-        //     $_SESSION['role'] = $role;
-        //     $_SESSION['username'] = $user;
+            $result = 'Logged succesfuly';
+            header("Location: index.php");
+        } elseif ($userFound == null) {
+            $result = 'User not found';
 
-        //     $result = 'Logged succesfuly';
-        //     header("Location: index.php");
-        // } elseif ($userFound == -1) {
-        //     $result = 'User not found';
-
-        // } elseif ($userFound == 0) {
-        //     $result = 'Wrong Password';
-        // }
-        // $data['message'] = $result;
-        // $this->view->show("login-form.php", $data);
+        } else {
+            $result = 'Something went wrong';
+        }
+        $data['message'] = $result;
+        $this->view->show("login-form.php", $data);
 
     }
 
@@ -473,6 +483,14 @@ class MainController {
             $this->view->show("product/productdetail.php", ['mode' => 'add', 'message' => $message]);
         }
     }
+
+    /**
+     * Do the product stocks menu
+     * @return void
+     */
+    public function doProductStocks() {
+        
+    }
     /**
      * displays product management page.
      */
@@ -509,5 +527,14 @@ class MainController {
             $message = "Invalid data";
             $this->view->show("warehouse/warehousedetail.php", ['mode' => 'add', 'message' => $message]);
         }
+    }
+    /**
+     * do Logout and redirect to index page
+     * @return void
+     */
+    public function doLogout()
+    {
+        session_destroy();
+        header("Location: index.php ");
     }
 }

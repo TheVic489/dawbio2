@@ -3,9 +3,11 @@ namespace proven\store\model\persist;
 
 require_once 'model/persist/StoreDb.php';
 require_once 'model/WarehouseProducts.php';
+require_once 'model/Product.php';
 
 use proven\store\model\persist\StoreDb   as DbConnect;
 use proven\store\model\WarehouseProducts as WarehouseProducts;
+use proven\store\model\Product as Product;
 
 /**
  * WarehouseProducts database persistence class.
@@ -98,7 +100,7 @@ class WarehouseDaoProducts {
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
             $stmt = $connection->prepare($this->queries['SELECT_WHERE_ID']);
-            $stmt->bindValue(':id', $warehouseProducts->getId(), \PDO::PARAM_INT);
+            $stmt->bindValue(':warehouse_id', $warehouseProducts->getWarehouseId(), \PDO::PARAM_INT);
             //query execution.
             $success = $stmt->execute(); //bool
             //Statement data recovery.
@@ -120,7 +122,7 @@ class WarehouseDaoProducts {
             }
 
         } catch (\PDOException $e) {
-            // print "Error Code <br>".$e->getCode();
+            // print "Error Code <br>".$e->getProductId();
             // print "Error Message <br>".$e->getMessage();
             // print "Strack Trace <br>".nl2br($e->getTraceAsString());
             $data = null;
@@ -156,14 +158,53 @@ class WarehouseDaoProducts {
                 $data = array();
             }
         } catch (\PDOException $e) {
-//            print "Error Code <br>".$e->getCode();
+//            print "Error Code <br>".$e->getProductId();
 //            print "Error Message <br>".$e->getMessage();
 //            print "Stack Trace <br>".nl2br($e->getTraceAsString());
             $data = array();
         }   
         return $data;   
     }
+    /**
+     * selects w entitites in database.
+     * return array of warehouseProducts objects.
+     */
+    public function selectWarehouseProductWhereProductId( Product $product): array {
+        $data = null;
+        try {
+            //PDO object creation.
+            $connection = $this->dbConnect->getConnection(); 
+            //query preparation.
+            $stmt = $connection->prepare($this->queries['SELECT_WHERE_PRODUCT_ID']);
+            $stmt->bindValue(':product_id', $product->getId(), \PDO::PARAM_INT);
+            //query execution.
+            $success = $stmt->execute(); //bool
+            //Statement data recovery.
+            if ($success) {
+                if ($stmt->rowCount()>0) {
+                    // //set fetch mode.
+                    // $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+                    // // get one row at the time
+                    // if ($u = $this->fetchTocategory($stmt)){
+                    //     $data = $u;
+                    // }
+                    $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, WarehouseProducts::class);
+                    $data = $stmt->fetch();
+                } else {
+                    $data = null;
+                }
+            } else {
+                $data = null;
+            }
 
+        } catch (\PDOException $e) {
+            // print "Error Code <br>".$e->getProductId();
+            // print "Error Message <br>".$e->getMessage();
+            // print "Strack Trace <br>".nl2br($e->getTraceAsString());
+            $data = null;
+        }   
+        return $data;
+    }
     /**
      * selects entitites in database where field value.
      * return array of warehouseProducts objects.
@@ -193,7 +234,7 @@ class WarehouseDaoProducts {
                 $data = array();
             }
         } catch (\PDOException $e) {
-//            print "Error Code <br>".$e->getCode();
+//            print "Error Code <br>".$e->getProductId();
 //            print "Error Message <br>".$e->getMessage();
 //            print "Strack Trace <br>".nl2br($e->getTraceAsString());
             $data = array();
@@ -213,14 +254,14 @@ class WarehouseDaoProducts {
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
             $stmt = $connection->prepare($this->queries['INSERT']);
-            $stmt->bindValue(':id', $warehouseProducts->getId(), \PDO::PARAM_STR);
-            $stmt->bindValue(':code', $warehouseProducts->getCode(), \PDO::PARAM_STR);
-            $stmt->bindValue(':address', $warehouseProducts->getAddress(), \PDO::PARAM_STR);
+            $stmt->bindValue(':warehouse_id', $warehouseProducts->getWarehouseId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':product_id', $warehouseProducts->getProductId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':stock', $warehouseProducts->getStock(), \PDO::PARAM_STR);
             //query execution.
             $success = $stmt->execute(); //bool
             $numAffected = $success ? $stmt->rowCount() : 0;
         } catch (\PDOException $e) {
-            // print "Error Code <br>".$e->getCode();
+            // print "Error Code <br>".$e->getProductId();
             // print "Error Message <br>".$e->getMessage();
             // print "Strack Trace <br>".nl2br($e->getTraceAsString());
             $numAffected = 0;
@@ -240,14 +281,14 @@ class WarehouseDaoProducts {
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
             $stmt = $connection->prepare($this->queries['UPDATE']);
-            $stmt->bindValue(':id', $warehouseProducts->getId(), \PDO::PARAM_STR);
-            $stmt->bindValue(':code', $warehouseProducts->getCode(), \PDO::PARAM_STR);
-            $stmt->bindValue(':address', $warehouseProducts->getAddress(), \PDO::PARAM_STR);
+            $stmt->bindValue(':warehouse_id', $warehouseProducts->getWarehouseId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':product_id', $warehouseProducts->getProductId(), \PDO::PARAM_STR);
+            $stmt->bindValue(':stock', $warehouseProducts->getStock(), \PDO::PARAM_STR);
             //query execution.
             $success = $stmt->execute(); //bool
             $numAffected = $success ? $stmt->rowCount() : 0;
         } catch (\PDOException $e) {
-            // print "Error Code <br>".$e->getCode();
+            // print "Error Code <br>".$e->getProductId();
             // print "Error Message <br>".$e->getMessage();
             // print "Strack Trace <br>".nl2br($e->getTraceAsString());
             $numAffected = 0;
@@ -267,11 +308,11 @@ class WarehouseDaoProducts {
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.            
             $stmt = $connection->prepare($this->queries['DELETE']);
-            $stmt->bindValue(':id', $warehouseProducts->getId(), \PDO::PARAM_INT);
+            $stmt->bindValue(':warehouse_id', $warehouseProducts->getWarehouseId(), \PDO::PARAM_INT);
             $success = $stmt->execute(); //bool
             $numAffected = $success ? $stmt->rowCount() : 0;
         } catch (\PDOException $e) {
-            // print "Error Code <br>".$e->getCode();
+            // print "Error Code <br>".$e->getProductId();
             // print "Error Message <br>".$e->getMessage();
             // print "Strack Trace <br>".nl2br($e->getTraceAsString());
             $numAffected = 0;

@@ -10,8 +10,13 @@ use proven\store\model\persist\UserDao;
 use proven\store\model\User;
 
 $dao = new UserDao();
-// debug\Debug::display($dao->selectAll());
+//debug\Debug::printr($dao->selectAll());
+debug\Debug::display($dao->select(new User(2)));
 debug\Debug::display($dao->selectWhere("username", "user05"));
+echo($dao->delete(new User(0, "peter01", "ppass01", "peter", "frampton", "registered")));
 echo($dao->insert(new User(0, "peter01", "ppass01", "peter", "frampton", "registered")));
-//debug\Debug::print_r($dao->update(new User(7, "peter11", "ppass11", "peter1", "frampton1", "admin")));
+echo($dao->update(new User(0, "peter01", "ppass01", "Peter", "Frampton", "registered")));
+
+debug\Debug::display($dao->selectWhereUsernamePassword(new User(0, "peter01", "ppass01")));
+debug\Debug::vardump($dao->selectWhere("username", "id"));
 //debug\Debug::print_r($dao->delete(new User(7)));

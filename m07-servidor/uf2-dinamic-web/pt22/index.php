@@ -14,9 +14,7 @@ session_start();
   <body>
       <?php
         include "views/topmenu.html";
-        if (isset($_SESSION['username'])) {
-            echo "Logged user: ".$_SESSION['username'];
-        }
+        
       ?>
       <h2>Store application</h2>
       <?php

@@ -7,5 +7,10 @@
         <li><a href="index.php?action=user/form">User form</a></li>
         <li><a href="index.php?action=login/form" class="right-nav">Login</a></li>
         <li><a href="index.php?action=logout/form" class="right-nav">Logout</a></li>
+        <?php
+    if (isset($_SESSION['username'])) {
+        echo "Logged user: ".$_SESSION['username'];
+        } ?>
     </ul>
+    
 </nav>

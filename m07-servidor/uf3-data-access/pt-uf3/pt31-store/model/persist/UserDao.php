@@ -73,7 +73,7 @@ class UserDao {
     /**
      * fetches a row from PDOStatement and converts it into an entity object.
      * @param $statement the statement with query data.
-     * @return entity object with retrieved data or false in case of error.
+     * @return User|bool object with retrieved data or false in case of error.
      */
     private function fetchToEntity($statement): mixed {
         $row = $statement->fetch();
@@ -103,6 +103,48 @@ class UserDao {
             //query preparation.
             $stmt = $connection->prepare($this->queries['SELECT_WHERE_ID']);
             $stmt->bindValue(':id', $entity->getId(), \PDO::PARAM_INT);
+            //query execution.
+            $success = $stmt->execute(); //bool
+            //Statement data recovery.
+            if ($success) {
+                if ($stmt->rowCount()>0) {
+                    // //set fetch mode.
+                    // $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+                    // // get one row at the time
+                    // if ($u = $this->fetchToEntity($stmt)){
+                    //     $data = $u;
+                    // }
+                    $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, User::class);
+                    $data = $stmt->fetch();
+                } else {
+                    $data = null;
+                }
+            } else {
+                $data = null;
+            }
+
+        } catch (\PDOException $e) {
+            // print "Error Code <br>".$e->getCode();
+            // print "Error Message <br>".$e->getMessage();
+            // print "Strack Trace <br>".nl2br($e->getTraceAsString());
+            $data = null;
+        }   
+        return $data;
+    }
+    /**
+     * selects an User with given username and password.
+     * @param User the entity to search.
+     * @return User object being searched or null if not found or in case of error.
+     */
+    public function selectWhereUsernamePassword(User $entity): ?User {
+        $data = null;
+        try {
+            //PDO object creation.
+            $connection = $this->dbConnect->getConnection(); 
+            //query preparation.
+            $stmt = $connection->prepare($this->queries['SELECT_WHERE_USERNAME_AND_PASSWORD']);
+            $stmt->bindValue(':username', $entity->getUsername());
+            $stmt->bindValue(':password', $entity->getPassword());
             //query execution.
             $success = $stmt->execute(); //bool
             //Statement data recovery.

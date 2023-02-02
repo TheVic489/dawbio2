@@ -1,5 +1,3 @@
-<?php
-echo <<<EOT
 <nav class="navbar navbar-default navbar-expand-sm navbar-light bg-primary">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -14,7 +12,13 @@ echo <<<EOT
       <li><a class="nav-link" href="index.php?action=warehouse">Warehouses</a></li>
     </ul>
     </div>
-    <a class="btn btn-info navbar-btn" href="index.php?action=loginform">login</a>
+    <a class="btn btn-info navbar-btn" href="index.php?action=logout">logout</a>
   </div>
+  <?php ?>
+  
 </nav>
-EOT;
+
+<?php
+    if (isset($_SESSION['username'])) {
+        echo "Logged user: ".$_SESSION['username'];
+        } ?>
