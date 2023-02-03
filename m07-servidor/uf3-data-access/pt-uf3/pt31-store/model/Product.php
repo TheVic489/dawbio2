@@ -7,19 +7,19 @@ class Product {
     private ?string $code;
     private ?string $description;
     private ?float $price;
-    private int $categoryId;
+    private int $category_id;
     
     public function __construct(
             int $id=0, 
             string $code=null, 
             string $description=null, 
             float $price=null, 
-            int $categoryId=0) {
+            int $category_id=0) {
         $this->id = $id;
         $this->code = $code;
         $this->description = $description;
         $this->price = $price;
-        $this->categoryId = $categoryId;
+        $this->category_id = $category_id;
     }
     
     public function getId(): int {
@@ -55,17 +55,17 @@ class Product {
     }
     
     public function getCategoryId(): int {
-        return $this->categoryId;
+        return $this->category_id;
     }
 
-    public function setCategoryId(int $categoryId): void {
-        $this->categoryId = $categoryId;
+    public function setCategoryId(int $category_id): void {
+        $this->category_id = $category_id;
     }
 
     public function __toString() {
-        return sprintf("Prouduct{[id=%d][code=%s][description=%s][price=%.2f€][categoryId=%d]}",
+        return sprintf("Prouduct{[id=%d][code=%s][description=%s][price=%.2f€][category_id=%d]}",
                 $this->id, $this->code, $this->description,
-                $this->price, $this->categoryId);        
+                $this->price, $this->category_id);        
     }
 
     

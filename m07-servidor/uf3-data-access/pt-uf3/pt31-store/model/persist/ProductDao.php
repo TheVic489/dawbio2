@@ -156,7 +156,7 @@ class ProductDao {
             if ($success) {
                 if ($stmt->rowCount()>0) {
                    //fetch in class mode and get array with all data.                   
-                     $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Product::class);
+                    $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Product::class);
                     $data = $stmt->fetchAll(); 
                     //or in one single sentence:
                     while ($p = $this->fetchToProduct($stmt)){

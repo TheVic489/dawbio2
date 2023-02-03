@@ -6,6 +6,7 @@ require_once 'model/WarehouseProducts.php';
 require_once 'model/Product.php';
 
 use proven\store\model\persist\StoreDb   as DbConnect;
+use proven\store\model\Warehouse;
 use proven\store\model\WarehouseProducts as WarehouseProducts;
 use proven\store\model\Product as Product;
 
@@ -75,7 +76,7 @@ class WarehouseProductsDao {
      * @param $statement the statement with query data.
      * @return WarehouseProducts|false object with retrieved data or false in case of error.
      */
-    private function fetchTocategory($statement): mixed {
+    private function fetchToEntity($statement): mixed {
         $row = $statement->fetch();
         if ($row) {
             $warehouseid = intval($row['warehouse_id']);
@@ -87,20 +88,56 @@ class WarehouseProductsDao {
             return false;
         }
     }    
-    
+   
     /**
-     * selects an warehouseProducts given its id.
-     * @param warehouseProducts the warehouseProducts to search.
-     * @return warehouseProducts object being searched or null if not found or in case of error.
+     * selects all entitites in database.
+     * return array of warehouseProducts objects.
      */
-    public function select(WarehouseProducts $warehouseProducts): ?WarehouseProducts {
+    public function selectAll(): ?Array {
+        $data = array();
+        try {
+            //PDO object creation.
+            $connection = $this->dbConnect->getConnection(); 
+            //query preparation.
+            $stmt = $connection->prepare($this->queries['SELECT_ALL']);
+            //query execution.
+            $success = $stmt->execute(); //bool
+            //Statement data recovery.
+            if ($success) {
+                if ($stmt->rowCount()>0) {
+                   //fetch in class mode and get array with all data.                   
+                    $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, WarehouseProducts::class);
+                    $data = $stmt->fetchAll(); 
+                    //or in one single sentence:
+                    //$data = $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, WarehouseProducts::class);
+                    while ($p = $this->fetchToEntity($stmt)) {
+                        $data = array_push($data, $p);
+                    }
+                } else {
+                    $data = array();
+                }
+            } else {
+                $data = array();
+            }
+        } catch (\PDOException $e) {
+           print "Error Message <br>".$e->getMessage();
+           print "Stack Trace <br>".nl2br($e->getTraceAsString());
+            $data = array();
+        }   
+        return $data;   
+    }
+    /**
+     * selects WarehouseProduct entity with given product id.
+     * return warehouseProducts object.
+     */
+    public function selectWhereProductId( Product $product): ?WarehouseProducts {
         $data = null;
         try {
             //PDO object creation.
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
-            $stmt = $connection->prepare($this->queries['SELECT_WHERE_ID']);
-            $stmt->bindValue(':warehouse_id', $warehouseProducts->getWarehouseId(), \PDO::PARAM_INT);
+            $stmt = $connection->prepare($this->queries['SELECT_WHERE_PRODUCT_ID']);
+            $stmt->bindValue(':product_id', $product->getId(), \PDO::PARAM_INT);
             //query execution.
             $success = $stmt->execute(); //bool
             //Statement data recovery.
@@ -109,7 +146,7 @@ class WarehouseProductsDao {
                     // //set fetch mode.
                     // $stmt->setFetchMode(\PDO::FETCH_ASSOC);
                     // // get one row at the time
-                    // if ($u = $this->fetchTocategory($stmt)){
+                    // if ($u = $this->fetchToEntity($stmt)){
                     //     $data = $u;
                     // }
                     $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, WarehouseProducts::class);
@@ -130,53 +167,18 @@ class WarehouseProductsDao {
         return $data;
     }
 
-    /**
-     * selects all entitites in database.
-     * return array of warehouseProducts objects.
-     */
-    public function selectAll(): array {
-        $data = array();
-        try {
-            //PDO object creation.
-            $connection = $this->dbConnect->getConnection(); 
-            //query preparation.
-            $stmt = $connection->prepare($this->queries['SELECT_ALL']);
-            //query execution.
-            $success = $stmt->execute(); //bool
-            //Statement data recovery.
-            if ($success) {
-                if ($stmt->rowCount()>0) {
-                   //fetch in class mode and get array with all data.                   
-                    $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, WarehouseProducts::class);
-                    $data = $stmt->fetchAll(); 
-                    //or in one single sentence:
-                    // $data = $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, WarehouseProducts::class);
-                } else {
-                    $data = array();
-                }
-            } else {
-                $data = array();
-            }
-        } catch (\PDOException $e) {
-        //    print "Error Code <br>".$e->getProductId();
-        //    print "Error Message <br>".$e->getMessage();
-        //    print "Stack Trace <br>".nl2br($e->getTraceAsString());
-            $data = array();
-        }   
-        return $data;   
-    }
-    /**
-     * selects WarehouseProduct entity with given product id.
+        /**
+     * selects WarehouseProduct entity with given warehouse id.
      * return warehouseProducts object.
      */
-    public function selectWarehouseProductWhereProductId( Product $product): ?WarehouseProducts {
+    public function selectWhereWarehouseId( Warehouse $warehouse): ?WarehouseProducts {
         $data = null;
         try {
             //PDO object creation.
             $connection = $this->dbConnect->getConnection(); 
             //query preparation.
-            $stmt = $connection->prepare($this->queries['SELECT_WHERE_PRODUCT_ID']);
-            $stmt->bindValue(':product_id', $product->getId(), \PDO::PARAM_INT);
+            $stmt = $connection->prepare($this->queries['SELECT_WHERE_WAREHOUSE_ID']);
+            $stmt->bindValue(':warehouse_id', $warehouse->getId(), \PDO::PARAM_INT);
             //query execution.
             $success = $stmt->execute(); //bool
             //Statement data recovery.
@@ -185,7 +187,7 @@ class WarehouseProductsDao {
                     // //set fetch mode.
                     // $stmt->setFetchMode(\PDO::FETCH_ASSOC);
                     // // get one row at the time
-                    // if ($u = $this->fetchTocategory($stmt)){
+                    // if ($u = $this->fetchToEntity($stmt)){
                     //     $data = $u;
                     // }
                     $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, WarehouseProducts::class);

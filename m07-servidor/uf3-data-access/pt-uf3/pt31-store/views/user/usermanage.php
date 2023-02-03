@@ -16,13 +16,18 @@
     <button class="btn btn-primary" type="submit" name="action" value="user/role">Search</button>
   </span>
   <span class="col-auto">
-    <button class="btn btn-primary" type="submit" name="action" value="user/form">Add</button>
+    <?php if ($_SESSION['role'] == 'admin') {
+            echo '<button class="btn btn-primary" type="submit" name="action" value="user/form">Add</button>';
+          } 
+    ?>
   </span>
 </div>
 </form>
 <?php
 //display list in a table.
 $list = $params['list'] ?? null;
+$session = session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;
+$session_started = isset($_SESSION['username']);
 if (isset($list)) {
     echo <<<EOT
         <table class="table table-sm table-bordered table-striped table-hover caption-top table-responsive-sm">
@@ -38,13 +43,26 @@ if (isset($list)) {
 EOT;
     // $params contains variables passed in from the controller.
     foreach ($list as $elem) {
+    if ($session_started) {
+      if (in_array($_SESSION['role'], ['staff'])){
         echo <<<EOT
-            <tr>
-                <td><a href="index.php?action=user/edit&id={$elem->getId()}">{$elem->getUsername()}</a></td>
-                <td>{$elem->getFirstname()} {$elem->getLastname()}</td>
-                <td>{$elem->getRole()}</td>
-            </tr>               
-EOT;
+        <tr>
+            <td>{$elem->getUsername()}</td>
+            <td>{$elem->getFirstname()} {$elem->getLastname()}</td>
+            <td>{$elem->getRole()}</td>
+        </tr>               
+        EOT;
+      }else {
+        echo <<<EOT
+        <tr>
+            <td><a href="index.php?action=user/edit&id={$elem->getId()}">
+            {$elem->getUsername()}</a></td>
+            <td>{$elem->getFirstname()} {$elem->getLastname()}</td>
+            <td>{$elem->getRole()}</td>
+        </tr>               
+        EOT;
+      }
+    }
     }
     echo "</tbody>";
     echo "</table>";

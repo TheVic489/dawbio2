@@ -10,7 +10,7 @@ require_once "model/Product.php";
 use proven\store\model\persist\ProductDao;
 
 $dao = new ProductDao();
-//debug\Debug::display($dao->selectAll());
+debug\Debug::display($dao->selectAll());
 debug\Debug::display($dao->select(new Product(5)));
 debug\Debug::display($dao->selectWhere("code", "prodcode03"));
 echo($dao->delete(new Product(10, 2, 'prodesc10', 10, 1)));

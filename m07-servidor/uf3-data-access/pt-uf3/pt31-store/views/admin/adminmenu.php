@@ -19,6 +19,6 @@
 </nav>
 
 <?php
-    if (isset($_SESSION['username'])) {
-        echo "Logged user: ".$_SESSION['username'];
-        } ?>
+if (isset($_SESSION['username'])) {
+  echo "Logged user: " . $_SESSION['fullname'];
+} ?>

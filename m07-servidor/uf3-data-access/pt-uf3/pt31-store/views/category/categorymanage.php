@@ -6,27 +6,16 @@
         </strong>
     </div>
 <?php endif ?>
-<!-- <form method="post">
-    <div class="row g-3 align-items-center">
-        <span class="col-auto">
-            <label for="search" class="col-form-label">Role to search</label>
-        </span>
-        <span class="col-auto">
-            <input type="text" id="search" name="search" class="form-control" aria-describedby="searchHelpInline">
-        </span>
-        <span class="col-auto">
-            <button class="btn btn-primary" type="submit" name="action" value="category/role">Search</button>
-        </span>
-        <span class="col-auto">
-            <button class="btn btn-primary" type="submit" name="action" value="category/form">Add</button>
-        </span>
-    </div>
-</form> -->
+
 <?php
 //display list in a table.
 $list = $params['list'] ?? null;
+
+$session_started = isset($_SESSION['username']);
+
 if (isset($list)) {
-    echo <<<EOT
+    if ($session_started) {
+        echo <<<EOT
         <table class="table table-sm table-bordered table-striped table-hover caption-top table-responsive-sm">
         <caption>List of Categories</caption>
         <thead class='table-dark'>
@@ -37,16 +26,39 @@ if (isset($list)) {
         </tr>
         </thead>
         <tbody>
-EOT;
-    // $params contains variables passed in from the controller.
-    foreach ($list as $elem) {
+    EOT;
+    } else {
         echo <<<EOT
+        <table class="table table-sm table-bordered table-striped table-hover caption-top table-responsive-sm">
+        <caption>List of Categories</caption>
+        <thead class='table-dark'>
+        <tr>
+            <th>code</th>
+            <th>description</th>
+        </tr>
+        </thead>
+        <tbody>
+    EOT;    
+    }
+    // $params contains variables passed in from the controller.
+    
+    foreach ($list as $elem) {
+        if ($session_started) {
+            echo <<<EOT
             <tr>
             <td><a href="index.php?action=category/edit&id={$elem->getId()}">{$elem->getCode()}</td>
             <td>{$elem->getDescription()}</a></td>
             <td><button class="btn btn-outline-dark" name="action" value="category/remove"><a href="index.php?action=category/formremove&id={$elem->getId()}">remove<a/></button></td>
             </tr>               
-EOT;
+    EOT;
+        } else {
+            echo <<<EOT
+            <tr>
+            <td>{$elem->getCode()}</td>
+            <td>{$elem->getDescription()}</a></td>
+            </tr>               
+    EOT;
+        }
     }
     echo "</tbody>";
     echo "</table>";

@@ -8,15 +8,13 @@ echo <<<EOT
     <div>
     <ul class="nav navbar-nav">
       <li class="active"><a class="nav-link" href=""index.php?action=home"">Home</a></li>
-      <li><a class="nav-link" href="index.php?action=user">Users</a></li>
       <li><a class="nav-link" href="index.php?action=category">Categories</a></li>
       <li><a class="nav-link" href="index.php?action=product">Products</a></li>
-      <li><a class="nav-link" href="index.php?action=warehouse">Warehouses</a></li>
 
     </ul>
     </div>
     <div>
-      <a class="nav-link" href="index.php?action=loginform">login</a>
+      <button class="btn btn-success" ><a class="nav-link" href="index.php?action=loginform">login</a></button>
     </div>
   </div>
 </nav>

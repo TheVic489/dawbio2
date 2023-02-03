@@ -230,8 +230,10 @@ class MainController {
         if ($userFound != null ) {
             $username = $userFound->getUsername();
             $role     = $userFound->getRole();
+            $fullname = $userFound->getFirstname() . ' ' . $userFound->getLastname();
             $_SESSION['username'] = $username;
             $_SESSION['role']     = $role;
+            $_SESSION['fullname'] = $fullname;
 
             $result = 'Logged succesfuly';
             header("Location: index.php");
@@ -400,7 +402,7 @@ class MainController {
              }
              $data['mode'] = $mode;
         }
-        $this->view->show("category/categoryre  moveform.php", $data);  //initial prototype version.
+        $this->view->show("category/categoryremoveform.php", $data);  //initial prototype version.
     }
     /* ============== PRODUCT MANAGEMENT CONTROL METHODS ============== */
 
@@ -489,7 +491,11 @@ class MainController {
      * @return void
      */
     public function doProductStocks() {
-        
+        //TODO: do product stocks menu
+        //get 
+        $message = "Not implemented yet :(";
+        $this->view->show("message.php", ['mode' => 'add', 'message' => $message]);
+    
     }
     /**
      * displays product management page.

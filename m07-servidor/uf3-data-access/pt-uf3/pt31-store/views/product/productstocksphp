@@ -25,11 +25,8 @@
 <?php
 //display list in a table.
 $list = $params['list'] ?? null;
-$session_started = isset($_SESSION['username']);
-
 if (isset($list)) {
-    if ($session_started) {
-        echo <<<EOT
+    echo <<<EOT
         <table class="table table-sm table-bordered table-striped table-hover caption-top table-responsive-sm">
         <caption>List of products</caption>
         <thead class='table-dark'>
@@ -40,23 +37,8 @@ if (isset($list)) {
             <th>actions</th>
         </tr>
         </thead>
-        <tbody> 
-    EOT;    
-    } else {
-        echo <<<EOT
-        <table class="table table-sm table-bordered table-striped table-hover caption-top table-responsive-sm">
-        <caption>List of products</caption>
-        <thead class='table-dark'>
-        <tr>
-            <th>code</th>
-            <th>description</th>
-            <th>price</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody> 
-    EOT; 
-    }
+        <tbody>
+EOT;    
     // $params contains variables passed in from the controller.
     foreach ($list as $elem) {
         echo <<<EOT
