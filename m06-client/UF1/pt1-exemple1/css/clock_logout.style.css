@@ -1,0 +1,33 @@
+/* Clock */
+.clock-logout-container {
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: 1fr 1fr;
+}
+
+.clock-logout-container {
+    margin: 0 10rem 0 10rem;
+}
+
+.clock {
+    /* color: rgb(220, 280, 290); */
+    color: black;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: Orbitron;
+    /* letter-spacing: 7px; */
+    text-align: start;
+}
+/* END: Clock */
+
+
+/* Logout*/
+.logout-wrapper {
+    text-align: end;
+}
+
+#logout-button {
+    display: none;
+}
+/* END: Logout*/
