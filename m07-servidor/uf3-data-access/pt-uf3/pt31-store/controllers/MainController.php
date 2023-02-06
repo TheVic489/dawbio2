@@ -238,7 +238,7 @@ class MainController {
             $result = 'Logged succesfuly';
             header("Location: index.php");
         } elseif ($userFound == null) {
-            $result = 'User not found';
+            $result = 'Wrong credentials';
 
         } else {
             $result = 'Something went wrong';
@@ -255,6 +255,11 @@ class MainController {
      */
     public function doUserMng() {
         //get all users.
+
+        // Redirect to login page if not logged in.
+        if (empty($_SESSION['username'])) {
+            header('Location: index.php');
+        }
         $result = $this->model->findAllUsers();
         //pass list to view and show.
         $this->view->show("user/usermanage.php", ['list' => $result]);        
@@ -298,10 +303,10 @@ class MainController {
         if (!is_null($user)) {
             $result = $this->model->addUser($user);
             $message = ($result > 0) ? "Successfully added":"Error adding";
-            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message, 'user' => $user]);
         } else {
             $message = "Invalid data";
-            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message, 'user' => $user]);
         }
     }
     
@@ -312,10 +317,10 @@ class MainController {
         if (!is_null($user)) {
             $result = $this->model->modifyUser($user);
             $message = ($result > 0) ? "Successfully modified":"Error modifying";
-            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message, 'user' => $user]);
         } else {
             $message = "Invalid data";
-            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message, 'user' => $user]);
         }
     }    
 
@@ -326,10 +331,10 @@ class MainController {
         if (!is_null($user)) {
             $result = $this->model->removeUser($user);
             $message = ($result > 0) ? "Successfully removed":"Error removing";
-            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message, 'user' => $user]);
         } else {
             $message = "Invalid data";
-            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("user/userdetail.php", ['mode' => 'add', 'message' => $message, 'user' => $user]);
         }
     } 
     
@@ -369,10 +374,10 @@ class MainController {
         if (!is_null($category)) {
             $result = $this->model->modifyCategory($category);
             $message = ($result > 0) ? "Successfully modified":"Error modifying";
-            $this->view->show("category/categorydetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("category/categorydetail.php", ['mode' => 'add', 'message' => $message, 'category' => $category]);
         } else {
             $message = "Invalid data";
-            $this->view->show("category/categorydetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("category/categorydetail.php", ['mode' => 'add', 'message' => $message, 'category' => null]);
         }
     }    
 
@@ -383,10 +388,10 @@ class MainController {
         if (!is_null($category)) {
             $result = $this->model->removeCategory($category);
             $message = ($result > 0) ? "Successfully removed":"Error removing";
-            $this->view->show("category/categoryremoveform.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("category/categoryremoveform.php", ['mode' => 'add', 'message' => $message, 'category' => $category]);
         } else {
             $message = "Invalid data";
-            $this->view->show("category/categoryremoveform.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("category/categoryremoveform.php", ['mode' => 'add', 'message' => $message, 'category' => null]);
         }
     } 
     public function doCategoryRemoveForm(string $mode) {
@@ -423,10 +428,10 @@ class MainController {
         if (!is_null($product)) {
             $result = $this->model->addProduct($product);
             $message = ($result > 0) ? "Successfully added":"Error adding";
-            $this->view->show("product/productdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("product/productdetail.php", ['mode' => 'add', 'message' => $message, 'product' => $product]);
         } else {
             $message = "Invalid data";
-            $this->view->show("product/productdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("product/productdetail.php", ['mode' => 'add', 'message' => $message, 'product' => null]);
         }
     }
     public function doProductEditForm(string $mode) {
@@ -466,10 +471,10 @@ class MainController {
         if (!is_null($product)) {
             $result = $this->model->removeProduct($product);
             $message = ($result > 0) ? "Successfully removed":"Error removing";
-            $this->view->show("product/productremoveform.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("product/productremoveform.php", ['mode' => 'add', 'message' => $message, 'product' => $product]);
         } else {
             $message = "Invalid data";
-            $this->view->show("product/productremoveform.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("product/productremoveform.php", ['mode' => 'add', 'message' => $message, 'product' => null]);
         }
     } 
     public function doProductModify() {
@@ -479,10 +484,10 @@ class MainController {
         if (!is_null($product)) {
             $result = $this->model->modifyProduct($product);
             $message = ($result > 0) ? "Successfully modified":"Error modifying";
-            $this->view->show("product/productdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("product/productdetail.php", ['mode' => 'add', 'message' => $message, 'product' => $product]);
         } else {
             $message = "Invalid data";
-            $this->view->show("product/productdetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("product/productdetail.php", ['mode' => 'add', 'message' => $message, 'product' => null]);
         }
     }
 
@@ -491,16 +496,33 @@ class MainController {
      * @return void
      */
     public function doProductStocks() {
-        //TODO: do product stocks menu
-        //get 
-        $message = "Not implemented yet :(";
-        $this->view->show("message.php", ['mode' => 'add', 'message' => $message]);
+        $mode = 'stocks';
+        $data = array();
+        //TODO: do Search product and stock  by id  function 
+        if ($mode != 'product/add') {
+            //fetch data for selected product
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+            if (($id !== false) && (!is_null($id))) {
+                $product = $this->model->findProductById($id);
+                if (!is_null($product)) {
+                    $data['product'] = $product;
+                }
+             }
+             $data['mode'] = $mode;
+        }
+        $warehouseProduct = $this->model->findWarehouseProductbyProduct($product); // Get the warehouse product
+        $data['warehouseProduct'] = $warehouseProduct;  // Save the warehouse product in the data array
+        $this->view->show("product/productstocks.php", $data); // Load the view with the data
     
     }
     /**
      * displays product management page.
      */
     public function doWarehouseMng() {
+        // Redirect to login page if not logged in.
+        if (empty($_SESSION['username'])) {
+            header('Location: index.php');
+        }
          //get all users.
          $result = $this->model->findAllWarehouses();
          //pass list to view and show.
@@ -528,10 +550,10 @@ class MainController {
         if (!is_null($warehouse)) {
             $result = $this->model->modifyWarehouse($warehouse);
             $message = ($result > 0) ? "Successfully modified":"Error modifying";
-            $this->view->show("warehouse/warehousedetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("warehouse/warehousedetail.php", ['mode' => 'add', 'message' => $message, 'warehouse' => $warehouse]);
         } else {
             $message = "Invalid data";
-            $this->view->show("warehouse/warehousedetail.php", ['mode' => 'add', 'message' => $message]);
+            $this->view->show("warehouse/warehousedetail.php", ['mode' => 'add', 'message' => $message, 'warehouse' => $warehouse]);
         }
     }
     /**

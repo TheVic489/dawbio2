@@ -129,11 +129,18 @@ class StoreModel {
         return $dbHelper->select($p);
     }
 
-    public function findStocksByWarehouse(int $id): ?Warehouse {
+    public function findWarehouseProductbyProduct(object $prodcut): ?array {
         $dbHelper = new WarehouseProductsDao();
-        $p = new Product();
-        return $dbHelper->selectWarehouseProductWhereProductId($p);
+        $p = $prodcut;
+        return $dbHelper->selectWhereProduct($p);
 
     }
+    public function selectWhereProduct(object $prodcut): ?array {
+        $dbHelper = new WarehouseProductsDao();
+        $p = $prodcut;
+        return $dbHelper->selectWhereProduct($p);
+
+    }
+    
     }
 

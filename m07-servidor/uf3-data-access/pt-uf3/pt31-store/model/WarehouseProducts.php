@@ -15,7 +15,7 @@ class WarehouseProducts {
     public function getWarehouseId(): ?int {
         return $this->warehouseId;
     }
-
+    
     public function getProductId(): ?int {
         return $this->productId;
     }
