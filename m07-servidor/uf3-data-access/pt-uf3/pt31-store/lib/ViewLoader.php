@@ -2,7 +2,7 @@
 namespace proven\lib;
 /**
  * template view loader.
- * @author ProvenSoft
+ * @author Victor Piñana
  */
 class ViewLoader {
     

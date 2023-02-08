@@ -5,7 +5,7 @@ require_once 'model/User.php';
 /**
  * Description of UserFormValidation
  * Provides validation to get data from User form.
- * @author ProvenSoft
+ * @author Victor Piñana
  */
 class UserLoginForm {
 

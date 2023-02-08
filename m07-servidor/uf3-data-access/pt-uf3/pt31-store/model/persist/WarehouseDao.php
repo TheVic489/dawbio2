@@ -9,7 +9,7 @@ use proven\store\model\Warehouse       as Warehouse;
 
 /**
  * Warehouse database persistence class.
- * @author ProvenSoft
+ * @author Victor Piñana
  */
 class WarehouseDao {
 

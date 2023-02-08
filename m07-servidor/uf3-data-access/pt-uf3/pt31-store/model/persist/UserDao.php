@@ -9,7 +9,7 @@ use proven\store\model\User as User;
 
 /**
  * User database persistence class.
- * @author ProvenSoft
+ * @author Victor Piñana
  */
 class UserDao {
 

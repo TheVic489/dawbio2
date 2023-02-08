@@ -12,7 +12,7 @@ use proven\store\model\Product as Product;
 
 /**
  * WarehouseProducts database persistence class.
- * @author ProvenSoft
+ * @author Victor Piñana
  * 
  */
 class WarehouseProductsDao {

@@ -3,7 +3,7 @@ namespace proven\store\model\persist;
 /**
  * PDO database connection.
  *
- * @author ProvenSoft
+ * @author Victor Piñana
  */
 class StoreDb { 
     

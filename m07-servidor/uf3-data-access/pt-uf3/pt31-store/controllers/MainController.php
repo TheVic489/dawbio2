@@ -20,7 +20,7 @@ use UserLoginForm;
 
 /**
  * Main controller
- * @author ProvenSoft
+ * @author Victor Piñana
  */
 class MainController {
     /**
