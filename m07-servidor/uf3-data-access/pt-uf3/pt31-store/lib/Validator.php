@@ -34,12 +34,11 @@ class Validator {
     }
     public static function validateProduct(int $method) {
         $obj  = null;
-        $id   = static::cleanAndValidate($method, 'id', FILTER_VALIDATE_INT); 
-        $code = static::cleanAndValidate($method, 'code'); 
+        $id          = static::cleanAndValidate($method, 'id', FILTER_VALIDATE_INT); 
+        $code        = static::cleanAndValidate($method, 'code'); 
         $description = static::cleanAndValidate($method, 'description'); 
-        $price = static::cleanAndValidate($method, 'price', FILTER_VALIDATE_INT); 
-        $categoryId = static::cleanAndValidate($method, 'categoryid'); 
-
+        $price       = static::cleanAndValidate($method, 'price', FILTER_VALIDATE_INT); 
+        $categoryId  = static::cleanAndValidate($method, 'categoryid');
         $obj = new Product($id, $code, $description, $price, $categoryId);
 
         return $obj;        

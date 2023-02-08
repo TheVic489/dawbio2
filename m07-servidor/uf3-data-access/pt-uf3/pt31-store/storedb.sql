@@ -83,7 +83,7 @@ INSERT INTO warehouses VALUES
   (5, "warhcode05", "address5");
 
 INSERT INTO warehousesproducts VALUES 
-  (1, 1, 11),
+  (1, 1, 11), 
   (1, 3, 13),
   (1, 5, 15),
   (2, 2, 21),

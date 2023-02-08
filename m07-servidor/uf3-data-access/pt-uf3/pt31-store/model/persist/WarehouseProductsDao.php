@@ -14,7 +14,6 @@ use proven\store\model\Product as Product;
  * WarehouseProducts database persistence class.
  * @author ProvenSoft
  * 
- * TODO
  */
 class WarehouseProductsDao {
 
@@ -57,6 +56,14 @@ class WarehouseProductsDao {
             "select * from %s where product_id = :product_id", 
             self::$TABLE_NAME
         );
+        $this->queries['SELECT_WHERE_PRODUCT_ID_NO_STOCK'] = \sprintf(
+            "select * from %s where product_id != :product_id and stock = 0", 
+            self::$TABLE_NAME
+        );
+        $this->queries['DELETE_PRODUCT_STOCK'] = sprintf(
+            "delete from %s where product_id = :product_id", 
+            self::$TABLE_NAME
+        );
         $this->queries['INSERT'] = \sprintf(
                 "insert into %s (warehouse_id, product_id, stock) values (:warehouse_id, :product_id, :stock)", 
                 self::$TABLE_NAME
@@ -91,7 +98,7 @@ class WarehouseProductsDao {
    
     /**
      * selects all entitites in database.
-     * return array of warehouseProducts objects.
+     * @return array of warehouseProducts objects and a void array in case of error.
      */
     public function selectAll(): ?Array {
         $data = array();
@@ -173,11 +180,10 @@ class WarehouseProductsDao {
         }   
         return $data;
     }
-
         /**
-     * selects WarehouseProduct entity with given warehouse id.
+     * selects WarehouseProduct entity with given warehouse entity.
      * @param Warehouse $warehouse object 
-     * @return warehouseProducts object.
+     * @return warehouseProducts object null otherwise.
      */
     public function selectWhereWarehouseId( Warehouse $warehouse): ?WarehouseProducts {
         $data = null;
@@ -217,7 +223,9 @@ class WarehouseProductsDao {
     }
     /**
      * selects entitites in database where field value.
-     * return array of warehouseProducts objects.
+     * @param string $fieldname the field name in the database.
+     * @param string $fieldvalue  the field value to search.
+     * @return array of warehouseProducts objects or void one if no results.
      */
     public function selectWhere(string $fieldname, string $fieldvalue): array {
         $data = array();
@@ -233,16 +241,10 @@ class WarehouseProductsDao {
             //Statement data recovery.
             if ($success) {
                 if ($stmt->rowCount()>0) {
-                    // $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, WarehouseProducts::class);
-                    // $data = $stmt->fetchAll(); 
-
                     while ($u = $this->fetchToEntity($stmt)){
-                        // $data = $u;
+                        // Push each row of data found to array.
                         array_push($data,$u);
                     }   
-
-                    // //or in one single sentence:
-                    //$data = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'WarehouseProducts');
                 } else {
                     $data = array();
                 }
@@ -258,6 +260,31 @@ class WarehouseProductsDao {
         return $data;   
     }
 
+
+    /**
+     * deletes the stock of the product in WarehouseProducts table
+     * @param Product the entity object to delete.
+     * @return number of rows affected.
+     */
+    public function deleteProductStock(Product $entity): int {
+        $numAffected = 0;
+        try {
+            //PDO object creation.
+            $connection = $this->dbConnect->getConnection(); 
+            //query preparation.            
+            $stmt = $connection->prepare($this->queries['DELETE_STOCK']);
+            $stmt->bindValue(':id', $entity->getId(), \PDO::PARAM_INT);
+            $success = $stmt->execute(); //bool
+            $numAffected = $success ? $stmt->rowCount() : 0;
+        } catch (\PDOException $e) {
+            // print "Error Code <br>".$e->getCode();
+            // print "Error Message <br>".$e->getMessage();
+            // print "Strack Trace <br>".nl2br($e->getTraceAsString());
+            $numAffected = 0;
+        }
+        return $numAffected;        
+    } 
+    
     /**
      * inserts a new warehouseProducts in database.
      * @param warehouseProducts the warehouseProducts object to insert.

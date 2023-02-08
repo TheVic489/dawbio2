@@ -24,5 +24,6 @@ if (isset($params['mode'])) {
 $category = $params['category'] ?? new Product();
 echo "<form method='post' action=\"index.php\">";
 echo proven\lib\views\Renderer::renderCategoryFields($category);
+echo " WARNING: this will remove all data related to this category. <br> ";
 echo "<button type='submit' name='action' class='btn btn-danger' value='category/remove' $editDisable>Remove</button>";
 echo "</form>";

@@ -15,7 +15,7 @@
             <input type="text" id="search" name="search" class="form-control" aria-describedby="searchHelpInline">
         </span>
         <span class="col-auto">
-            <button class="btn btn-primary" type="submit" name="action" value="product/role">Search</button>
+            <button class="btn btn-primary" type="submit" name="action" value="product/searchbycategory">Search</button>
         </span>
         <span class="col-auto">
             <button class="btn btn-primary" type="submit" name="action" value="product/form">Add</button>
@@ -51,7 +51,6 @@ if (isset($list)) {
             <th>code</th>
             <th>description</th>
             <th>price</th>
-            <th>actions</th>
         </tr>
         </thead>
         <tbody> 
@@ -59,7 +58,10 @@ if (isset($list)) {
     }
     // $params contains variables passed in from the controller.
     foreach ($list as $elem) {
-        echo <<<EOT
+        if ($session_started) {
+
+
+            echo <<<EOT
             <tr>
             <td>{$elem->getCode()}</td>
             <td>{$elem->getDescription()}</td>
@@ -70,7 +72,17 @@ if (isset($list)) {
                 <button class="btn btn-outline-dark" name="action" value="product/remove"><a href="index.php?action=product/formremove&id={$elem->getId()}">remove<a/></button>
             </td>
             </tr>               
-EOT;
+            EOT;
+        }else {
+
+            echo <<<EOT
+            <tr>
+            <td>{$elem->getCode()}</td>
+            <td>{$elem->getDescription()}</td>
+            <td>{$elem->getPrice()}</td>
+            </tr>               
+            EOT;
+        }
     }
     echo "</tbody>";
     echo "</table>";

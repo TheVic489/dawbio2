@@ -74,14 +74,14 @@ class Renderer {
      * @param Product $product 
      * @return string html representation of fields
      */
-    public static function renderProductFields(Product $product, string $mode): string {
+    public static function renderProductFields(Product $product, string $mode = ''): string {
         $disable = '';
         if ($mode == 'stocks') { // Disable edit for stock mode;
             $disable = 'readonly';
         }
         $result = "<fieldset>";
         $result .= self::renderLabelInput("Id: ", "id", $product->getId(), "readonly placeholder='id'");
-        $result .= self::renderLabelInput("Code: ", "code", $product->getCode(), "placeholder='code" ." ". $disable);
+        $result .= self::renderLabelInput("Code: ", "code", $product->getCode(), "placeholder='code'" ." ". $disable);
         $result .= self::renderLabelInput("Description: ", "description", $product->getDescription(), "placeholder='description'" ." ". $disable);
         $result .= self::renderLabelInput("Price: ", "price", $product->getPrice(), "placeholder='price'" ." ". $disable);
         $result .= self::renderLabelInput("Category ID: ", "categoryid", $product->getCategoryId(), "placeholder='category id'" ." ". $disable);

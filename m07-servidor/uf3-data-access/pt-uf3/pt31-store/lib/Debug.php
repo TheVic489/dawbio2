@@ -16,7 +16,7 @@ class Debug {
         }
     }
 
-    static function printr(array $data): void {
+    static function printr(array|string $data): void {
         echo '<pre>';
         print_r($data);
         echo '</pre>';

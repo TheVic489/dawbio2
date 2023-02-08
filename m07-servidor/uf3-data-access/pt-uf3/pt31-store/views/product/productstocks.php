@@ -27,12 +27,14 @@ $message = $params['message'] ?? "";
 printf("<p>%s</p>", $message);
 
 $mode = $params['mode'];
+var_dump($mode);
 $product = $params['product'] ?? new Product();
 
 echo proven\lib\views\Renderer::renderProductFields($product, $mode);
 
 //var_dump($params['warehouseProduct']);
-$WPlist = $params['warehouseProduct'] ?? null;
+$WPlist       = $params['warehouseProduct'] ?? null;
+
 //display list in a table.
 $list = $params['list'] ?? null;
 if (isset($WPlist)) {
@@ -56,6 +58,7 @@ EOT;
             </tr>               
 EOT;
     }
+    
     echo "</tbody>";
     echo "</table>";
     echo "<div class='alert alert-info' role='alert'>";
@@ -64,5 +67,6 @@ EOT;
 } else {
     echo "No data found";
 }
+
 
 ?>  

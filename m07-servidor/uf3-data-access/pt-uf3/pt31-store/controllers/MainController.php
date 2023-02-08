@@ -179,7 +179,7 @@ class MainController {
                 $this->doCategoryRemove();
                 break;
             case 'product/searchbycategory': 
-                $this->doProductSearchByCategory();
+                $this->doSearchProductsByCategory();
                 break;
             case 'login/submit':
                 $this->doLoginUser(); 
@@ -265,7 +265,10 @@ class MainController {
         $this->view->show("user/usermanage.php", ['list' => $result]);        
         //$this->view->show("user/user.php", [])  //initial prototype version;
     }   
-
+    
+    /**
+     * List Users by role.
+     */
     public function doListUsersByRole() {
         //get role sent from client to search.
         $roletoSearch = \filter_input(INPUT_POST, "search");
@@ -379,8 +382,10 @@ class MainController {
             $message = "Invalid data";
             $this->view->show("category/categorydetail.php", ['mode' => 'add', 'message' => $message, 'category' => null]);
         }
-    }    
-
+    }
+    /**
+     * do Category delete
+     */
     public function doCategoryRemove() {
         //get category data from form and validate
         $category = Validator::validateCategory(INPUT_POST);
@@ -470,6 +475,7 @@ class MainController {
         //add product to database
         if (!is_null($product)) {
             $result = $this->model->removeProduct($product);
+                      $this->model->removeProductStock($product);
             $message = ($result > 0) ? "Successfully removed":"Error removing";
             $this->view->show("product/productremoveform.php", ['mode' => 'add', 'message' => $message, 'product' => $product]);
         } else {
@@ -492,6 +498,24 @@ class MainController {
     }
 
     /**
+     * Do search and list products by category
+     * @return void
+     */
+    public function doSearchProductsByCategory() {
+        //get the id to search for
+        $id2Find = \filter_input(INPUT_POST, "search");
+        if ($id2Find !== false) {
+            //get the products searched by the category code
+            $products = $this->model->findProductByCategoryCode($id2Find);
+            //pass list to view and show.
+            $this->view->show("product/productmanage.php", ['list' => $products]);   
+        }  else {
+            //pass information message to view and show.
+            $this->view->show("product/productmanage.php", ['message' => "No data found"]);   
+        }
+    }
+
+    /**
      * Do the product stocks menu
      * @return void
      */
@@ -510,8 +534,10 @@ class MainController {
              }
              $data['mode'] = $mode;
         }
-        $warehouseProduct = $this->model->findWarehouseProductbyProduct($product); // Get the warehouse product
-        $data['warehouseProduct'] = $warehouseProduct;  // Save the warehouse product in the data array
+        $warehouseProduct        = $this->model->findWarehouseProductbyProduct($product); // Get the warehouse product
+
+        $data['warehouseProduct']        = $warehouseProduct;         // Save the warehouse product in the data array
+
         $this->view->show("product/productstocks.php", $data); // Load the view with the data
     
     }
@@ -528,6 +554,12 @@ class MainController {
          //pass list to view and show.
          $this->view->show("warehouse/warehousemanage.php", ['list' => $result]);     
     }
+
+    /**
+     * Summary of doWarehouseEditForm
+     * @param string $mode
+     * @return void
+     */
     public function doWarehouseEditForm(string $mode) {
         $data = array();
         if ($mode != 'warehouse/add') {
@@ -543,6 +575,11 @@ class MainController {
         }
         $this->view->show("warehouse/warehousedetail.php", $data);  //initial prototype version.
     }
+    
+    /**
+     * Summary of doWarehouseModify
+     * @return void
+     */
     public function doWarehouseModify() {
         //get warehouse data from form and validate
         $warehouse = Validator::validateWarehouse(INPUT_POST);
